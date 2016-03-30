@@ -27,6 +27,8 @@ public class StartAutomation
 		JaxbInfoGenerator gen = new JaxbInfoGenerator();
 		gen.generateInfos(file.getAbsolutePath());
 
+		// TODO: Need to compile newly created Classes
+		
 		/*
 		 * Generate tables from XSD or Info       - Tables
 		 */				
