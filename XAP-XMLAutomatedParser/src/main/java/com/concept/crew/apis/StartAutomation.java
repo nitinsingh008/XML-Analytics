@@ -12,8 +12,8 @@ public class StartAutomation
 
 	public static void main(String[] args) throws Exception
 	{
-		String XSD_SCHEMA = "markit_bond.xsd";
-		//String XSD_SCHEMA = "CustomersOrders.xsd";
+		//String XSD_SCHEMA = "markit_bond.xsd";
+		String XSD_SCHEMA = "CustomersOrders.xsd";
 		
 		/*
 		 * Generate jaxb (Info) Classes from XSD
