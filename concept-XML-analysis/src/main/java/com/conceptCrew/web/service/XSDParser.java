@@ -85,7 +85,7 @@ class SchemaComplexType {
     
     private String name;
     private List<SchemaElement> children;
-    private Map<String, String> attributes = new HashMap<>();
+    private Map<String, String> attributes = new HashMap<String, String>();
 	public String getName() {
 		return name;
 	}
@@ -106,7 +106,7 @@ class SchemaComplexType {
 	}
    public void addAttribute(String name,String attribute){
 	   if(attributes == null){
-		   attributes = new HashMap<>();
+		   attributes = new HashMap<String, String>();
 	   }
 	   attributes.put(name, attribute);
    }
@@ -123,8 +123,8 @@ class SchemaSaxHandler extends DefaultHandler {
     private List<SchemaElement> currentSequence;
 
     // cumulative - will use the data when XML finishes
-    private Map<String, String> simpleTypes = new HashMap<>();
-    private Map<String, SchemaComplexType> complexTypes = new HashMap<>();
+    private Map<String, String> simpleTypes = new HashMap();
+    private Map<String, SchemaComplexType> complexTypes = new HashMap();
     private SchemaElement rootElement;
     
     private StringBuilder xsdInTree = new StringBuilder("<ul>");
@@ -145,7 +145,7 @@ class SchemaSaxHandler extends DefaultHandler {
         }
 
         if (qName.equals("xs:sequence")) {
-            currentSequence = new ArrayList<>();
+            currentSequence = new ArrayList();
         }
 
         if (qName.equals("xs:element")) {
