@@ -13,25 +13,28 @@
 					</div>
 				</div>
 		<div class="row col-xs-12">	
-		<form:form commandName="xsdParseRequest">
-				<table align="center" width="70%">
+		<form:form commandName="xsdParseRequest" id="captureParseSettings">
+				<table align="left" width="100%">
 					<tbody>
 						<tr>
-							<td align="center" width="50%"> 
+							<td align="center" width="70%"> 
 								<table>
 									<tbody>
 										<tr>
 											<td> <strong> XSD View </strong> </td>
 										</tr>
 										<tr>
-											<td><form:textarea id="parsedXSD" path="parsedXSD"  rows="15" cols="20" /></td>
+											<td><textarea rows="10" cols="50" readonly="readonly">${parsedInString}</textarea> 
+												
+											</td>
 										</tr>
 									</tbody>
 								</table>
 							</td>
-							<td align="center" width="50%">
+							<td align="left" width="30%">
 								<table cellpadding="1px">
 									<tbody>
+									<tr><td><strong>Select Setting</strong> </td></tr>
 										<tr>
 											<td>Run All</td>
 											<td><form:checkbox path="doAll"></form:checkbox></td>
@@ -69,7 +72,7 @@
 							<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp</td>
 						</tr>
 						<tr>
-							<td colspan="2" align="center"><form:button id="Generate" class="btn btn-primary">Generate</form:button>
+							<td colspan="2" align="center"><input type="button" id="GenerateButton" class="btn btn-primary" value="Generate" onclick="clickGenerate()"/>
 							</td>
 						</tr>
 					</tbody>

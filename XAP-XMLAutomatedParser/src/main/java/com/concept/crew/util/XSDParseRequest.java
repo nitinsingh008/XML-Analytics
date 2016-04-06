@@ -1,10 +1,13 @@
-package com.conceptCrew.web.dto;
+package com.concept.crew.util;
 
-import org.springframework.stereotype.Component;
+import java.io.Serializable;
 
-@Component("XSDParseRequest")
-public class XSDParseRequest {
+public class XSDParseRequest implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String parsedXSD;
 	Boolean doAll;
 	Boolean createScript;

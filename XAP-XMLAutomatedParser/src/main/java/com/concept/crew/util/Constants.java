@@ -8,4 +8,7 @@ public class Constants {
 	public static final String compilationPath = dirSrcJava + "/com/concept/crew/info/jaxb";
 	public static final String resourcePath = "D:/XAP/LoadersFramework/src/main/resources";
 	public static final String pomPath = "D:/XAP/LoadersFramework/pom.xml";
+	
+	
+	public static final String xsdLocalPath = "C:/Users/NITIN SINGH/Documents/GitHub/XML-Analytics-svn/concept-XML-analysis/temp";
 }

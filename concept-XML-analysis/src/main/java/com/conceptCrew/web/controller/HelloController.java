@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.conceptCrew.web.dto.Constants;
-import com.conceptCrew.web.dto.XSDParseRequest;
+import com.concept.crew.util.Constants;
+import com.concept.crew.util.XSDParseRequest;
 import com.conceptCrew.web.service.XSDParser;
 
 @Controller
@@ -29,9 +29,8 @@ public class HelloController {
 	@Named("XSDParser")
 	XSDParser xsdParser;
 
-	@Inject
-	@Named("XSDParseRequest")
-	XSDParseRequest reuest;
+	
+	private XSDParseRequest reuest;
 
 	String tempXSDName;
 	
@@ -59,13 +58,15 @@ public class HelloController {
 				if (!dir.exists())
 					dir.mkdirs();
 				tempXSDName = (file.getName().contains(File.separator)) ? file.getName().substring(
-						file.getName().lastIndexOf(File.separator)+1, file.getName().length() - 1) : file.getName();
+						file.getName().lastIndexOf(File.separator)+1, file.getName().length()) : file.getName();
 				// Create the file on server
 				File serverFile = new File(dir.getAbsolutePath() + File.separator + tempXSDName);
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
-
+//				xsdParser.parseXSD(tempXSDName);
+				reuest = new XSDParseRequest();
+				//reuest.setParsedXSD(xsdParser.getXSDToPreview(tempXSDName));
 				
 
 			} catch (Exception e) {
@@ -76,14 +77,15 @@ public class HelloController {
 			reuest.setParsedXSD("You have Uplaoded Blank file");
 		}
 		model.put("xsdParseRequest", reuest);
+		model.put("parsedInString", (xsdParser.getXSDToPreview(tempXSDName)));
 		return "step2";
 	}
 	
 	
-	@RequestMapping(value = "/getXSDPreview", method = RequestMethod.GET)
-	public @ResponseBody String getXSDasTree(ModelMap model) {
-
-		return xsdParser.getXSDInTree();
+	@RequestMapping(value = "/Generate", method = RequestMethod.POST)
+	public void processWithTask(@RequestBody XSDParseRequest request, ModelMap model) {
+		
+		return;
 
 	}
 	

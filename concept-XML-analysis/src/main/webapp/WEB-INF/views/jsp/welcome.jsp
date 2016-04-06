@@ -48,16 +48,6 @@
 					    	 $("#step1jsp").hide();
 					    	 $("#step2jsp").attr("disabled", false);
 							 $("#step1jsp").attr("disabled", true);
-							 $.ajax({
-							    url: 'getXSDPreview',
-							    dataType: 'text',
-							    type: 'GET',
-							    success: function(data){
-							     		alert(data);
-							   			$("parsedXSD").html(data);
-							    }
-							  });
-							 
 					    	 $("#step2jsp").html(data);
 					    }
 					  });
@@ -69,6 +59,21 @@
 		});
 
 	});
+	
+	function clickGenerate(){
+		
+			$.ajax({
+					    url: 'Generate',
+					    data: {
+					    	request : $("#captureParseSettings").serialize()
+					    },
+					    type: 'POST',
+					    dataType:"json",
+					    success: function(data){
+					   		alert("success");
+					    }
+					  });
+    }
 </script>
 </head>
 

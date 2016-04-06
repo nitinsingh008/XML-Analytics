@@ -14,7 +14,12 @@
 	</properties>
 
 	<dependencies>
-
+	
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.7.3</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -55,7 +60,16 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
-
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>1.3.04</version>
+		</dependency>
+		<dependency>
+			<groupId>XAP-XMLAutomatedParser</groupId>
+			<artifactId>XAP-XMLAutomatedParser</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -72,9 +86,11 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
+				<!-- <groupId>org.eclipse.jetty</groupId> <artifactId>jetty-maven-plugin</artifactId> 
+					<version>7.1.6.v20100715</version> -->
+				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.2.11.v20150529</version>
+				<version>8.1.16.v20140903</version>
 				<configuration>
 					<scanIntervalSeconds>10</scanIntervalSeconds>
 					<webApp>
@@ -94,7 +110,16 @@
 					<wtpContextName>XMLAnalysis</wtpContextName>
 				</configuration>
 			</plugin>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<warSourceDirectory>src/main/webapp</warSourceDirectory>
+					<warName>ConceptCrewXAP</warName>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

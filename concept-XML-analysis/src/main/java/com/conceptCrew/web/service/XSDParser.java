@@ -1,26 +1,27 @@
 package com.conceptCrew.web.service;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 import org.springframework.stereotype.Component;
+import org.w3c.dom.Document;
 import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.conceptCrew.web.dto.Constants;
+import com.concept.crew.util.Constants;
+
 
 
 @Component("XSDParser")
@@ -29,19 +30,43 @@ public class XSDParser {
     public static final String PATH = Constants.xsdLocalPath;
     private SchemaSaxHandler customeHandler = new SchemaSaxHandler();
     
-    public void parseXSD(String xsdName) throws FileNotFoundException, IOException, SAXException, ParserConfigurationException{
-    	 SAXParserFactory spf = SAXParserFactory.newInstance();
+	public void parseXSD(String xsdName) throws FileNotFoundException, IOException, SAXException, ParserConfigurationException{
+    	/* SAXParserFactory spf = SAXParserFactory.newInstance();
          SAXParser sp = spf.newSAXParser();
          XMLReader reader = sp.getXMLReader();
         
          reader.setContentHandler(customeHandler);
-         reader.parse(new InputSource(new FileInputStream(new File(PATH, xsdName))));
+         reader.parse(new InputSource(new FileInputStream(new File(PATH, xsdName))));*/
          
+         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+         DocumentBuilder docBuilder;
+         docBuilder = docBuilderFactory.newDocumentBuilder();
+         Document doc = docBuilder.parse (new File(PATH, xsdName)); 
          
     }
     
     public String getXSDInTree(){
     	return customeHandler.getXsdInTree().toString();
+    }
+    
+    
+    public String getXSDToPreview(String xsdName){
+    	StringBuilder br = new StringBuilder();
+    	try{
+    		BufferedReader reader = new BufferedReader(new FileReader(new File(PATH, xsdName)));
+    		String line = reader.readLine();
+    		while(line != null){
+    			br.append(line);
+    			br.append("\n");
+    			line = reader.readLine();
+    		}
+    	}catch(Exception e){
+    		br = new StringBuilder();
+    		br.append("Issue in preview XSD :"+e.getMessage());
+    	}
+    	
+    	
+    	return br.toString();
     }
 }
 
