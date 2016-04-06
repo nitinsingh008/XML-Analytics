@@ -5,6 +5,7 @@ import java.io.File;
 import com.concept.crew.info.DBColumns;
 import com.concept.crew.processor.JaxbTableGenerator;
 import com.concept.crew.processor.TableGenerator;
+import com.concept.crew.util.AutomationHelper;
 import com.concept.crew.util.JaxbInfoGenerator;
 import com.google.common.collect.Multimap;
 
@@ -13,28 +14,40 @@ public class StartAutomation
 
 	public static void main(String[] args) throws Exception
 	{
-		//String XSD_SCHEMA = "markit_bond.xsd";
-		String XSD_SCHEMA = "CustomersOrders.xsd";
+		if(!validateInputs(args)){
+			return;			
+		}
+		File xsdFile = new File(args[0]); 
 		
-		/*
-		 * Generate jaxb (Info) Classes from XSD
-		 */
-		final Thread currentThread = Thread.currentThread();
-		final ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		File file = new File(contextClassLoader.getResource(XSD_SCHEMA).getFile()); //resource folder
+		String XSD_SCHEMA = xsdFile.getName();
 		
+		//1. Create maven project
+		System.out.println("Creating maven project");
+		AutomationHelper.createMavenProject(xsdFile);
+		
+		//2. Generate Jaxb object in new maven project from the input XSD
+		System.out.println("Generating Jaxb object in new maven project from the input XSD");		
 		JaxbInfoGenerator gen = new JaxbInfoGenerator();
-		gen.generateInfos(file.getAbsolutePath());
+		gen.generateInfos(xsdFile.getAbsolutePath());
 
-		// TODO: Need to compile newly created Classes
+		//3. Compile newly created Classes
+		System.out.println("Build Maven project");
+		AutomationHelper.buildMavenProject();
 		
+		
+		//AutomationHelper.compileJaxbInfos();
+		
+		//AutomationHelper.copyFiles();		
 		/*
 		 * Generate tables from XSD or Info       - Tables
 		 */				
 		tableGenerator(XSD_SCHEMA);
 		
 		// Generate loaders automatically - Main/Schedules
+		
+		// Last Step
+		System.out.println("Build Maven project");
+		AutomationHelper.buildMavenProject();
 	}
 
 /*	public static void tableGeneratorFromXSD(String xsdName) throws Exception
@@ -67,5 +80,18 @@ public class StartAutomation
 		// can Create Separate sql scripts for each table (Optional)
 		// Login to Database and create table (Drop and recreate tables)
 	}	
+	
+	private static boolean validateInputs(String[] args){
+		if(args.length == 0){
+			System.out.println("Provide correct XSD path");
+			return false;
+		}
+		File f = new File(args[0]);
+		if(!f.isFile()){
+			System.out.println("Provide correct XSD path");
+			return false;
+		}
+		return true;
+	}
 	
 }
