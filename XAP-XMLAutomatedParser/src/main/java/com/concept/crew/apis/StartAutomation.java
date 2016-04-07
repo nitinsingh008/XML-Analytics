@@ -30,7 +30,7 @@ public class StartAutomation
 		JaxbInfoGenerator gen = new JaxbInfoGenerator();
 		gen.generateInfos(xsdFile.getAbsolutePath());
 
-		//3. Compile newly created Classes
+		//3. Build Maven project
 		System.out.println("Build Maven project");
 		AutomationHelper.buildMavenProject();
 		
@@ -40,7 +40,9 @@ public class StartAutomation
 		//AutomationHelper.copyFiles();		
 		/*
 		 * Generate tables from XSD or Info       - Tables
+		 * Script will be created at /resource Folder
 		 */				
+		System.out.println("Generating Table Scripts from target/<ProjectName>-1.0.jar");
 		tableGenerator(XSD_SCHEMA);
 		
 		// Generate loaders automatically - Main/Schedules
@@ -50,23 +52,6 @@ public class StartAutomation
 		AutomationHelper.buildMavenProject();
 	}
 
-/*	public static void tableGeneratorFromXSD(String xsdName) throws Exception
-	{
-		TableGenerator generator =  new TableGenerator(xsdName);
-		
-		// RAW Table
-		Multimap<String, DBColumns> tableMap = generator.parseSchema(false);	
-		generator.tableScripts(tableMap, "RAW");
-		
-		// Main Table
-		tableMap = generator.parseSchema(true);	
-		generator.tableScripts(tableMap, "MAIN");		
-		
-		// TODO
-		// can Create Separate sql scripts for each table (Optional)
-		// Login to Database and create table (Drop and recreate tables)
-	}*/	
-	
 	public static void tableGenerator(String xsdName) throws Exception
 	{
 		TableGenerator generator =  new JaxbTableGenerator(xsdName);

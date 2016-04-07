@@ -87,7 +87,7 @@ public class JaxbTableGenerator extends TableGenerator
 	public Multimap<String, DBColumns> parse(boolean typed) throws Exception
 	{
 		Multimap<String, DBColumns> tableMap = ArrayListMultimap.create();
-		String pathToJar = Constants.targetPath+ "\\" + Constants.jarName;
+		String pathToJar = Constants.targetPath+ "\\" + Constants.jarFileName;
 		JarFile jarFile = new JarFile(pathToJar);
 		Enumeration e = jarFile.entries();
 

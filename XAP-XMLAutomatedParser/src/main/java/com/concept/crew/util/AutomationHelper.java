@@ -75,6 +75,7 @@ public class AutomationHelper {
 		properties.setProperty("groupId", "com.concept.crew.app");
 		properties.setProperty("artifactId", "LoadersFramework");
 		properties.setProperty("archetypeArtifactId", "maven-archetype-quickstart");
+		properties.setProperty("version", "1.0");
 		request.setProperties(properties);
 		Invoker invoker = new DefaultInvoker();
 		invoker.setWorkingDirectory(srcDir);

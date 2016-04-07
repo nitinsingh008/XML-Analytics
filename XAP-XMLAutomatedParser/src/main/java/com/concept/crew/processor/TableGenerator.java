@@ -37,7 +37,7 @@ public abstract class TableGenerator
 							 					throws Exception
 	{
 		System.out.println("Start Generating scripts for " +tableSuffix);
-		String fileName = Constants.dirSrcResource + "createTable";
+		String fileName = Constants.resourcePath + "createTable";
 		if(tableSuffix != null && tableSuffix != "")
 		{
 			fileName = fileName + "_" + tableSuffix + ".sql";
