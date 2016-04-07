@@ -91,7 +91,7 @@
 				<div class="row">
 					<div class="headerLabel">
 						<div class="container">
-							<h1>Lets Get Started</h1>
+							<h1>XAP - XML Automated Parser</h1>
 						</div>
 					</div>
 				</div>
@@ -159,7 +159,7 @@
 		<hr>
 		<footer>
 			<div class="container-fluid row footerBack" align="center">
-				<h6>Concept-Crew &copy; markit.com 2016</h6>
+				<h6>The Concept Crew &copy; markit.com 2016</h6>
 			</div>
 		</footer>
 	</div>
