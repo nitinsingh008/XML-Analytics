@@ -22,6 +22,7 @@ public class StartAutomation
 		String XSD_SCHEMA = xsdFile.getName();
 		
 		//1. Create maven project
+		// TODO: If project already exists, it fails => Need to handler by clean or delete
 		System.out.println("Creating maven project");
 		AutomationHelper.createMavenProject(xsdFile);
 		
@@ -34,24 +35,24 @@ public class StartAutomation
 		System.out.println("Build Maven project");
 		AutomationHelper.buildMavenProject();
 		
-		
-		//AutomationHelper.compileJaxbInfos();
-		
+		//AutomationHelper.compileJaxbInfos();		
 		//AutomationHelper.copyFiles();		
-		/*
-		 * Generate tables from XSD or Info       - Tables
-		 * Script will be created at /resource Folder
-		 */				
+
+		// 4. Generate tables from XSD
 		System.out.println("Generating Table Scripts from target/<ProjectName>-1.0.jar");
 		tableGenerator(XSD_SCHEMA);
 		
-		// Generate loaders automatically - Main/Schedules
+		// 5. Generate loaders automatically - Main/Schedules
 		
-		// Last Step
+		// 6. Last Step = > Build Maven project again
 		System.out.println("Build Maven project");
 		AutomationHelper.buildMavenProject();
 	}
 
+	/*
+	 * Generate tables from XSD or Info       - Tables
+	 * Script will be created at /resource Folder
+	 */
 	public static void tableGenerator(String xsdName) throws Exception
 	{
 		TableGenerator generator =  new JaxbTableGenerator(xsdName);
