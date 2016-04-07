@@ -61,8 +61,11 @@ public class AutomationHelper {
 	public static void createMavenProject(File xsdFile) throws IOException,
 			MavenInvocationException {
 		File srcDir = new File(Constants.mavenProjectPath);
-		if (!srcDir.exists()) {
-			srcDir.mkdirs();
+		if (!srcDir.exists()) 
+		{
+			boolean dirCreated = srcDir.mkdirs();
+			if(!dirCreated)
+				throw new IOException(srcDir.getAbsolutePath() + " can't be created");
 		}
 
 		InvocationRequest request = new DefaultInvocationRequest();
