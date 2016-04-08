@@ -68,6 +68,8 @@ public class AutomationHelper {
 				throw new IOException(srcDir.getAbsolutePath() + " can't be created");
 		}
 
+		deleteExistingProject(new File(Constants.mavenProjectPath+ "/" +Constants.mavenProjectName));
+		
 		InvocationRequest request = new DefaultInvocationRequest();
 		request.setGoals(Collections.singletonList("archetype:generate"));
 		request.setInteractive(false);
@@ -102,5 +104,14 @@ public class AutomationHelper {
 		if (result.getExitCode() != 0) {
 			throw new IllegalStateException("maven build failed.");
 		}
+	}
+	
+	private static void deleteExistingProject(File files) throws IOException {
+		if (files.isDirectory()) {
+			for (File file : files.listFiles())
+				deleteExistingProject(file);
+		}
+		if (!files.delete())
+			System.out.println("Maven project not present...creating new");
 	}
 }

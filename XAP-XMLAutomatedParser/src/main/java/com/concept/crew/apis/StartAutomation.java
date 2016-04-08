@@ -22,7 +22,6 @@ public class StartAutomation
 		String XSD_SCHEMA = xsdFile.getName();
 		
 		//1. Create maven project
-		// TODO: If project already exists, it fails => Need to handler by clean or delete
 		System.out.println("Creating maven project");
 		AutomationHelper.createMavenProject(xsdFile);
 		
