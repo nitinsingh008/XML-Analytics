@@ -64,11 +64,10 @@
 		
 			$.ajax({
 					    url: 'Generate',
-					    data: {
-					    	request : $("#captureParseSettings").serialize()
-					    },
+					    data: $('#captureParseSettings').serialize(),
+					  
 					    type: 'POST',
-					    dataType:"json",
+						
 					    success: function(data){
 					   		alert("success");
 					    }

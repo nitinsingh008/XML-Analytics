@@ -9,6 +9,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+
+import com.concept.crew.util.XSDParseRequest;
  
 @EnableWebMvc
 @Configuration
@@ -35,4 +37,9 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 	    resolver.setDefaultEncoding("utf-8");
 	    return resolver;
 	}
+	
+	@Bean(name="XSDParseRequest")
+	public XSDParseRequest createXSDParseRequest(){
+		return new XSDParseRequest();
+	} 
 }

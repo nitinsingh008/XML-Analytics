@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,14 +24,16 @@ import com.concept.crew.util.XSDParseRequest;
 import com.conceptCrew.web.service.XSDParser;
 
 @Controller
+@RequestMapping("hello")
 public class HelloController {
 
 	@Inject
 	@Named("XSDParser")
 	XSDParser xsdParser;
 
-	
-	private XSDParseRequest reuest;
+	@Inject
+	@Named("XSDParseRequest")
+	XSDParseRequest reuest;
 
 	String tempXSDName;
 	
@@ -65,7 +68,7 @@ public class HelloController {
 				stream.write(bytes);
 				stream.close();
 //				xsdParser.parseXSD(tempXSDName);
-				reuest = new XSDParseRequest();
+			//	reuest = new XSDParseRequest();
 				//reuest.setParsedXSD(xsdParser.getXSDToPreview(tempXSDName));
 				
 
@@ -83,9 +86,9 @@ public class HelloController {
 	
 	
 	@RequestMapping(value = "/Generate", method = RequestMethod.POST)
-	public void processWithTask(@RequestBody XSDParseRequest request, ModelMap model) {
+	public String processWithTask(@ModelAttribute("captureParseSettings") XSDParseRequest request, ModelMap model) {
 		
-		return;
+		return null;
 
 	}
 	

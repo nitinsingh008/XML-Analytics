@@ -13,7 +13,7 @@
 					</div>
 				</div>
 		<div class="row col-xs-12">	
-		<form:form commandName="xsdParseRequest" id="captureParseSettings">
+		<form:form commandName="xsdParseRequest" id="captureParseSettings" name="captureSettings">
 				<table align="left" width="100%">
 					<tbody>
 						<tr>
@@ -63,6 +63,10 @@
 										<tr>
 											<td>Password</td>
 											<td><form:input path="password" /></td>
+										</tr>
+										<tr>
+											<td>Generate Parsing framework</td>
+											<td><form:checkbox path="createFramework"/></td>
 										</tr>
 									</tbody>
 								</table>
