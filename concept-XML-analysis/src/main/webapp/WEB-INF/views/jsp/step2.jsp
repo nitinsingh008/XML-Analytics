@@ -14,7 +14,7 @@
 				</div>
 		<div class="row col-xs-12">	
 		<form:form commandName="xsdParseRequest" id="captureParseSettings" name="captureSettings">
-				<table align="left" width="100%">
+				<table width="100%">
 					<tbody>
 						<tr>
 							<td align="center" width="70%"> 
@@ -24,7 +24,7 @@
 											<td> <strong> XSD View </strong> </td>
 										</tr>
 										<tr>
-											<td><textarea rows="10" cols="50" readonly="readonly">${parsedInString}</textarea> 
+											<td><textarea rows="15" cols="50" readonly="readonly">${parsedInString}</textarea> 
 												
 											</td>
 										</tr>
