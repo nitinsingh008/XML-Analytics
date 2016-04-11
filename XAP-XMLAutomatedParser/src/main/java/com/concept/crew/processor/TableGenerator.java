@@ -69,14 +69,15 @@ public abstract class TableGenerator
 			sb.append("CREATE TABLE ").append(tableName.toUpperCase());
 			if(tableSuffix != null && tableSuffix != "")
 			{
-				sb.append("_").append(tableSuffix);
+				sb.append("_").append(tableSuffix.toUpperCase());
 			}
 			sb.append(" ( ") ;
 			Collection<DBColumns> columnList = tableMap.get(tableName);
 			
 			for(DBColumns columns :columnList)
 			{
-				sb.append(columns.getName()).append(" ").append(columns.getDataType()).append(", ");
+				sb.append(columns.getName().toUpperCase()).append(" ").
+				   append(columns.getDataType().toUpperCase()).append(", ");
 			}
 			sb.deleteCharAt(sb.length()-2);
 			sb.append(");");
