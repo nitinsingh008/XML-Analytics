@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.concept.crew.apis.StartAutomation;
 import com.concept.crew.util.Constants;
 import com.concept.crew.util.XSDParseRequest;
 import com.conceptCrew.web.service.XSDParser;
@@ -84,7 +85,28 @@ public class HelloController {
 	
 	
 	@RequestMapping(value = "/Generate", method = RequestMethod.POST)
-	public String processWithTask(@ModelAttribute("captureParseSettings") XSDParseRequest request, ModelMap model) {
+	public String processWithTask(@ModelAttribute("captureParseSettings") XSDParseRequest request, ModelMap model) throws Exception {
+		 
+		if(!StartAutomation.validateInputs(request.getParsedXSD())){
+			return "Validation Failed";
+		}
+		
+		if(request.getDoAll()){
+			
+			StartAutomation.doAll(request);
+			
+		}else if(request.getCreateScript()){
+			
+			StartAutomation.createScript(request);
+			
+		}else if(request.getCreateTable()){
+			
+			StartAutomation.createTable(request);
+			
+		}else if(request.getCreateFramework()){
+			
+			StartAutomation.createFrameWork(request);
+		}
 		
 		return null;
 
