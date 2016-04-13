@@ -15,7 +15,7 @@ public class StartAutomation
 
 	public static void start(XSDParseRequest request, Boolean createScripts , Boolean createTable, Boolean createFramework) throws Exception
 	{
-		File xsdFile = new File(request.getParsedXSD()); 
+		File xsdFile = new File(request.getParsedXSDPath()); 
 		
 		String XSD_SCHEMA = xsdFile.getName();
 		

@@ -8,7 +8,7 @@ public class XSDParseRequest implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	String parsedXSD;
+	String parsedXSDPath;
 	Boolean doAll;
 	Boolean createScript;
 	Boolean createTable;
@@ -17,11 +17,12 @@ public class XSDParseRequest implements Serializable{
 	String tnsEntry;
 	String userName;
 	String password;
-	public String getParsedXSD() {
-		return parsedXSD;
+	
+	public String getParsedXSDPath() {
+		return parsedXSDPath;
 	}
-	public void setParsedXSD(String parseXSD) {
-		this.parsedXSD = parseXSD;
+	public void setParsedXSDPath(String parsedXSDPath) {
+		this.parsedXSDPath = parsedXSDPath;
 	}
 	public Boolean getDoAll() {
 		return doAll;
