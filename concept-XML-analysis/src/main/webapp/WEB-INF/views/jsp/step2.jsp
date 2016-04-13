@@ -68,6 +68,11 @@
 											<td>Generate Parsing framework</td>
 											<td><form:checkbox path="createFramework"/></td>
 										</tr>
+										<tr> 
+											<td>
+											<input type="hidden" path="parsedXSDPath" id="parsedXSDPath" name="parsedXSDPath" value="${xsdParseRequest.parsedXSDPath}">
+											</td>
+										</tr>
 									</tbody>
 								</table>
 							</td>

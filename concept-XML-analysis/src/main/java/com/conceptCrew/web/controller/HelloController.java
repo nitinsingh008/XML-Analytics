@@ -66,17 +66,18 @@ public class HelloController {
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
+				reuest.setParsedXSDPath(serverFile.getAbsolutePath());
 //				xsdParser.parseXSD(tempXSDName);
 			//	reuest = new XSDParseRequest();
 				//reuest.setParsedXSD(xsdParser.getXSDToPreview(tempXSDName));
 				
 
 			} catch (Exception e) {
-				reuest.setParsedXSD("You failed to upload " + file.getName() + " => " + e.getMessage());
+				model.put("parsedInString", "You failed to upload " + file.getName() + " => " + e.getMessage());
 				e.printStackTrace();
 			}
 		} else {
-			reuest.setParsedXSD("You have Uplaoded Blank file");
+			model.put("parsedInString", "You have Uplaoded Blank file");
 		}
 		model.put("xsdParseRequest", reuest);
 		model.put("parsedInString", (xsdParser.getXSDToPreview(tempXSDName)));
@@ -87,7 +88,7 @@ public class HelloController {
 	@RequestMapping(value = "/Generate", method = RequestMethod.POST)
 	public String processWithTask(@ModelAttribute("captureParseSettings") XSDParseRequest request, ModelMap model) throws Exception {
 		 
-		if(!StartAutomation.validateInputs(request.getParsedXSD())){
+		if(!StartAutomation.validateInputs(request.getParsedXSDPath())){
 			return "Validation Failed";
 		}
 		
