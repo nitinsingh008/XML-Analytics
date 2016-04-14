@@ -4,10 +4,20 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import com.concept.crew.info.DBColumns;
 import com.concept.crew.util.Constants;
@@ -32,15 +42,17 @@ public abstract class TableGenerator
 	
 	public abstract Multimap<String, DBColumns> parse(boolean typed) throws Exception;
 	
-	public void tableScripts(Multimap<String, DBColumns> tableMap, 
-							 String tableSuffix)
+	public void tableScripts(Multimap<String, DBColumns> tableMap, String tableSuffix, String rootNode)
 							 					throws Exception
 	{
 		System.out.println("Start Generating scripts for " +tableSuffix);
 		String fileName = Constants.resourcePath + "createTable";
+		String parentTableName = null;
+
 		if(tableSuffix != null && tableSuffix != "")
 		{
 			fileName = fileName + "_" + tableSuffix + ".sql";
+			parentTableName = rootNode.toUpperCase() + "_"+ tableSuffix;
 		}
 		
 		File file = new File(fileName);
@@ -57,21 +69,37 @@ public abstract class TableGenerator
 		}
 		FileWriter fw = new FileWriter(file.getAbsoluteFile());
 		BufferedWriter bw = new BufferedWriter(fw);
-
-		
 		
 		StringBuffer sb = new StringBuffer();
+		
+		if(rootNode != null){
+			sb.append("CREATE SEQUENCE ").append(rootNode.toUpperCase()).append("_SEQ ").append("MINVALUE 1 START WITH 1 INCREMENT BY 1 NOCACHE ;");
+			bw.write(sb.toString());
+			bw.newLine();
+			sb = new StringBuffer();
+		}
 		
 		Iterator<String> tableMapIt =  tableMap.keySet().iterator();
 		while(tableMapIt.hasNext())
 		{
 			String tableName = tableMapIt.next();
+			if(tableName.contains("$")){
+				tableName = tableName.replace("$", "_");
+			}
 			sb.append("CREATE TABLE ").append(tableName.toUpperCase());
 			if(tableSuffix != null && tableSuffix != "")
 			{
 				sb.append("_").append(tableSuffix.toUpperCase());
 			}
 			sb.append(" ( ") ;
+			
+			if(tableName.equals(rootNode)){
+				sb.append("PKEY NUMBER PRIMARY KEY, ");
+				
+			}else{
+				sb.append("PARENT_KEY NUMBER, ");
+			}
+			
 			Collection<DBColumns> columnList = tableMap.get(tableName);
 			
 			for(DBColumns columns :columnList)
@@ -79,7 +107,14 @@ public abstract class TableGenerator
 				sb.append(columns.getName().toUpperCase()).append(" ").
 				   append(columns.getDataType().toUpperCase()).append(", ");
 			}
-			sb.deleteCharAt(sb.length()-2);
+			
+			if(!tableName.equals(rootNode)){
+				sb.append("CONSTRAINT ").append(tableName.toUpperCase()).append("_FK ").
+				   append("FOREIGN KEY (PARENT_KEY) REFERENCES ").append(parentTableName).append("( PKEY)");
+			}else{
+				sb.deleteCharAt(sb.length()-2);
+			}
+			
 			sb.append(");");
 			System.out.println(sb);
 			bw.write(sb.toString());
@@ -128,5 +163,26 @@ public abstract class TableGenerator
 			sqlType = xsdType;
 		}	
 		return sqlType;
+	}
+	
+	public String fetchRootNode(File xsdFile) throws ParserConfigurationException, SAXException, IOException{
+		final Thread currentThread = Thread.currentThread();
+		final ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		final InputStream inputStream = contextClassLoader.getResourceAsStream(xsdName);
+		
+		//parse the document
+		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder;
+		docBuilder 		= docBuilderFactory.newDocumentBuilder();
+		Document doc 	= docBuilder.parse(inputStream);
+		NodeList list 	= doc.getElementsByTagName("xs:element"); 
+		
+		if(list != null){
+			Element element = (Element)list.item(0) ;
+			return element.getAttribute("name");
+		}
+			
+		return null;
 	}
 }

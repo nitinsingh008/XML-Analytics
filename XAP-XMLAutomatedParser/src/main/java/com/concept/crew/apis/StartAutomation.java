@@ -17,8 +17,6 @@ public class StartAutomation
 	{
 		File xsdFile = new File(request.getParsedXSDPath()); 
 		
-		String XSD_SCHEMA = xsdFile.getName();
-		
 		if(createScripts){
 			//1. Create maven project
 			System.out.println("Creating maven project");
@@ -35,7 +33,7 @@ public class StartAutomation
 			
 			// 4. Generate tables from XSD
 			System.out.println("Generating Table Scripts from target/<ProjectName>-1.0.jar");
-			tableGenerator(XSD_SCHEMA);
+			tableGenerator(xsdFile);
 			
 			// 5. Generate loaders automatically - Main/Schedules
 			
@@ -45,11 +43,12 @@ public class StartAutomation
 
 		}
 		
-		if(createTable){
+			
+		if(createFramework){
 			
 		}
 		
-		if(createFramework){
+		if(createTable){
 			
 		}
 	}
@@ -58,13 +57,13 @@ public class StartAutomation
 	 * Generate tables from XSD or Info       - Tables
 	 * Script will be created at /resource Folder
 	 */
-	public static void tableGenerator(String xsdName) throws Exception
+	public static void tableGenerator(File xsdFile) throws Exception
 	{
-		TableGenerator generator =  new JaxbTableGenerator(xsdName);
-		
+		TableGenerator generator =  new JaxbTableGenerator(xsdFile.getName());
+		String rootNode = generator.fetchRootNode(xsdFile);
 		// RAW Table
 		Multimap<String, DBColumns> tableMap = generator.parse(false);	
-		generator.tableScripts(tableMap, "RAW");
+		generator.tableScripts(tableMap, "RAW", rootNode);
 
 		
 		// TODO
