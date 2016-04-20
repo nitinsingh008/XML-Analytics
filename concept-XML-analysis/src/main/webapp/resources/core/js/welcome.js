@@ -67,3 +67,8 @@
 					    }
 					  });
     }
+	
+	function clickBack(){
+		$('#step1jsp').show();
+		$('#step2jsp').hide();
+	}

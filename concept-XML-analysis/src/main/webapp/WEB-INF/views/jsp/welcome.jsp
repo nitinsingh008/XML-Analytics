@@ -23,9 +23,9 @@
 		id="full-screen-background-image" />
 	<div id="parent" class="snap12">
 
-		<div class="header">
+		<div class="header snap12" align = "right">
 			<img src="<c:url value='/resources/images/xap_logo.png'/>"
-				id="xaplogo" /> <%-- <img
+				id="xaplogo" title="back to home"/> <%-- <img
 				src="<c:url value='/resources/images/concept_crew.png'/>"
 				id="conceptlogo" /> --%>
 

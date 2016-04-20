@@ -43,24 +43,27 @@
 					<span>Run All</span> <br>
 
 					<form:checkbox path="createScript" />
-					<span>Create Database Script</span> <br> <span>Choose
-						Database Type</span> <br>
+					<span>Create Database Script</span> <br> 
+
+					<form:checkbox path="createFramework" />
+					<span>Generate Parsing framework</span> <br>
+					<form:checkbox path="createTable" />
+					<span>Create Table in Database</span> <br>
+					
+					<span>Choose
+						Database Type</span> 
 					<form:select path="databaseType" items="${databaseType}"></form:select>
 					<br>
-
-					<form:checkbox path="createTable" />
-					<span>Create Table in Database</span> <br> <span>Database
-						TNS</span> <br>
+					 <span>Database Connection String</span> <br>
 					<form:textarea path="tnsEntry" rows="5" cols="20" />
 					<br> <span>UserName</span>
 					<form:input path="userName" />
 					<br>
 					<br> <span>Password</span>
-					<form:input path="password" />
+					<form:input path="password" type="password"/>
 					<br>
 
-					<form:checkbox path="createFramework" />
-					<span>Generate Parsing framework</span>
+					
 
 					<%-- <input type="hidden" path="parsedXSDPath"
 						id="parsedXSDPath" name="parsedXSDPath"
@@ -68,14 +71,19 @@
 
 				</div>
 
-				<div class="generatebtn">
+
+			</form:form>
+			
+			<div class="generatebtn" align ="center">
 					<button type="button" id="GenerateButton" class="upload"
 						value="Generate" onclick="clickGenerate()">
 						<span>Generate</span>
 					</button>
+					<button type="button" id="Back" class="upload"
+						value="Back" onclick="clickBack()">
+						<span>Back</span>
+					</button>
 				</div>
-
-			</form:form>
 
 		</div>
 	</div>
