@@ -1,7 +1,0 @@
-com\conceptCrew\config\SpringWebConfig.class
-com\conceptCrew\web\controller\HelloController.class
-com\conceptCrew\web\service\SchemaComplexType.class
-com\conceptCrew\servlet3\MyWebInitializer.class
-com\conceptCrew\web\service\SchemaSaxHandler.class
-com\conceptCrew\web\service\SchemaElement.class
-com\conceptCrew\web\service\XSDParser.class
