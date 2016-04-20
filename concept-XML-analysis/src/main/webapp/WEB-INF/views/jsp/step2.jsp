@@ -40,14 +40,13 @@
 					<strong>Select Setting</strong> <br>
 
 					<form:checkbox path="doAll"></form:checkbox>
-					<span>Run All</span>
-					<br>
+					<span>Run All</span> <br>
 
 					<form:checkbox path="createScript" />
 					<span>Create Database Script</span> <br> <span>Choose
 						Database Type</span> <br>
 					<form:select path="databaseType" items="${databaseType}"></form:select>
-<br>
+					<br>
 
 					<form:checkbox path="createTable" />
 					<span>Create Table in Database</span> <br> <span>Database
@@ -55,20 +54,27 @@
 					<form:textarea path="tnsEntry" rows="5" cols="20" />
 					<br> <span>UserName</span>
 					<form:input path="userName" />
-					<br><br> <span>Password</span>
+					<br>
+					<br> <span>Password</span>
 					<form:input path="password" />
 					<br>
 
 					<form:checkbox path="createFramework" />
 					<span>Generate Parsing framework</span>
 
-</div>
+					<%-- <input type="hidden" path="parsedXSDPath"
+						id="parsedXSDPath" name="parsedXSDPath"
+						value="${xsdParseRequest.parsedXSDPath}"/> --%>
 
-					 <div class="generatebtn">
-						<button type="button" id="GenerateButton" class="upload" value="Generate"
-							onclick="clickGenerate()" ><span>Generate</span></button>
-							</div>
-				
+				</div>
+
+				<div class="generatebtn">
+					<button type="button" id="GenerateButton" class="upload"
+						value="Generate" onclick="clickGenerate()">
+						<span>Generate</span>
+					</button>
+				</div>
+
 			</form:form>
 
 		</div>
