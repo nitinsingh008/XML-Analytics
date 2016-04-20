@@ -1,93 +1,78 @@
 <jsp:include page="library.jsp"></jsp:include>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <html>
+<head>
+
+<link href="<c:url value="/resources/core/css/step2.css" />"
+	rel="stylesheet">
+<script src="<c:url value="/resources/core/js/welcome.js" />"></script>
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<%-- <link href="<c:url value="/resources/core/css/default.css" />"
+	rel="stylesheet"> --%>
+
+
+</head>
 <body>
+
 	<div class="container-fluid">
-		<div class="row">
-					<div class="headerLabel">
-						<div class="container">
-							<h1>Select Settings</h1>
-						</div>
-					</div>
-				</div>
-		<div class="row col-xs-12">	
-		<form:form commandName="xsdParseRequest" id="captureParseSettings" name="captureSettings">
-				<table width="100%">
-					<tbody>
-						<tr>
-							<td align="center" width="70%"> 
-								<table>
-									<tbody>
-										<tr>
-											<td> <strong> XSD View </strong> </td>
-										</tr>
-										<tr>
-											<td><textarea rows="15" cols="50" readonly="readonly">${parsedInString}</textarea> 
-												
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</td>
-							<td align="left" width="30%">
-								<table cellpadding="1px">
-									<tbody>
-									<tr><td><strong>Select Setting</strong> </td></tr>
-										<tr>
-											<td>Run All</td>
-											<td><form:checkbox path="doAll"></form:checkbox></td>
-										</tr>
-										<tr>
-											<td>Create Database Script</td>
-											<td><form:checkbox path="createScript"/></td>
-										</tr>
-										<tr>
-											<td>Choose Database Type</td>
-											<td><form:select path="databaseType"
-													items="${databaseType}"></form:select></td>
-										</tr>
-										<tr>
-											<td>Create Table in Database</td>
-											<td><form:checkbox path="createTable" /></td>
-										</tr>
-										<tr>
-											<td>Database TNS</td>
-											<td><form:textarea path="tnsEntry" rows="5" cols="20" /></td>
-										</tr>
-										<tr>
-											<td>UserName</td>
-											<td><form:input path="userName" /></td>
-										</tr>
-										<tr>
-											<td>Password</td>
-											<td><form:input path="password" /></td>
-										</tr>
-										<tr>
-											<td>Generate Parsing framework</td>
-											<td><form:checkbox path="createFramework"/></td>
-										</tr>
-										<tr> 
-											<td>
-											<input type="hidden" path="parsedXSDPath" id="parsedXSDPath" name="parsedXSDPath" value="${xsdParseRequest.parsedXSDPath}">
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp</td>
-						</tr>
-						<tr>
-							<td colspan="2" align="center"><input type="button" id="GenerateButton" class="btn btn-primary" value="Generate" onclick="clickGenerate()"/>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-		</form:form>
+		<div class="xsd_container">
+
+			<div class="xsdview_blck">
+				<h4>
+					<strong> XSD View </strong>
+				</h4>
+				<textarea rows="15" cols="50" readonly="readonly">${parsedInString}</textarea>
+			</div>
+
+
+			<form:form commandName="xsdParseRequest" id="captureParseSettings"
+				name="captureSettings">
+
+				<div class="setting_blck">
+					<strong>Select Setting</strong> <br>
+
+					<form:checkbox path="doAll"></form:checkbox>
+					<span>Run All</span>
+					<br>
+
+					<form:checkbox path="createScript" />
+					<span>Create Database Script</span> <br> <span>Choose
+						Database Type</span> <br>
+					<form:select path="databaseType" items="${databaseType}"></form:select>
+<br>
+
+					<form:checkbox path="createTable" />
+					<span>Create Table in Database</span> <br> <span>Database
+						TNS</span> <br>
+					<form:textarea path="tnsEntry" rows="5" cols="20" />
+					<br> <span>UserName</span>
+					<form:input path="userName" />
+					<br><br> <span>Password</span>
+					<form:input path="password" />
+					<br>
+
+					<form:checkbox path="createFramework" />
+					<span>Generate Parsing framework</span>
+
+</div>
+
+					 <div class="generatebtn">
+						<button type="button" id="GenerateButton" class="upload" value="Generate"
+							onclick="clickGenerate()" ><span>Generate</span></button>
+							</div>
+				
+			</form:form>
+
 		</div>
 	</div>
+
 </body>
 </html>
