@@ -82,6 +82,7 @@ public abstract class TableGenerator
 		Iterator<String> tableMapIt =  tableMap.keySet().iterator();
 		while(tableMapIt.hasNext())
 		{
+			sb.append("\n") ;
 			String tableName = tableMapIt.next();
 			if(tableName.contains("$")){
 				tableName = tableName.replace("$", "_");
@@ -91,21 +92,23 @@ public abstract class TableGenerator
 			{
 				sb.append("_").append(tableSuffix.toUpperCase());
 			}
-			sb.append(" ( ") ;
+			sb.append(" ( \n") ;
 			
-			if(tableName.equals(rootNode)){
-				sb.append("PKEY NUMBER PRIMARY KEY, ");
-				
-			}else{
-				sb.append("PARENT_KEY NUMBER, ");
+			if(tableName.equals(rootNode))
+			{
+				sb.append("PKEY\t\tNUMBER PRIMARY KEY, \n");	
+			}
+			else
+			{
+				sb.append("PARENT_KEY\t\tNUMBER, \n");
 			}
 			
 			Collection<DBColumns> columnList = tableMap.get(tableName);
 			
 			for(DBColumns columns :columnList)
 			{
-				sb.append(columns.getName().toUpperCase()).append(" ").
-				   append(columns.getDataType().toUpperCase()).append(", ");
+				sb.append(columns.getName().toUpperCase()).append("\t\t").
+				   append(columns.getDataType().toUpperCase()).append(",\n");
 			}
 			
 			if(!tableName.equals(rootNode)){
@@ -115,7 +118,7 @@ public abstract class TableGenerator
 				sb.deleteCharAt(sb.length()-2);
 			}
 			
-			sb.append(");");
+			sb.append("\n);");
 			System.out.println(sb);
 			bw.write(sb.toString());
 			bw.newLine();

@@ -13,11 +13,15 @@ import com.google.common.collect.Multimap;
 public class StartAutomation 
 {
 
-	public static void start(XSDParseRequest request, Boolean createScripts , Boolean createTable, Boolean createFramework) throws Exception
+	public static void start(XSDParseRequest request, 
+							 Boolean 		 createScripts , 
+							 Boolean 		 createTable, 
+							 Boolean 		 createFramework) throws Exception
 	{
 		File xsdFile = new File(request.getParsedXSDPath()); 
 		
-		if(createScripts){
+		if(createScripts)
+		{
 			//1. Create maven project
 			System.out.println("Creating maven project");
 			AutomationHelper.createMavenProject(xsdFile);
@@ -40,15 +44,15 @@ public class StartAutomation
 			// 6. Last Step = > Build Maven project again
 			System.out.println("Build Maven project");
 			AutomationHelper.buildMavenProject();
+		}
 
-		}
-		
-			
-		if(createFramework){
+		if(createFramework)
+		{
 			
 		}
 		
-		if(createTable){
+		if(createTable)
+		{
 			
 		}
 	}
@@ -96,5 +100,12 @@ public class StartAutomation
 	
 	public static void createFrameWork(XSDParseRequest request) throws Exception{
 		start(request, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE);
+	}
+	
+	public static void main(String[] args) throws Exception
+	{
+		XSDParseRequest request = new XSDParseRequest();
+		request.setParsedXSDPath(args[0]);
+		doAll(request);
 	}
 }
