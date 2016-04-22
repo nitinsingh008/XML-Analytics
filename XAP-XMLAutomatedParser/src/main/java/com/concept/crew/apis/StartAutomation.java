@@ -2,7 +2,9 @@ package com.concept.crew.apis;
 
 import java.io.File;
 
+import com.concept.crew.dao.XapDBRoutine;
 import com.concept.crew.info.DBColumns;
+import com.concept.crew.processor.DBScriptRunner;
 import com.concept.crew.processor.JaxbTableGenerator;
 import com.concept.crew.processor.TableGenerator;
 import com.concept.crew.util.AutomationHelper;
@@ -13,7 +15,7 @@ import com.google.common.collect.Multimap;
 public class StartAutomation 
 {
 
-	public static void start(XSDParseRequest request, 
+	private static void start(XSDParseRequest request, 
 							 Boolean 		 createScripts , 
 							 Boolean 		 createTable, 
 							 Boolean 		 createFramework) throws Exception
@@ -53,7 +55,10 @@ public class StartAutomation
 		
 		if(createTable)
 		{
-			
+			System.out.println("Start executing DB scripts");
+			XapDBRoutine.initializeDBRoutine(request.getDatabaseType(), request.getTnsEntry(), request.getUserName(), request.getPassword());
+			DBScriptRunner.executeScripts();
+			System.out.println("Scripts Executed....");
 		}
 	}
 
@@ -67,7 +72,7 @@ public class StartAutomation
 		String rootNode = generator.fetchRootNode(xsdFile);
 		// RAW Table
 		Multimap<String, DBColumns> tableMap = generator.parse(false);	
-		generator.tableScripts(tableMap, "RAW", rootNode);
+		generator.tableScripts(tableMap, "RAW", rootNode, "core_ref_data".toUpperCase());
 
 		
 		// TODO
@@ -106,6 +111,10 @@ public class StartAutomation
 	{
 		XSDParseRequest request = new XSDParseRequest();
 		request.setParsedXSDPath(args[0]);
+		request.setDatabaseType("ORACLE");
+		request.setTnsEntry("jdbc:oracle:thin:@ (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = lon2odcdvscan01.markit.partners)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = BRD02DV)))");
+		request.setUserName("CORE_REF_DATA");
+		request.setPassword("CORE_REF_DATA");
 		doAll(request);
 	}
 }

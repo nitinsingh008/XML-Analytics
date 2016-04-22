@@ -42,7 +42,7 @@ public abstract class TableGenerator
 	
 	public abstract Multimap<String, DBColumns> parse(boolean typed) throws Exception;
 	
-	public void tableScripts(Multimap<String, DBColumns> tableMap, String tableSuffix, String rootNode)
+	public void tableScripts(Multimap<String, DBColumns> tableMap, String tableSuffix, String rootNode , String schema)
 							 					throws Exception
 	{
 		System.out.println("Start Generating scripts for " +tableSuffix);
@@ -52,7 +52,7 @@ public abstract class TableGenerator
 		if(tableSuffix != null && tableSuffix != "")
 		{
 			fileName = fileName + "_" + tableSuffix + ".sql";
-			parentTableName = rootNode.toUpperCase() + "_"+ tableSuffix;
+			parentTableName = schema+"."+rootNode.toUpperCase() + "_"+ tableSuffix;
 		}
 		
 		File file = new File(fileName);
@@ -72,8 +72,12 @@ public abstract class TableGenerator
 		
 		StringBuffer sb = new StringBuffer();
 		
+		addDropScripts(bw, sb, tableMap.keySet(), tableSuffix, rootNode,  schema);
+		
 		if(rootNode != null){
-			sb.append("CREATE SEQUENCE ").append(rootNode.toUpperCase()).append("_SEQ ").append("MINVALUE 1 START WITH 1 INCREMENT BY 1 NOCACHE ;");
+			sb = new StringBuffer();
+			sb.append("\n") ;
+			sb.append("CREATE SEQUENCE ").append(schema).append(".").append(rootNode.toUpperCase()).append("_SEQ ").append("MINVALUE 1 START WITH 1 INCREMENT BY 1 NOCACHE ;");
 			bw.write(sb.toString());
 			bw.newLine();
 			sb = new StringBuffer();
@@ -85,9 +89,10 @@ public abstract class TableGenerator
 			sb.append("\n") ;
 			String tableName = tableMapIt.next();
 			if(tableName.contains("$")){
-				tableName = tableName.replace("$", "_");
+				//tableName = tableName.replace("$", "_");
+				continue;
 			}
-			sb.append("CREATE TABLE ").append(tableName.toUpperCase());
+			sb.append("CREATE TABLE ").append(schema).append(".").append(tableName.toUpperCase());
 			if(tableSuffix != null && tableSuffix != "")
 			{
 				sb.append("_").append(tableSuffix.toUpperCase());
@@ -187,5 +192,37 @@ public abstract class TableGenerator
 		}
 			
 		return null;
+	}
+	
+	private static void addDropScripts(BufferedWriter bw, StringBuffer sb, Set<String> tableName, String tableSuffix, String rootNode , String schema ) throws IOException{
+		
+		Iterator<String> itr = tableName.iterator();
+		while(itr.hasNext()){
+			String name = itr.next();
+			if(name.contains("$") || name.equals(rootNode)){
+				continue;
+			}
+			sb.append("DROP TABLE ").append(schema).append(".").append(name.toUpperCase());
+			
+			if(tableSuffix != null && tableSuffix != "")
+			{
+				sb.append("_").append(tableSuffix.toUpperCase());
+			}
+			sb.append(";") ;
+			sb.append("\n") ;
+		}
+	
+		sb.append("DROP TABLE ").append(schema).append(".").append(rootNode.toUpperCase());
+		
+		if(tableSuffix != null && tableSuffix != "")
+		{
+			sb.append("_").append(tableSuffix.toUpperCase());
+		}
+		sb.append(";") ;
+
+		sb.append("\n") ;
+		sb.append("DROP SEQUENCE ").append(schema).append(".").append(rootNode.toUpperCase()).append("_").append("SEQ").append(";");
+		bw.write(sb.toString());
+		bw.newLine();
 	}
 }

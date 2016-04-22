@@ -13,4 +13,9 @@ public class Constants
 	public static final String targetPath 		= mavenProjectPath + "/" + mavenProjectName + "/target";
 	public static final String jarFileName 		= mavenProjectName + "-1.0.jar";
 	public static final String xsdLocalPath     = mavenProjectPath + "/" + "temp";
+	
+	public enum DatabaseType{
+		ORACLE,
+		MYSQL;
+	}
 }
