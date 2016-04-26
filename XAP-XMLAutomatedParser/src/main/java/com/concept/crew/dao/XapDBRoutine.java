@@ -14,11 +14,18 @@ public class XapDBRoutine {
 	private static String DB_PASSWORD ;
 	private static Connection conn ;
 	
-	public static void initializeDBRoutine(String dbType, String jdbcUrl, String user, String password) {
+	public static void initializeDBRoutine(String dbType, 
+										   String jdbcUrl, 
+										   String user, 
+										   String password) 
+	{
 		
-		if(DatabaseType.ORACLE.toString().equals(dbType)){
+		if(DatabaseType.ORACLE.toString().equals(dbType))
+		{
 			DB_DRIVER = "oracle.jdbc.driver.OracleDriver";
-		}else{
+		}
+		else
+		{
 			DB_DRIVER = "com.mysql.jdbc.Driver";
 		}
 		DB_CONNECTION = jdbcUrl;
@@ -26,31 +33,61 @@ public class XapDBRoutine {
 		DB_PASSWORD = password;
 	}
 
-	public boolean testDBConnection(){
-		if(conn == null){
-			initializeConnection();
-			return true;
+	public static boolean testAndValidateDBConnection()
+	{
+		boolean connected = false;
+		if(DB_DRIVER == null)
+		{
+			System.out.println("Select Database Type [Oracle | SQL Server]");
+			return false;
 		}
-		return true;
+		if(DB_CONNECTION == null)
+		{
+			System.out.println("Enter correct TNS Entry for database");
+			return false;
+		}
+		if(DB_USER == null)
+		{
+			System.out.println("Dabtase user can't be empty");
+			return false;
+		}
+		if(DB_PASSWORD == null)
+		{
+			System.out.println("Dabtase password can't be empty");
+			return false;
+		}
+		
+		connected = initializeConnection();
+
+		return connected;
 	}
 
-	private static void initializeConnection(){		
+	private static boolean initializeConnection()
+	{		
+		boolean connected = false;
 		if(conn != null)
-			return;
+			return true;
 		
-		try {
+		try 
+		{
 			Class.forName(DB_DRIVER);
 			
 			conn = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
 			
-			if(conn != null){
+			if(conn != null)
+			{
 				System.out.println("Connection to DB successful");
+				connected = true;
 			}
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) 
+		{
 			e.printStackTrace();
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
+		return connected;
 	}
 	
 	public static void cleanUp(){
@@ -67,5 +104,12 @@ public class XapDBRoutine {
 			return conn;
 		}
 		return conn;
+	}
+	
+	public static void main(String args[])
+	{
+		XapDBRoutine.initializeDBRoutine(DatabaseType.ORACLE.toString(), "TNSEntry", "username", "password");
+		boolean dbConnected = XapDBRoutine.testAndValidateDBConnection();
+		System.out.println(dbConnected);
 	}
 }

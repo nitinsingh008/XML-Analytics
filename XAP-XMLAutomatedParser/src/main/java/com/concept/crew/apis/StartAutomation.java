@@ -16,9 +16,9 @@ public class StartAutomation
 {
 
 	private static void start(XSDParseRequest request, 
-							 Boolean 		 createScripts , 
-							 Boolean 		 createTable, 
-							 Boolean 		 createFramework) throws Exception
+							  Boolean 		  createScripts , 
+							  Boolean 		  createTable, 
+							  Boolean 		  createFramework) throws Exception
 	{
 		File xsdFile = new File(request.getParsedXSDPath()); 
 		
@@ -57,7 +57,16 @@ public class StartAutomation
 		{
 			System.out.println("Start executing DB scripts");
 			XapDBRoutine.initializeDBRoutine(request.getDatabaseType(), request.getTnsEntry(), request.getUserName(), request.getPassword());
-			DBScriptRunner.executeScripts();
+			
+			if(XapDBRoutine.testAndValidateDBConnection())
+			{
+				DBScriptRunner.executeScripts();
+			}
+			else
+			{
+				System.out.println("Db Connectivity Test failed");
+			}
+			
 			System.out.println("Scripts Executed....");
 		}
 	}
