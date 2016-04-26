@@ -49,7 +49,7 @@ public class HelloController {
 
 		Iterator<String> itr = request.getFileNames();
 		MultipartFile file = request.getFile(itr.next());
-		model.put("databaseType", Arrays.asList(new String[] { "ORACLE", "SQL SERVER" }));
+		model.put("databaseType", Arrays.asList(new String[] { "ORACLE", "SQL SERVER" , "MySQL" }));
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
