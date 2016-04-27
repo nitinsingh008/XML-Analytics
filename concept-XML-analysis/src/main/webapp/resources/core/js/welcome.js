@@ -1,9 +1,9 @@
 	$(document).ready(function() {
 		// hide remaining divs
-		$("#step2jsp").hide();
+	//	$("#step2jsp").hide();
 		$("#step3jsp").hide();
-		$("#step2jsp").attr("disabled", true);
-		$("#step3jsp").attr("disabled", true);
+	//	$("#step2jsp").attr("disabled", true);
+	//	$("#step3jsp").attr("disabled", true);
 		$("#alert").hide();
 
 		$("#step1Nav").click(function() {
@@ -40,8 +40,8 @@
 					    success: function(data){
 					   		 $("#step2jsp").show();
 					    	 $("#step1jsp").hide();
-					    	 $("#step2jsp").attr("disabled", false);
-							 $("#step1jsp").attr("disabled", true);
+					    	 //$("#step2jsp").attr("disabled", false);
+							 //$("#step1jsp").attr("disabled", true);
 					    	 $("#step2jsp").html(data);
 					    }
 					  });
@@ -71,4 +71,8 @@
 	function clickBack(){
 		$('#step1jsp').show();
 		$('#step2jsp').hide();
+	}
+	
+	function initStep2(){
+		$('#databaseSetting').hide();
 	}
