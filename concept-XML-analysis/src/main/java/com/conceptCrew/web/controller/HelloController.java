@@ -86,7 +86,7 @@ public class HelloController {
 	
 	
 	@RequestMapping(value = "/Generate", method = RequestMethod.POST)
-	public String processWithTask(@ModelAttribute("captureParseSettings") XSDParseRequest request, ModelMap model) throws Exception {
+	public String processWithTask(@ModelAttribute("xsdParseRequest") XSDParseRequest request, ModelMap model) throws Exception {
 		 
 		if(!StartAutomation.validateInputs(request.getParsedXSDPath())){
 			return "Validation Failed";

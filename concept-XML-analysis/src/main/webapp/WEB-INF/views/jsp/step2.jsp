@@ -63,11 +63,9 @@
 					<form:input path="password" type="password"/>
 					<br>
 
-					
-
-					<%-- <input type="hidden" path="parsedXSDPath"
+					 <input type="hidden" path="parsedXSDPath"
 						id="parsedXSDPath" name="parsedXSDPath"
-						value="${xsdParseRequest.parsedXSDPath}"/> --%>
+						value="${xsdParseRequest.parsedXSDPath}"/> 
 
 				</div>
 
