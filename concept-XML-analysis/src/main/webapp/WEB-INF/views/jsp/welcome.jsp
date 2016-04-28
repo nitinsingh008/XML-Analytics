@@ -18,7 +18,7 @@
 
 </head>
 
-<body>
+<body class="main_body">
 	<img src="<c:url value='/resources/images/logo.jpg'/>"
 		id="full-screen-background-image" />
 	<div id="parent" class="snap12">
@@ -84,6 +84,8 @@
 					</form>
 				</div>
 			</div>
+			
+
 		</div>
 
 		<div id="step2jsp"></div>
@@ -91,12 +93,11 @@
 		<div id="step3jsp"></div>
 
 
-		<div class="footer">
-			<!--  <img src="<c:url value='/resources/images/J3jt5K1461055454.png'/>" />-->
+			<div class="footer">			
 			<h6 align="center">The Concept Crew &copy; markit.com 2016</h6>
 			<h6 align="center">Gaurav Agarwal | Nitin Singh | Parag Garg</h6>
+			 <img src="<c:url value='/resources/images/concept_crew.png'/>" id="concpt_crew_logo" /> 
 		</div>
-
 	</div>
 
 </body>
