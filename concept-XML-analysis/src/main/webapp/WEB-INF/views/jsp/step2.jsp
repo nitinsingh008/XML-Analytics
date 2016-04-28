@@ -104,15 +104,16 @@ function checkConnectivity()
 					<br>
 					<div id="databaseSetting">
 						 <span>Database Connection String</span> <br>
-						<form:textarea path="tnsEntry" rows="2" cols="45" />
+						<form:textarea path="tnsEntry" rows="2" cols="45" id="tnsEntry"/>
 						<br> <span>UserName</span>
-						<form:input path="userName" />
+						<form:input path="userName" id="username"/>
 						<br>
 						<br> <span>Password</span>
-						<form:input path="password" type="password"/>
+						<form:input path="password" type="password" id="password"/>
 						<br>
-<%-- 						<form:input type="button" value="Test Connectivity" onclick="checkConnectivity()"/>
- --%>						
+						<input type="button" value="Test Connectivity" onclick="checkConnectivity()"/>
+						
+						
 					</div>
 
 					 <input type="hidden" path="parsedXSDPath"
