@@ -85,7 +85,7 @@ function checkConnectivity(){
 				name="captureSettings">
 
 				<div class="setting_blck">
-					<table>
+					<table cellspacing="5">
 						<tbody>
 							<tr>
 								<td>
@@ -124,7 +124,7 @@ function checkConnectivity(){
 							</tr>
 							<tr>
 								<td>
-									<table id="databaseSetting">
+									<table cellspacing="5" id="databaseSetting">
 										<tbody>
 											<tr>
 												<td colspan="2">
