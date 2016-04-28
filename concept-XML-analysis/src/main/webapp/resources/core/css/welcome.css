@@ -102,6 +102,7 @@
 
 #divborder{
 	border: 1px solid black;
+	border-radius: 10px;
 	width: 80%;
 	margin-left: 100px;	
 	padding:20px;
@@ -116,19 +117,65 @@
 }
 
 .footer{
-	    position:fixed;
-	   opacity: 0.5; 
-    height:50px; 
- background-color:#ffffff;
+	    /* position:fixed; */
+	   /*opacity: 0.5;*/ 
+    height:70px; 
+ /*background-color:#ffffff;*/
     text-color: black;
-    bottom:0px;
-    left:0px;
-    right:0px;    
+    /* bottom:0px;
+    left:0px;*/
+    right:0px; 
+    background: rgba(255,255,255,0.4);    
+    position:fixed;
+	bottom:0;
+	
+	left:0;
+    
 }
-.footer img{
+
+div.footer h6 {
+   color: #000000;
+   margin-top: 15px;
+    font-weight: bold;
+}
+
+/* #container-jsp2{
+		min-height:100%;
+	position:relative;
+} */
+.footer_jsp2{
+	    height:100px; 
+    text-color: black;
+    
+    background: rgba(255,255,255,0.4);    
+    position:absolute;
+	bottom:0;
+	left:0;	
+	width:100%;	
+	
+}
+div.footer_jsp2 h6 {
+   color: #000000;
+   margin: 20px;
+    font-weight: bold;
+}
+
+ #concpt_crew_logo
+ {
+	position: absolute;
+	bottom: 0px;
+	left: 280px;;	
+	width: 100px;
+	height: 100px;
+	
+} 
+
+
+/* .footer img{
 	position: relative;
 	left: 40%;
-}
+} */
+
 
 .upload_form{
 	position:relative;
@@ -136,6 +183,12 @@
     height:50px;
     top:180px;    
     margin-bottom:0px;	
+    
+    transition: width 1s, height 1s;
+}
+.upload_form:HOVER{
+	
+	transform: scale(1.01,1.01);
 }
 
 .selectxsd{
@@ -151,12 +204,11 @@
 .xsdview_blck{
 	float: left;
 	display:inline-block;
-	/* position: relative;
-	top: 180px; */
+	margin-top:0px;
 	margin-left: 50px;
 	margin-right: 50px;	
 	border: 1px solid black;
-	padding: 20px;
+	padding: 0 20px 20px 20px;
 	
 	
 	background-color: #ffffff;
@@ -189,12 +241,22 @@
 
 .xsd_container{
 	position: relative;
-	top: 180px;	
+	top: 150px;	
+	height:400px;
+	padding:10px;
+	
+	/* overflow-y: auto; */
+	
 }
 
 .generatebtn{
 	clear: both;
 	margin: 0 auto;
+}
+
+.main_body{
+	overflow-y: auto;
+	
 }
 
 
