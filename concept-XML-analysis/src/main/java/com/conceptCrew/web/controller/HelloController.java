@@ -9,7 +9,6 @@ import java.util.Iterator;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.html.FormSubmitEvent.MethodType;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -124,6 +123,6 @@ public class HelloController {
 		if(XapDBRoutine.testAndValidateDBConnection()){
 			return "Connected";
 		}
-		return "Failed";
+		return "Connectivity Failed";
 	}
 }

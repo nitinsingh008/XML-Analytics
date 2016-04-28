@@ -52,7 +52,7 @@ function checkConnectivity(){
 		$.ajax({
 					    url: 'checkConnectivity',
 					    data: {
-					  		DatabaseType : $("#databaseType"),
+					  		DatabaseType : $("#databaseType").val(),
 					    	tns : tns,
 					    	username : username,
 					    	password : password
