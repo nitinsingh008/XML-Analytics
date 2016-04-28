@@ -29,7 +29,7 @@ $(document).ready(function() {
 		    $("#createScript").attr("checked",true);
 		    $("#createFramework").attr("checked",true);
 		    $("#createTable").attr("checked",true);
-		     $("#databaseSetting").show();
+		    $("#databaseSetting").show();
 		} else {
 		    $("#createScript").attr("checked",false);
 		    $("#createFramework").attr("checked",false);
@@ -37,7 +37,34 @@ $(document).ready(function() {
 		     $("#databaseSetting").hide();
 		}
 	});
+	
+	
 });
+
+function checkConnectivity(){
+		var tns = $("#tnsEntry").val();
+		var username = $("#username").val();
+		var password = $("#password").val();
+		if(tns== null || tns == ''){
+			alert("Please enter TNS entry");
+			return;
+		}
+		$.ajax({
+					    url: 'checkConnectivity',
+					    data: {
+					  		DatabaseType : $("#databaseType"),
+					    	tns : tns,
+					    	username : username,
+					    	password : password
+					    },
+					  
+					    type: 'POST',
+						
+					    success: function(data){
+					   		alert(data);
+					    }
+					  });
+	}
 </script>
 
 
@@ -58,34 +85,76 @@ $(document).ready(function() {
 				name="captureSettings">
 
 				<div class="setting_blck">
-					<strong>Select Setting</strong> <br>
-
-					<form:checkbox path="doAll" id="doAll"></form:checkbox>
-					<span>Run All</span> <br>
-
-					<form:checkbox path="createScript" id="createScript"/>
-					<span>Create Database Script</span> <br> 
-
-					<form:checkbox path="createFramework" id="createFramework" />
-					<span>Generate Parsing framework</span> <br>
-					<form:checkbox path="createTable" id="createTable"/>
-					<span>Create Table in Database</span> <br>
-					
-					<span>Choose
-						Database Type</span> 
-					<form:select path="databaseType" items="${databaseType}"></form:select>
-					<br>
-					<div id="databaseSetting">
-						 <span>Database Connection String</span> <br>
-						<form:textarea path="tnsEntry" rows="5" cols="20" />
-						<br> <span>UserName</span>
-						<form:input path="userName" />
-						<br>
-						<br> <span>Password</span>
-						<form:input path="password" type="password"/>
-						<br>
-					</div>
-
+					<table>
+						<tbody>
+							<tr>
+								<td>
+									<strong>Select Setting</strong>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<form:checkbox path="doAll" id="doAll"></form:checkbox>
+									<span>Run All</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<form:checkbox path="createScript" id="createScript"/>
+									<span>Create Database Script</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<form:checkbox path="createFramework" id="createFramework" />
+									<span>Generate Parsing framework</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<form:checkbox path="createTable" id="createTable"/>
+									<span>Create Table in Database</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span>Choose Database Type</span> 
+									<form:select path="databaseType" items="${databaseType}" id="databaseType"></form:select>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<table id="databaseSetting">
+										<tbody>
+											<tr>
+												<td colspan="2">
+													<span>Database Connection String</span>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="2">
+													<form:textarea path="tnsEntry" rows="5" cols="35" id="tnsEntry"/>
+												</td>
+											</tr>
+											<tr>
+												<td><span>UserName</span></td>
+												<td><form:input path="userName" id="username"/></td>
+											</tr>
+											
+											<tr>
+												<td><span>Password</span></td>
+												<td><form:input path="password" type="password" id="password"/></td>
+											</tr>
+											<tr>
+												<td colspan="2"><input type="button" value="Test Connectivity" onclick="checkConnectivity()"/> </td>
+											</tr>
+										</tbody>
+									</table>
+									
+								</td>
+							</tr>
+						</tbody>
+					</table>
 					 <input type="hidden" path="parsedXSDPath"
 						id="parsedXSDPath" name="parsedXSDPath"
 						value="${xsdParseRequest.parsedXSDPath}"/> 

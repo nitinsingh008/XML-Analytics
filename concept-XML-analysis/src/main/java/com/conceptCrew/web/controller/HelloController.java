@@ -9,16 +9,20 @@ import java.util.Iterator;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.html.FormSubmitEvent.MethodType;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.concept.crew.apis.StartAutomation;
+import com.concept.crew.dao.XapDBRoutine;
 import com.concept.crew.util.Constants;
 import com.concept.crew.util.XSDParseRequest;
 import com.conceptCrew.web.service.XSDParser;
@@ -113,5 +117,13 @@ public class HelloController {
 
 	}
 	
-
+	@RequestMapping(value="/checkConnectivity",method = RequestMethod.POST)
+	public @ResponseBody String checkConnectivity(@RequestParam("DatabaseType") String databaseType, @RequestParam("tns") String tns,
+			@RequestParam("username") String userNamee,@RequestParam("password") String password){
+		XapDBRoutine.initializeDBRoutine(databaseType, tns, userNamee, password);
+		if(XapDBRoutine.testAndValidateDBConnection()){
+			return "Connected";
+		}
+		return "Failed";
+	}
 }

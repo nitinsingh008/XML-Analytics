@@ -56,7 +56,9 @@
 	
 	function clickGenerate(){
 		
-			$.ajax({
+		if(document.getElementById('doAll').checked || document.getElementById('createScript').checked || document.getElementById('createFramework').checked 
+			|| document.getElementById('createTable').checked){
+				$.ajax({
 					    url: 'Generate',
 					    data: $('#captureParseSettings').serialize(),
 					  
@@ -66,6 +68,12 @@
 					   		alert("success");
 					    }
 					  });
+			}else{
+					alert("Please Select Any Option");
+					return;
+			}
+		
+			
     }
 	
 	function clickBack(){
