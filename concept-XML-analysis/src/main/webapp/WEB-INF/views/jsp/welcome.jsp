@@ -14,6 +14,26 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="<c:url value="/resources/core/js/crawler.js" />"></script>
+
+<script type="text/javascript">
+marqueeInit({
+	uniqueid: 'mycrawler',
+	style: 
+	{
+		'padding': '5px',
+		'width': '100%',		
+		'background': 'rgba(255,255,255,0.0)',
+		'font-size': '35px',
+	},
+	inc: 5, //speed - pixel increment for each iteration of this marquee's movement
+	mouse: 'cursor driven', //mouseover behavior ('pause' 'cursor driven' or false)
+	moveatleast: 2,
+	neutral: 150,
+	persist: true,
+	savedirection: true
+});
+</script> 
 
 
 </head>
@@ -23,13 +43,39 @@
 		id="full-screen-background-image" />
 	<div id="parent" class="snap12">
 
-		<div class="header snap12" align = "right">
-			<img src="<c:url value='/resources/images/xap_logo.png'/>"
-				id="xaplogo" title="back to home"/> <%-- <img
-				src="<c:url value='/resources/images/concept_crew.png'/>"
-				id="conceptlogo" /> --%>
-
+		<!-- http://www.dynamicdrive.com/dynamicindex2/crawler/ use this link for reference for crawler marquee -->
+		<div class="marquee" id="mycrawler">
+			| XAP - XML Automated Parser
+			<img src="<c:url value='/resources/images/xap_logo.png'/>" id="xap_crawler" /> 
+			| Features 
+			: <img src="<c:url value='/resources/images/maven.png'/>" id="maven_crawler" /> Generation of new maven project
+			: <img src="<c:url value='/resources/images/java1.png'/>" id="conceptCrew_crawler" /> Generation of JAXB, POJO classes 		
+			: <img src="<c:url value='/resources/images/sqlSmall.png'/>" id="sql_crawler" /> Generation of SQL scripts
+			: <img src="<c:url value='/resources/images/dbTable.png'/>" id="dbTable_crawler" /> Generation of new Database Model => Tables, Sequence, Primary Key, Foreign Key etc  			
+			: Generation of Parser classes 
+			: Generation of Loader framework 
+			| Developed by  <img src="<c:url value='/resources/images/ConceptCrewSmall.png'/>" id="conceptCrew_crawler" />
+			| Contributors Gaurav Agarwal <img src="<c:url value='/resources/images/GauravAgarwal.JPG'/>" id="conceptCrew_crawler" />
+			| Nitin Singh
+			| Parag Garg
 		</div>
+
+		<div class="header">
+
+			<img src="<c:url value='/resources/images/xap_logo.png'/>"
+				id="xaplogo" title="XAP" />
+			<h6 align="right">Home|About Us</h6>
+			
+		</div>
+
+		<%-- 		<div class="header snap12" align = "right">
+			<img src="<c:url value='/resources/images/xap_logo.png'/>"
+				id="xaplogo" title="XAP"/> <img
+				src="<c:url value='/resources/images/concept_crew.png'/>"
+				id="conceptlogo" />
+
+		</div>	 --%>	
+
 
 		<div id="step1jsp" class="container-fluid">
 			<div align="center">
