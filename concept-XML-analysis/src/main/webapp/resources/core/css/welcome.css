@@ -30,8 +30,8 @@
 	height:70px;
 	width:200px;
 	position:fixed;
-	top:55px;
-	left:30px;
+	top:50px;
+	left:25px;
 }
 
 #sql_crawler
@@ -47,8 +47,20 @@
 
 #maven_crawler
 {
-	height: 50px;
+	height: 55px;
 	width:  100px;	
+}
+
+#loader_crawler 
+{
+	height: 50px;
+	width: 80px;	
+}
+
+#xml_crawler 
+{
+	height: 60px;
+	width: 60px;	
 }
 
 #xap_crawler 
@@ -58,7 +70,19 @@
 }
 #conceptCrew_crawler 
 {
-	height: 50px;
+	height: 51px;
+	width: 50px;	
+}
+
+#photo_crawler 
+{
+	height: 45px;
+	width : 50px;	
+}
+
+#java1_crawler 
+{
+	height: 55px;
 	width: 50px;	
 }
 
@@ -148,7 +172,7 @@
 .footer {
 	/* position:fixed; */
 	/*opacity: 0.5;*/
-	height: 70px;
+	height: 55px;
 	/*background-color:#ffffff;*/
 	text-color: black;
 	/* bottom:0px;
@@ -161,12 +185,12 @@
 
 div.footer h6 {
    color: #000000;
-   margin-top: 15px;
+   margin-top: 10px;
     font-weight: bold;
 }
 
 .header {
-	height: 50px;
+	height: 45px;
 	/*background-color:#ffffff;*/
 	text-color: black;
 	right: 0px;

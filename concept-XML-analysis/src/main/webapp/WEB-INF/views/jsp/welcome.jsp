@@ -21,10 +21,11 @@ marqueeInit({
 	uniqueid: 'mycrawler',
 	style: 
 	{
-		'padding': '5px',
-		'width': '100%',		
-		'background': 'rgba(255,255,255,0.0)',
-		'font-size': '35px',
+		'padding'	 : '5px',
+		'width'		 : '100%',		
+		'background' : 'rgba(255,255,255,0.0)',
+		'font-size'  : '30px',
+		'font-style' : 'italic',
 	},
 	inc: 5, //speed - pixel increment for each iteration of this marquee's movement
 	mouse: 'cursor driven', //mouseover behavior ('pause' 'cursor driven' or false)
@@ -45,26 +46,25 @@ marqueeInit({
 
 		<!-- http://www.dynamicdrive.com/dynamicindex2/crawler/ use this link for reference for crawler marquee -->
 		<div class="marquee" id="mycrawler">
-			| XAP - XML Automated Parser
-			<img src="<c:url value='/resources/images/xap_logo.png'/>" id="xap_crawler" /> 
+			| <img src="<c:url value='/resources/images/xap_logo.png'/>" id="xap_crawler" /> XAP - XML Automated Parser
 			| Features 
 			: <img src="<c:url value='/resources/images/maven.png'/>" id="maven_crawler" /> Generation of new maven project
-			: <img src="<c:url value='/resources/images/java1.png'/>" id="conceptCrew_crawler" /> Generation of JAXB, POJO classes 		
+			: <img src="<c:url value='/resources/images/java1.png'/>" id="java1_crawler" /> Generation of JAXB, POJO classes 		
 			: <img src="<c:url value='/resources/images/sqlSmall.png'/>" id="sql_crawler" /> Generation of SQL scripts
-			: <img src="<c:url value='/resources/images/dbTable.png'/>" id="dbTable_crawler" /> Generation of new Database Model => Tables, Sequence, Primary Key, Foreign Key etc  			
-			: Generation of Parser classes 
-			: Generation of Loader framework 
+			: <img src="<c:url value='/resources/images/dbTable.png'/>" id="dbTable_crawler" /> Generation of Database Model => Tables, Sequence, Primary Key, Foreign Key etc  			
+			: <img src="<c:url value='/resources/images/xml.png'/>" id="xml_crawler" />  Generation of XML Parsers
+			: <img src="<c:url value='/resources/images/loader.png'/>" id="loader_crawler" /> Generation of Loader framework 
 			| Developed by  <img src="<c:url value='/resources/images/ConceptCrewSmall.png'/>" id="conceptCrew_crawler" />
-			| Contributors Gaurav Agarwal <img src="<c:url value='/resources/images/GauravAgarwal.JPG'/>" id="conceptCrew_crawler" />
-			| Nitin Singh
-			| Parag Garg
+			| Contributors : <img src="<c:url value='/resources/images/GauravAgarwal.JPG'/>" id="photo_crawler" /> Gaurav Agarwal
+			, Nitin Singh
+			, Parag Garg
 		</div>
 
 		<div class="header">
 
 			<img src="<c:url value='/resources/images/xap_logo.png'/>"
 				id="xaplogo" title="XAP" />
-			<h6 align="right">Home|About Us</h6>
+			<h6 align="right">HOME | ABOUT US | HELP | CONTACT US</h6>
 			
 		</div>
 
