@@ -24,10 +24,16 @@ public class XapDBRoutine {
 		{
 			DB_DRIVER = "oracle.jdbc.driver.OracleDriver";
 		}
-		else
+		else if(DatabaseType.MySQL.toString().equals(dbType))
 		{
 			DB_DRIVER = "com.mysql.jdbc.Driver";
 		}
+		else
+		{
+			// DB Driver for MS SQL Server
+			//DB_DRIVER = "com.mysql.jdbc.Driver";
+		}
+		
 		DB_CONNECTION = jdbcUrl;
 		DB_USER = user;
 		DB_PASSWORD = password;
