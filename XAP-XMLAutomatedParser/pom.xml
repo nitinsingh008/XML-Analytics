@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>XAP-XMLAutomatedParser</groupId>
   <artifactId>XAP-XMLAutomatedParser</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0</version>
   <dependencies>
   	<dependency>
 		<groupId>com.google.guava</groupId>
@@ -39,5 +39,51 @@
          <systemPath>${basedir}\src\lib\ojdbc6.jar</systemPath>
       </dependency>
    </dependencies>
+
+ 
+	 <build>
+	    <plugins>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-dependency-plugin</artifactId>
+			    <executions>
+			        <execution>
+			            <id>copy-dependencies</id>
+			            <phase>prepare-package</phase>
+			            <goals>
+			                <goal>copy-dependencies</goal>
+			            </goals>
+			            <configuration>
+			                <outputDirectory>${project.build.directory}/classes/lib</outputDirectory>
+			                <overWriteReleases>false</overWriteReleases>
+			                <overWriteSnapshots>false</overWriteSnapshots>
+			                <overWriteIfNewer>true</overWriteIfNewer>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>
+			
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-jar-plugin</artifactId>
+			    <configuration>
+			        <archive>
+			            <manifest>
+			                <addClasspath>true</addClasspath>
+<!-- 			                <classpathPrefix>lib</classpathPrefix>
+			                <mainClass>com.concept.crew.apis.StartAutomation</mainClass> -->
+			            </manifest>
+			            <manifestEntries>
+			                <Class-Path>lib/</Class-Path>
+			            </manifestEntries>
+			        </archive>
+			    </configuration>
+			</plugin>	    
+	    
+	    
+	
+	    </plugins>
+	  </build>
+
 
 </project>
