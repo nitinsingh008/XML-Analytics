@@ -36,7 +36,6 @@ marqueeInit({
 });
 </script> 
 
-
 </head>
 
 <body class="main_body">
@@ -55,7 +54,7 @@ marqueeInit({
 			: <img src="<c:url value='/resources/images/xml.png'/>" id="xml_crawler" />  Generation of XML Parsers
 			: <img src="<c:url value='/resources/images/loader.png'/>" id="loader_crawler" /> Generation of Loader framework 
 			| Developed by  <img src="<c:url value='/resources/images/ConceptCrewSmall.png'/>" id="conceptCrew_crawler" />
-			| Contributors :  Gaurav Agarwal
+			| Contributors : <img src="<c:url value='/resources/images/GauravAgarwal.JPG'/>" id="photo_crawler" /> Gaurav Agarwal
 			, Nitin Singh
 			, Parag Garg
 		</div>
@@ -64,7 +63,23 @@ marqueeInit({
 
 			<img src="<c:url value='/resources/images/xap_logo.png'/>"
 				id="xaplogo" title="XAP" />
-			<h6 align="right">HOME | ABOUT US | HELP | CONTACT US</h6>
+			<h6 align="right"><a href="#">
+			<img src="<c:url value='/resources/images/home_icon.png'/>"
+				id="home_icon"/>			
+          &nbsp;Home
+        </a> | <a href="#">
+			<img src="<c:url value='/resources/images/about_us.png'/>"
+				id="aboutus_icon"/>			
+          &nbsp;ABOUT US
+        </a> | <a href="#">
+			<img src="<c:url value='/resources/images/help.png'/>"
+				id="help_icon"/>			
+          &nbsp;HELP
+        </a> | <a href="#">
+			<img src="<c:url value='/resources/images/contact.png'/>"
+				id="contact_icon"/>			
+          &nbsp;CONTACT US
+        </a></h6>
 			
 		</div>
 
