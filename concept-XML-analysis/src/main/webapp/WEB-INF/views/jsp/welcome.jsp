@@ -23,9 +23,13 @@ marqueeInit({
 	{
 		'padding'	 : '5px',
 		'width'		 : '100%',		
-		'background' : 'rgba(255,255,255,0.0)',
-		'font-size'  : '30px',
+		/* 'background' : 'rgba(255,255,255,0.0)', */
+		'font-size'	 : '35px',
 		'font-style' : 'italic',
+		'color'      :'#090995'
+		
+			
+		
 	},
 	inc: 5, //speed - pixel increment for each iteration of this marquee's movement
 	mouse: 'cursor driven', //mouseover behavior ('pause' 'cursor driven' or false)
@@ -45,14 +49,27 @@ marqueeInit({
 
 		<!-- http://www.dynamicdrive.com/dynamicindex2/crawler/ use this link for reference for crawler marquee -->
 		<div class="marquee" id="mycrawler">
-			| <img src="<c:url value='/resources/images/xap_logo.png'/>" id="xap_crawler" /> XAP - XML Automated Parser
-			| Features 
-			: <img src="<c:url value='/resources/images/maven.png'/>" id="maven_crawler" /> Generation of new maven project
-			: <img src="<c:url value='/resources/images/java1.png'/>" id="java1_crawler" /> Generation of JAXB, POJO classes 		
-			: <img src="<c:url value='/resources/images/sqlSmall.png'/>" id="sql_crawler" /> Generation of SQL scripts
-			: <img src="<c:url value='/resources/images/dbTable.png'/>" id="dbTable_crawler" /> Generation of Database Model => Tables, Sequence, Primary Key, Foreign Key etc  			
-			: <img src="<c:url value='/resources/images/xml.png'/>" id="xml_crawler" />  Generation of XML Parsers
-			: <img src="<c:url value='/resources/images/loader.png'/>" id="loader_crawler" /> Generation of Loader framework 
+			| <img src="<c:url value='/resources/images/xap_logo.png'/>" id="xap_crawler" /> 
+			<img src="<c:url value='/resources/images/text1.png'/>" id="text1_crawler" />
+<!-- 			XAP - XML Automated Parser | Features  -->	
+			: <img src="<c:url value='/resources/images/maven.png'/>" id="maven_crawler" /> 
+<!-- 			Generation of maven project -->
+		<img src="<c:url value='/resources/images/text2.png'/>" id="text2_crawler" />
+			: <img src="<c:url value='/resources/images/java1.png'/>" id="java1_crawler" /> 
+<!-- 			Generation of JAXB, POJO classes  -->
+					<img src="<c:url value='/resources/images/text3.png'/>" id="text3_crawler" />		
+			: <img src="<c:url value='/resources/images/sqlSmall.png'/>" id="sql_crawler" /> 
+		<!-- 	Generation of SQL scripts -->
+		<img src="<c:url value='/resources/images/text4.png'/>" id="text4_crawler" />		
+			: <img src="<c:url value='/resources/images/dbTable.png'/>" id="dbTable_crawler" /> 
+		<!-- 	Generation of Database Model => Tables, Sequence, Primary Key, Foreign Key etc -->
+		<img src="<c:url value='/resources/images/text5.png'/>" id="text5_crawler" />				  			
+			: <img src="<c:url value='/resources/images/xml.png'/>" id="xml_crawler" />  
+		<!-- 	Generation of XML Parsers -->
+		<img src="<c:url value='/resources/images/text6.png'/>" id="text6_crawler" />		
+			: <img src="<c:url value='/resources/images/loader.png'/>" id="loader_crawler" /> 
+			<!-- Generation of Loader framework  -->
+		<img src="<c:url value='/resources/images/text7.png'/>" id="text7_crawler" />			
 <%-- 			| Developed by  <img src="<c:url value='/resources/images/ConceptCrewSmall.png'/>" id="conceptCrew_crawler" />
 			| Contributors : <img src="<c:url value='/resources/images/GauravAgarwal.JPG'/>" id="photo_crawler" /> Gaurav Agarwal
 			, Nitin Singh
