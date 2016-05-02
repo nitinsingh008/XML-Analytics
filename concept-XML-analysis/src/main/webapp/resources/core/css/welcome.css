@@ -201,8 +201,10 @@ div.footer h6 {
 
 div.header h6 {
    color: #000000;
-   margin-top: 15px;
+   /* margin-top: 15px; */
     font-weight: bold;
+    position: relative;
+	top: -5px;
 }
 /* #container-jsp2{
 		min-height:100%;
@@ -343,23 +345,34 @@ background-origin: content-box;"
 	margin-bottom: 35px;
 }
 #home_icon{
-	width:20px;
-	height:20px;
+	width:40px;
+	height:40px;
+	position: relative;
+	top: -1px;
 	
 }
 
 #aboutus_icon{
-	width:20px;
-	height:20px;
+	width:40px;
+	height:40px;
+	position: relative;
+	top: -1px;
 	
 }
-#help_icon{
-		width:20px;
-	height:20px;
+#help_icon
+{
+	width:30px;
+	height:40px;
+	position: relative;
+	top: -1px;
+	
 }
-#contact_icon{
-		width:20px;
-	height:20px;
+#contact_icon
+{
+	width:30px;
+	height:40px;
+	position: relative;
+	top: -1px;
 }
 
 
