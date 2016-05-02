@@ -53,10 +53,10 @@ marqueeInit({
 			: <img src="<c:url value='/resources/images/dbTable.png'/>" id="dbTable_crawler" /> Generation of Database Model => Tables, Sequence, Primary Key, Foreign Key etc  			
 			: <img src="<c:url value='/resources/images/xml.png'/>" id="xml_crawler" />  Generation of XML Parsers
 			: <img src="<c:url value='/resources/images/loader.png'/>" id="loader_crawler" /> Generation of Loader framework 
-			| Developed by  <img src="<c:url value='/resources/images/ConceptCrewSmall.png'/>" id="conceptCrew_crawler" />
+<%-- 			| Developed by  <img src="<c:url value='/resources/images/ConceptCrewSmall.png'/>" id="conceptCrew_crawler" />
 			| Contributors : <img src="<c:url value='/resources/images/GauravAgarwal.JPG'/>" id="photo_crawler" /> Gaurav Agarwal
 			, Nitin Singh
-			, Parag Garg
+			, Parag Garg --%>
 		</div>
 
 		<div class="header">

@@ -94,7 +94,7 @@ function checkConnectivity()
 					<strong>Select Setting</strong> <br>
 				</h4>
 					<form:checkbox path="doAll" id="doAll"></form:checkbox>
-					<span>Run All</span> <br>
+					<span>Select All</span> <br>
 
 					<form:checkbox path="createScript" id="createScript"/>
 					<span>Create Database Script</span> <br> 
