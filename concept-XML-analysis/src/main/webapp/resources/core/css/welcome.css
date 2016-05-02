@@ -259,58 +259,58 @@ div.footer_jsp2 h6 {
 .selectxsd{
 	border: 1px solid black;
 	width: 50%;
-	margin: 20px;	
-	padding:10px;
-	 background-color: #0000a0;
-    box-shadow: 10px 10px 5px grey;
-    color: #FFFFFF;   
-}
+	margin: 20px;
+	padding: 10px;
+	background-color: #0000a0;
+	box-shadow: 10px 10px 5px grey;
+	color: #FFFFFF;}
 
 .xsdview_blck{
 	float: left;
-	display:inline-block;
-	margin-top:0px;
+	display: inline-block;
+	margin-top: 0px;
 	margin-left: 50px;
-	margin-right: 50px;	
+	margin-right: 50px;
 	border: 1px solid black;
 	padding: 0 20px 20px 20px;
-	
-	
 	background-color: #ffffff;
-    box-shadow: 10px 10px 5px grey;
-    
-    background: grey; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(grey, white); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(grey, white); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(grey, white); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(grey, white); /* Standard syntax (must be last) */	
+	box-shadow: 10px 10px 5px grey;
+	background: grey; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(grey, white);
+	/* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(grey, white);
+	/* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(grey, white);
+	/* For Firefox 3.6 to 15 */
+	background: linear-gradient(grey, white);
+	/* Standard syntax (must be last) */
 	
-	
-}
-.setting_blck{
-	display:inline-block;
-	padding: 20px;
-	/* position: relative;
-	top: 180px;	 */
+	}
+
+.setting_blck {
+	display: inline-block;
+	padding: 0 20px 20px 20px;
 	border: 1px solid black;
-		background-color: #ffffff;
-    box-shadow: 10px 10px 5px grey;
-    width: 400px;
-    background: grey; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(grey, white); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(grey, white); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(grey, white); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(grey, white); /* Standard syntax (must be last) */	
-}
+	background-color: #ffffff;
+	box-shadow: 10px 10px 5px grey;
+	width: 380px;
+	background: grey; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(grey, white);
+	/* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(grey, white);
+	/* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(grey, white);
+	/* For Firefox 3.6 to 15 */
+	background: linear-gradient(grey, white);
+	/* Standard syntax (must be last) */	
+	}
 
 
 .xsd_container{
 	position: relative;
-	top: 150px;	
+	top: 70px;	
 	height:400px;
 	padding:10px;
-	
-	/* overflow-y: auto; */
 	
 }
 
@@ -320,9 +320,46 @@ div.footer_jsp2 h6 {
 }
 
 .main_body{
-	overflow-y: auto;
+	overflow-y: auto;	
+}
+
+#username{
+	margin-bottom: 8px;	
+	background-image: url(userid.jpg); 
+	background-repeat: no-repeat;  
+background-size: contain;
+background-origin: content-box;"
+	
+}
+#password{
+	margin-bottom: 8px;
+	background-image: url(password.jpg); 
+	background-repeat: no-repeat;  
+background-size: contain;
+background-origin: content-box;"
+}
+
+#testconn{
+	margin-bottom: 35px;
+}
+#home_icon{
+	width:20px;
+	height:20px;
 	
 }
 
+#aboutus_icon{
+	width:20px;
+	height:20px;
+	
+}
+#help_icon{
+		width:20px;
+	height:20px;
+}
+#contact_icon{
+		width:20px;
+	height:20px;
+}
 
 
