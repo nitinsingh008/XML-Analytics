@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">	
+		   
+   <xsd:element name="Instrument" type="Instrument"/>
+
+   <xsd:complexType name="Instrument">
+      <xsd:sequence>
+         <xsd:element name="instrumentId" minOccurs="1" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="datasetId" minOccurs="1" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="version" minOccurs="1" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="newIssue" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="20"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="instrumentGrade" minOccurs="1" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="25"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="lastModifiedDate" minOccurs="1" maxOccurs="1" type="xsd:dateTime"/>
+         <xsd:element name="source" minOccurs="1" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="30"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="hasAdditionalCredit" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="alternativePrincipalCcyCode" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="3"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="amtIssuedPublic" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="auctionType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="averageLifeDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="isBankQualified" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="isBondLinked" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="benchmarkISIN" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="12"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="instrumentInsuranceType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="tranche" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="instrumentSwapType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="businessDayConvention" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="calculationType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="capitalPurpose" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="classification" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="classificationSubType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="isCommodityLinked" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="isConvertibleOrExchangeable" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="isCorridor" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="priceAtIssue" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="issueSize" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="issueCountry" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="3"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="couponExchangeRate" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="isCovered" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="creditEnhancementFlag" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="isCurrencyLinked" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="currentCoupon" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="currAmtOutstanding" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="datedDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="dayCountConvention" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="denominationIncrease" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="denominationType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="depositoryType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="isDualCcy" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="isEmerging" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="hasEquityClawback" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="isEquityLinked" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="exDividendCalc" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="exDividendDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="hasExDividend" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="isExchangeListed" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="escrowType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="externalNotes" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="4000"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="firstCouponDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="isFloat" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="isFundLinked" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="isFunged" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="isGuarantee" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="isInflationProtected" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="accrualStartDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="interestAlternativeCcyCode" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="3"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="interestIndexLinkedFlag" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="isInterestLinked" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="issueCurrency" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="3"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="issueDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="issueName" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="issueType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="issueYield" minOccurs="0" maxOccurs="1" type="xsd:decimal"/>
+         <xsd:element name="hasLiquidityOptions" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="lastCouponDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="marketRegion" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="hasMarketEvent" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="maturityAmount" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="maturityDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="maturityPrice" minOccurs="0" maxOccurs="1" type="xsd:decimal"/>
+         <xsd:element name="maturityType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="maxCoupon" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="maxProgramSize" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="minCoupon" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="minDenomination" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="isMTN" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="origDealAmount" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="isPerpetual" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="putType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="putSubType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="callType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="callSubType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="optionStyle" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="optionStyleSubType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+		 
+		  <xsd:element name="assetExchange" minOccurs="0" maxOccurs="unbounded" type="AssetExchange"/>
+		  <xsd:element name="CallSchedule" 	minOccurs="0" maxOccurs="unbounded" type="CallSchedule"/>
+		  <xsd:element name="PutSchedule" 	minOccurs="0" maxOccurs="unbounded" type="PutSchedule"/>
+		  <xsd:element name="Ratings" 		minOccurs="0" maxOccurs="unbounded" type="Ratings"/>
+		  <xsd:element name="Redemption" 	minOccurs="0" maxOccurs="unbounded" type="Redemption"/>
+
+      </xsd:sequence>
+   </xsd:complexType>
+ 
+   <xsd:complexType name="AssetExchange">
+      <xsd:sequence>
+         <xsd:element name="assetExchangeSource" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="30"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="exchangeCode" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="mic" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="micStatus" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="listingEffectiveDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="bbgExchangeId" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="50"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="bbgExchangeTicker" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="50"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="cityOfListing" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="countryOfListing" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="10"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="delistingDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="exchangeName" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="listingStatus" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="50"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="lotSize" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="minTradeQuantity" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="isPrimaryListing" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="cityOfSubMarket" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="subMarketExchange" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="subMarketMic" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="10"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="subMarketMicStatus" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="50"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="CallSchedule">
+      <xsd:sequence>
+         <xsd:element name="callScheduleSource" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="30"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="isCallDefeased" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="callStartDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="callEndDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="callValidity" minOccurs="0" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="callFrequencyCode" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="callPrice" minOccurs="0" maxOccurs="1" type="xsd:decimal"/>
+         <xsd:element name="callMaxNoticeDays" minOccurs="0" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="callMinNoticeDays" minOccurs="0" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="optionStyle" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="optionStyleSubType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="callNoticeDaysConvention" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="callMethodType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="callMethodSubType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="isCompoundAccretedValue" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="callPriceLinkage" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="50"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="isPriceDifferentFromPar" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="circumstanceCallType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="equityClawbackPercent" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="makewholeBenchmark" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="makewholeSpread" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="softCallConversionPercent" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="softCallConversionPercentPremium" minOccurs="0" maxOccurs="1"
+                      type="xsd:double"/>
+         <xsd:element name="softCallDays" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="softCallTriggerValue" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="PutSchedule">
+      <xsd:sequence>
+         <xsd:element name="putScheduleSource" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="30"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="putStartDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="putEndDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="putValidity" minOccurs="0" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="putFee" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="putFrequencyCode" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="putPrice" minOccurs="0" maxOccurs="1" type="xsd:decimal"/>
+         <xsd:element name="isSpecialPut" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="putMaxNoticeDays" minOccurs="0" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="putMinNoticeDays" minOccurs="0" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="optionStyle" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="optionStyleSubType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="putNoticeDaysConvention" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="putMethodType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="putMethodSubType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="200"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="putPriceLinkage" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="50"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="isPriceDifferentFromPar" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="makewholeBenchmark" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="makewholeSpread" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+      </xsd:sequence>
+   </xsd:complexType>
+ 
+   <xsd:complexType name="Ratings">
+      <xsd:sequence>
+         <xsd:element name="ratingType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="ratingProvider" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="ratingEffectiveDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="rating" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="ratingsSource" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="30"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="ratingOutlook" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="50"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="ratingWatch" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="50"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="ratingEndDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="isIssuerOrInstrumentRating" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="20"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="Redemption">
+      <xsd:sequence>
+         <xsd:element name="redemptionSource" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="30"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="amount" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="date" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="redemptionMethod" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="redemptionStrikePrice" minOccurs="0" maxOccurs="1" type="xsd:decimal"/>
+         <xsd:element name="redemptionType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="redemptionValue" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="redenominatedExchangeRate" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="refundingDatedDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="refundingSettleDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="currAmtOutstandingEffectiveDate" minOccurs="0" maxOccurs="1"
+                      type="xsd:date"/>
+         <xsd:element name="amtChangeType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="100"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         <xsd:element name="redemptionCashFlow" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="reofferReopenPrice" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+         <xsd:element name="reofferReopenSpread" minOccurs="0" maxOccurs="1" type="xsd:decimal"/>
+         <xsd:element name="reofferReopenYield" minOccurs="0" maxOccurs="1" type="xsd:decimal"/>
+         <xsd:element name="caAnnouncementDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="amountOutstanding" minOccurs="0" maxOccurs="1" type="xsd:double"/>
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>
