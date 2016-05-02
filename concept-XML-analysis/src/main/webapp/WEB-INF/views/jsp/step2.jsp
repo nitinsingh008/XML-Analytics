@@ -65,6 +65,13 @@ function checkConnectivity()
 					  });
 	}
 
+
+	function hideUserIcon() {
+		document.getElementById("username").style.backgroundImage = 'none';
+	}
+	function hidePsswdIcon() {
+		document.getElementById("password").style.backgroundImage = 'none';
+	}
 </script>
 
 
@@ -80,13 +87,12 @@ function checkConnectivity()
 				<textarea rows="15" cols="50" readonly="readonly">${parsedInString}</textarea>
 			</div>
 
-
 			<form:form commandName="xsdParseRequest" id="captureParseSettings"
 				name="captureSettings">
-
 				<div class="setting_blck">
+				<h4>
 					<strong>Select Setting</strong> <br>
-
+				</h4>
 					<form:checkbox path="doAll" id="doAll"></form:checkbox>
 					<span>Run All</span> <br>
 
@@ -105,13 +111,13 @@ function checkConnectivity()
 					<div id="databaseSetting">
 						 <span>Database Connection String</span> <br>
 						<form:textarea path="tnsEntry" rows="2" cols="45" id="tnsEntry"/>
-						<br> <span>UserName</span>
-						<form:input path="userName" id="username"/>
+						<br> <span>UserName&nbsp;</span>
+						<form:input path="userName" id="username"  oninput="hideUserIcon()" />
 						<br>
-						<br> <span>Password</span>
-						<form:input path="password" type="password" id="password"/>
+						 <span>Password&nbsp;&nbsp;</span>
+						<form:input path="password" type="password" id="password" oninput="hidePsswdIcon()"/>
 						<br>
-						<input type="button" value="Test Connectivity" onclick="checkConnectivity()"/>
+						<input type="button" value="Test Connectivity" onclick="checkConnectivity()" id="testconn"/>
 						
 						
 					</div>
