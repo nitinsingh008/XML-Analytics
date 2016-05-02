@@ -173,7 +173,9 @@ public abstract class TableGenerator
 		return sqlType;
 	}
 	
-	public String fetchRootNode(File xsdFile) throws ParserConfigurationException, SAXException, IOException{
+	public String fetchRootNode(File xsdFile) throws ParserConfigurationException, SAXException, IOException
+	{
+		String roodNode = null;
 		final Thread currentThread = Thread.currentThread();
 		final ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
@@ -186,12 +188,24 @@ public abstract class TableGenerator
 		Document doc 	= docBuilder.parse(inputStream);
 		NodeList list 	= doc.getElementsByTagName("xs:element"); 
 		
-		if(list != null){
+		if(list != null && list.item(0) != null)
+		{
 			Element element = (Element)list.item(0) ;
-			return element.getAttribute("name");
+			roodNode =  element.getAttribute("name");
 		}
-			
-		return null;
+		if(roodNode == null)
+		{
+			// Try searching by xsd
+			list 	= doc.getElementsByTagName("xsd:element"); 
+			if(list != null && list.item(0) != null)
+			{
+				Element element = (Element)list.item(0) ;
+				roodNode =  element.getAttribute("name");
+			}
+		}
+		
+		
+		return roodNode;
 	}
 	
 	private static void addDropScripts(BufferedWriter bw, StringBuffer sb, Set<String> tableName, String tableSuffix, String rootNode , String schema ) throws IOException{
