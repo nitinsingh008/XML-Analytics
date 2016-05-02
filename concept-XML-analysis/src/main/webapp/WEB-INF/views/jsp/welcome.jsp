@@ -66,7 +66,7 @@ marqueeInit({
 			<h6 align="right"><a href="#">
 			<img src="<c:url value='/resources/images/home_icon.png'/>"
 				id="home_icon"/>			
-          &nbsp;Home
+          &nbsp;HOME
         </a> | <a href="#">
 			<img src="<c:url value='/resources/images/about_us.png'/>"
 				id="aboutus_icon"/>			
@@ -78,7 +78,7 @@ marqueeInit({
         </a> | <a href="#">
 			<img src="<c:url value='/resources/images/contact.png'/>"
 				id="contact_icon"/>			
-          &nbsp;CONTACT US
+          &nbsp;CONTACT US&nbsp;&nbsp;
         </a></h6>
 			
 		</div>
