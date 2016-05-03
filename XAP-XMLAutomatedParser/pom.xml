@@ -38,6 +38,13 @@
          <version>1.0</version>
          <systemPath>${basedir}\src\lib\ojdbc6.jar</systemPath>
       </dependency>
+       <dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
    </dependencies>
 
  
@@ -54,7 +61,7 @@
 			                <goal>copy-dependencies</goal>
 			            </goals>
 			            <configuration>
-			                <outputDirectory>${project.build.directory}/classes/lib</outputDirectory>
+			                <outputDirectory>${project.build.directory}/classes</outputDirectory>
 			                <overWriteReleases>false</overWriteReleases>
 			                <overWriteSnapshots>false</overWriteSnapshots>
 			                <overWriteIfNewer>true</overWriteIfNewer>

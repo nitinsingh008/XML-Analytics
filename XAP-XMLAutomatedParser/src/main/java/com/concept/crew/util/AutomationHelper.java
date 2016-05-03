@@ -73,6 +73,7 @@ public class AutomationHelper {
 		InvocationRequest request = new DefaultInvocationRequest();
 		request.setGoals(Collections.singletonList("archetype:generate"));
 		request.setInteractive(false);
+		request.setGlobalSettingsFile(new File(Constants.settingsFilePath));
 		Properties properties = new Properties();
 		properties.setProperty("groupId", "com.concept.crew.app");
 		properties.setProperty("artifactId", "LoadersFramework");
