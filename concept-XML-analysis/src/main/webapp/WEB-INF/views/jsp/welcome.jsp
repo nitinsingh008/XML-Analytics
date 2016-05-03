@@ -48,7 +48,7 @@ marqueeInit({
 	<div id="parent" class="snap12">
 
 		<!-- http://www.dynamicdrive.com/dynamicindex2/crawler/ use this link for reference for crawler marquee -->
-		<div class="marquee" id="mycrawler">
+<%-- 		<div class="marquee" id="mycrawler">
 			| <img src="<c:url value='/resources/images/xap_logo.png'/>" id="xap_crawler" /> 
 			<img src="<c:url value='/resources/images/text1.png'/>" id="text1_crawler" />
 <!-- 			XAP - XML Automated Parser | Features  -->	
@@ -70,11 +70,11 @@ marqueeInit({
 			: <img src="<c:url value='/resources/images/loader.png'/>" id="loader_crawler" /> 
 			<!-- Generation of Loader framework  -->
 		<img src="<c:url value='/resources/images/text7.png'/>" id="text7_crawler" />			
-<%-- 			| Developed by  <img src="<c:url value='/resources/images/ConceptCrewSmall.png'/>" id="conceptCrew_crawler" />
+			| Developed by  <img src="<c:url value='/resources/images/ConceptCrewSmall.png'/>" id="conceptCrew_crawler" />
 			| Contributors : <img src="<c:url value='/resources/images/GauravAgarwal.JPG'/>" id="photo_crawler" /> Gaurav Agarwal
 			, Nitin Singh
-			, Parag Garg --%>
-		</div>
+			, Parag Garg
+		</div> --%>
 
 		<div class="header">
 
