@@ -37,18 +37,32 @@
          <scope>system</scope>
          <version>1.0</version>
          <systemPath>${basedir}\src\lib\ojdbc6.jar</systemPath>
-      </dependency>
-       <dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.15</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-   </dependencies>
+    </dependency>
+     <dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.15</version>
+		<type>jar</type>
+		<scope>compile</scope>
+		<exclusions>
+           <exclusion>
+               <groupId>com.sun.jmx</groupId>
+               <artifactId>jmxri</artifactId>
+           </exclusion>
+           <exclusion>
+               <groupId>com.sun.jdmk</groupId>
+               <artifactId>jmxtools</artifactId>
+           </exclusion>
+           <exclusion>
+               <groupId>javax.jms</groupId>
+               <artifactId>jms</artifactId>
+           </exclusion>
+      	</exclusions>
+	</dependency>
+  </dependencies>
 
  
-	 <build>
+<!-- 	 <build>
 	    <plugins>
 			<plugin>
 			    <groupId>org.apache.maven.plugins</groupId>
@@ -77,8 +91,8 @@
 			        <archive>
 			            <manifest>
 			                <addClasspath>true</addClasspath>
-<!-- 			                <classpathPrefix>lib</classpathPrefix>
-			                <mainClass>com.concept.crew.apis.StartAutomation</mainClass> -->
+			                <classpathPrefix>lib</classpathPrefix>
+			                <mainClass>com.concept.crew.apis.StartAutomation</mainClass>
 			            </manifest>
 			            <manifestEntries>
 			                <Class-Path>lib/</Class-Path>
@@ -90,7 +104,7 @@
 	    
 	
 	    </plugins>
-	  </build>
+	  </build> -->
 
 
 </project>
