@@ -101,19 +101,19 @@ public class StartAutomation
 	
 	
 	public static void doAll(XSDParseRequest request) throws Exception{
-		start(request, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE);
+		start(request, request.getCreateScript(), request.getCreateTable(), request.getCreateFramework());
 	}
 	
 	public static void createScript(XSDParseRequest request) throws Exception{
-		start(request , Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
+		start(request , request.getCreateScript(), request.getCreateTable(), request.getCreateFramework());
 	}
 	
 	public static void createTable(XSDParseRequest request) throws Exception{
-		start(request, Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
+		start(request, request.getCreateScript(), request.getCreateTable(), request.getCreateFramework());
 	}
 	
 	public static void createFrameWork(XSDParseRequest request) throws Exception{
-		start(request, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE);
+		start(request, request.getCreateScript(), request.getCreateTable(), request.getCreateFramework());
 	}
 	
 	public static void main(String[] args) throws Exception
