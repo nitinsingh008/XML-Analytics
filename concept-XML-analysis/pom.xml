@@ -91,15 +91,36 @@
 		<artifactId>maven-invoker</artifactId>
 		<version>2.2</version>
 	</dependency>
-	<dependency>
+<!-- 	<dependency>
 		<groupId>com.oracle</groupId>
 		<artifactId>ojdbc6</artifactId>
 		<version>11.2.0.3</version>
-	</dependency>
+	</dependency> -->
+	<dependency>
+         <groupId>ojdbc6</groupId>
+         <artifactId>ojdbc6</artifactId>
+         <scope>system</scope>
+         <version>1.0</version>
+         <systemPath>${basedir}\src\lib\ojdbc6.jar</systemPath>
+    </dependency>	
 	<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.15</version>
+			<exclusions>
+	            <exclusion>
+	                <groupId>com.sun.jmx</groupId>
+	                <artifactId>jmxri</artifactId>
+	            </exclusion>
+	            <exclusion>
+	                <groupId>com.sun.jdmk</groupId>
+	                <artifactId>jmxtools</artifactId>
+	            </exclusion>
+	            <exclusion>
+	                <groupId>javax.jms</groupId>
+	                <artifactId>jms</artifactId>
+	            </exclusion>
+        	</exclusions>
 		</dependency>
 	</dependencies>
 
