@@ -218,7 +218,7 @@
     left:0px;*/
 	right: 0px;
 	background: rgba(255, 255, 255, 0.4);
-	position: fixed;
+	position: absolute;
 	bottom: 0;
 	left: 0;}
 
@@ -246,10 +246,7 @@ div.header h6 {
 	top: -5px;
 	
 }
-/* #container-jsp2{
-		min-height:100%;
-	position:relative;
-} */
+
 .footer_jsp2{
 	    height:100px; 
     text-color: black;
@@ -350,7 +347,7 @@ div.footer_jsp2 h6 {
 
 .xsd_container{
 	position: relative;
-	top: 70px;	
+	top: 130px;	
 	height:400px;
 	padding:10px;
 	
@@ -362,24 +359,21 @@ div.footer_jsp2 h6 {
 }
 
 .main_body{
-	overflow-y: auto;	
+	/* overflow-y: auto;	 */
 }
 
 #username{
-	margin-bottom: 8px;	
-	background-image: url(userid.jpg); 
-	background-repeat: no-repeat;  
-background-size: contain;
-background-origin: content-box;"
-	
-}
+	margin-bottom: 8px;
+	background-image: url(userid.jpg);
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-origin: content-box;}
 #password{
 	margin-bottom: 8px;
-	background-image: url(password.jpg); 
-	background-repeat: no-repeat;  
-background-size: contain;
-background-origin: content-box;"
-}
+	background-image: url(password.jpg);
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-origin: content-box;}
 
 #testconn{
 	margin-bottom: 35px;
@@ -388,8 +382,7 @@ background-origin: content-box;"
 	width:40px;
 	height:40px;
 	position: relative;
-	top: -1px;
-	
+	top: -1px;	
 }
 
 #aboutus_icon{
