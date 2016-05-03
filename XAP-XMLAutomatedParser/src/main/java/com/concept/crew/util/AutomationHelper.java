@@ -82,6 +82,10 @@ public class AutomationHelper {
 		request.setProperties(properties);
 		Invoker invoker = new DefaultInvoker();
 		invoker.setWorkingDirectory(srcDir);
+		// For setting repo directory
+/*		File localRepo = new File("C://Documents and Settings//others//.m2\\repository");
+		invoker.setLocalRepositoryDirectory(localRepo);*/
+		
 		InvocationResult result = invoker.execute(request);
 
 		if (result.getExitCode() != 0) {

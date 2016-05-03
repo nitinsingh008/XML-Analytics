@@ -124,6 +124,7 @@ public class StartAutomation
 		request.setTnsEntry("jdbc:oracle:thin:@ (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = lon2odcdvscan01.markit.partners)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = BRD02DV)))");
 		request.setUserName("CORE_REF_DATA");
 		request.setPassword("CORE_REF_DATA");
+		request.setCreateScript(true);
 		doAll(request);
 	}
 }
