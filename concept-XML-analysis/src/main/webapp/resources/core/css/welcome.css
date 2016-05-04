@@ -145,13 +145,14 @@
 .upload{
   display: inline-block;
   border-radius: 4px;
-  background-color: #0000a0;
+  background-color: #08384E;
   border: none;
   color: #FFFFFF;
   text-align: center;
   font-size: 20px;
   padding: 10px;
-  width: 150px;
+  width: 120px;
+  height:45px;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
@@ -295,14 +296,16 @@ div.footer_jsp2 h6 {
 	transform: scale(1.01,1.01);
 }
 
-.selectxsd{
-	border: 1px solid black;
+.selectxsd{	
 	width: 50%;
 	margin: 20px;
 	padding: 10px;
-	background-color: #0000a0;
+	background-color: #08384E;
 	box-shadow: 10px 10px 5px grey;
-	color: #FFFFFF;}
+	color: #FFFFFF;
+	border-radius: 4px;  	
+  
+	}
 
 .xsdview_blck{
 	float: left;
@@ -376,7 +379,8 @@ div.footer_jsp2 h6 {
 	background-origin: content-box;}
 
 #testconn{
-	margin-bottom: 35px;
+	margin-bottom: 25px;
+	font-family: "Calibri";
 }
 #home_icon{
 	width:40px;
@@ -406,6 +410,13 @@ div.footer_jsp2 h6 {
 	height:40px;
 	position: relative;
 	top: -1px;
+}
+
+.settng_span{
+	font-family: "Calibri";
+	font-size: 16px;
+	font-style: 
+	
 }
 
 
