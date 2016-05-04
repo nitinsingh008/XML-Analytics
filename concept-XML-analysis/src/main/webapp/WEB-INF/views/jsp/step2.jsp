@@ -94,27 +94,27 @@ function checkConnectivity()
 					<strong>Select Setting</strong> <br>
 				</h4>
 					<form:checkbox path="doAll" id="doAll"></form:checkbox>
-					<span>Select All</span> <br>
+					<span class="settng_span">Select All</span> <br>
 
 					<form:checkbox path="createScript" id="createScript"/>
-					<span>Create Database Script</span> <br> 
+					<span class="settng_span">Create Database Script</span> <br> 
 
 					<form:checkbox path="createFramework" id="createFramework" />
-					<span>Generate Parsing framework</span> <br>
+					<span class="settng_span">Generate Parsing framework</span> <br>
 					<form:checkbox path="createTable" id="createTable"/>
-					<span>Create Table in Database</span> <br>
+					<span class="settng_span">Create Table in Database</span> <br>
 					
-					<span>Choose
+					<span class="settng_span">Choose
 						Database Type</span> 
 					<form:select path="databaseType" items="${databaseType}"></form:select>
 					<br>
 					<div id="databaseSetting">
-						 <span>Database Connection String</span> <br>
+						 <span class="settng_span">Database Connection String</span> <br>
 						<form:textarea path="tnsEntry" rows="2" cols="45" id="tnsEntry"/>
-						<br> <span>UserName&nbsp;</span>
+						<br> <span class="settng_span">UserName&nbsp;</span>
 						<form:input path="userName" id="username"  oninput="hideUserIcon()" />
 						<br>
-						 <span>Password&nbsp;&nbsp;</span>
+						 <span class="settng_span">Password&nbsp;&nbsp;&nbsp;</span>
 						<form:input path="password" type="password" id="password" oninput="hidePsswdIcon()"/>
 						<br>
 						<input type="button" value="Test Connectivity" onclick="checkConnectivity()" id="testconn"/>
