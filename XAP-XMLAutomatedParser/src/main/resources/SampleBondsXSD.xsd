@@ -642,7 +642,7 @@
             </xsd:simpleType>
          </xsd:element>
          <xsd:element name="amount" minOccurs="0" maxOccurs="1" type="xsd:double"/>
-         <xsd:element name="date" minOccurs="0" maxOccurs="1" type="xsd:date"/>
+         <xsd:element name="redeemDate" minOccurs="0" maxOccurs="1" type="xsd:date"/>
          <xsd:element name="redemptionMethod" minOccurs="0" maxOccurs="1">
             <xsd:simpleType>
                <xsd:restriction base="xsd:string">

@@ -88,7 +88,7 @@ public abstract class TableGenerator
 		{
 			sb.append("\n") ;
 			String tableName = tableMapIt.next();
-			if(tableName.contains("$")){
+			if(tableName == null ||  tableName.contains("$") || tableName.toUpperCase().contains("OBJECTFACTORY")){
 				//tableName = tableName.replace("$", "_");
 				continue;
 			}
@@ -112,6 +112,9 @@ public abstract class TableGenerator
 			
 			for(DBColumns columns :columnList)
 			{
+				if(columns.getName().length() > 30){
+					columns.setName(columns.getName().substring(0, 30));
+				}
 				sb.append(columns.getName().toUpperCase()).append("\t\t").
 				   append(columns.getDataType().toUpperCase()).append(",\n");
 			}
