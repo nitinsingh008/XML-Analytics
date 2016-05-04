@@ -111,6 +111,7 @@ function checkConnectivity()
 					<div id="databaseSetting">
 						 <span class="settng_span">Database Connection String</span> <br>
 						<form:textarea path="tnsEntry" rows="2" cols="45" id="tnsEntry"/>
+						
 						<br> <span class="settng_span">UserName&nbsp;</span>
 						<form:input path="userName" id="username"  oninput="hideUserIcon()" />
 						<br>

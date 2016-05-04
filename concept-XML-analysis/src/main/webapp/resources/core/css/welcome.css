@@ -345,6 +345,7 @@ div.footer_jsp2 h6 {
 	/* For Firefox 3.6 to 15 */
 	background: linear-gradient(grey, white);
 	/* Standard syntax (must be last) */	
+	font-size:100%;
 	}
 
 
@@ -381,6 +382,7 @@ div.footer_jsp2 h6 {
 #testconn{
 	margin-bottom: 25px;
 	font-family: "Calibri";
+	font-weight: bold;
 }
 #home_icon{
 	width:40px;

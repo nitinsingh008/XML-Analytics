@@ -58,6 +58,13 @@
 		
 		if(document.getElementById('doAll').checked || document.getElementById('createScript').checked || document.getElementById('createFramework').checked 
 			|| document.getElementById('createTable').checked){
+			if(document.getElementById('createTable').checked){
+				var tns = $("#tnsEntry").val();
+				if(tns== null || tns == ''){
+					alert("Please enter TNS entry");
+					return;
+				}
+			}
 				$.ajax({
 					    url: 'Generate',
 					    data: $('#captureParseSettings').serialize(),

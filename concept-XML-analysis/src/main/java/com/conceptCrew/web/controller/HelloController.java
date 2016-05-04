@@ -70,6 +70,7 @@ public class HelloController {
 				stream.write(bytes);
 				stream.close();
 				reuest.setParsedXSDPath(serverFile.getAbsolutePath());
+				reuest.setTnsEntry("jdbc:oracle:thin:@ (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = lon2odcdvscan01.markit.partners)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = BRD02DV)))");
 //				xsdParser.parseXSD(tempXSDName);
 			//	reuest = new XSDParseRequest();
 				//reuest.setParsedXSD(xsdParser.getXSDToPreview(tempXSDName));
@@ -99,17 +100,18 @@ public class HelloController {
 			
 			StartAutomation.doAll(request);
 			
-		}else if(request.getCreateScript()){
+		}else if(request.getCreateFramework()){
 			
-			StartAutomation.createScript(request);
+			StartAutomation.createFrameWork(request);
 			
 		}else if(request.getCreateTable()){
 			
 			StartAutomation.createTable(request);
 			
-		}else if(request.getCreateFramework()){
+		}else if(request.getCreateScript()){
 			
-			StartAutomation.createFrameWork(request);
+			StartAutomation.createScript(request);
+			
 		}
 		
 		return null;
