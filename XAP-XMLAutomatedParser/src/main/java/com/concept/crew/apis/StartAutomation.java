@@ -1,7 +1,7 @@
 package com.concept.crew.apis;
 
 import java.io.File;
-
+import org.apache.log4j.Logger;
 import com.concept.crew.dao.XapDBRoutine;
 import com.concept.crew.info.DBColumns;
 import com.concept.crew.processor.DBScriptRunner;
@@ -14,6 +14,8 @@ import com.google.common.collect.Multimap;
 
 public class StartAutomation 
 {
+	private static Logger 		logger 			= Logger.getLogger(StartAutomation.class);
+	
 	public static void doAll(XSDParseRequest request) throws Exception{
 		start(request, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE);
 	}
@@ -40,26 +42,26 @@ public class StartAutomation
 		if(createScripts)
 		{
 			//1. Create maven project
-			System.out.println("Creating maven project");
+			logger.info("Creating maven project");
 			AutomationHelper.createMavenProject(xsdFile);
 			
 			//2. Generate Jaxb object in new maven project from the input XSD
-			System.out.println("Generating Jaxb object in new maven project from the input XSD");		
+			logger.info("Generating Jaxb object in new maven project from the input XSD");		
 			JaxbInfoGenerator gen = new JaxbInfoGenerator();
 			gen.generateInfos(xsdFile.getAbsolutePath());
 
 			//3. Build Maven project
-			System.out.println("Build Maven project");
+			logger.info("Build Maven project");
 			AutomationHelper.buildMavenProject();
 			
 			// 4. Generate tables from XSD
-			System.out.println("Generating Table Scripts from target/<ProjectName>-1.0.jar");
+			logger.info("Generating Table Scripts");
 			tableGenerator(xsdFile, request.getUserName());
 			
 			// 5. Generate loaders automatically - Main/Schedules
 			
 			// 6. Last Step = > Build Maven project again
-			System.out.println("Build Maven project");
+			logger.info("Build Maven project");
 			AutomationHelper.buildMavenProject();
 		}
 
@@ -70,7 +72,7 @@ public class StartAutomation
 		
 		if(createTable)
 		{
-			System.out.println("Start executing DB scripts");
+			logger.info("Creating Tables in schema");
 			XapDBRoutine.initializeDBRoutine(request.getDatabaseType(), request.getTnsEntry(), request.getUserName(), request.getPassword());
 			
 			if(XapDBRoutine.testAndValidateDBConnection())
@@ -82,7 +84,7 @@ public class StartAutomation
 				System.out.println("Db Connectivity Test failed");
 			}
 			
-			System.out.println("Scripts Executed....");
+			logger.info("Table created....");
 		}
 	}
 
