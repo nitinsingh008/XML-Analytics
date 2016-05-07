@@ -2,9 +2,16 @@ package com.concept.crew.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Properties;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.maven.shared.invoker.DefaultInvocationRequest;
 import org.apache.maven.shared.invoker.DefaultInvoker;
@@ -12,6 +19,10 @@ import org.apache.maven.shared.invoker.InvocationRequest;
 import org.apache.maven.shared.invoker.InvocationResult;
 import org.apache.maven.shared.invoker.Invoker;
 import org.apache.maven.shared.invoker.MavenInvocationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 public class AutomationHelper {
 
@@ -118,5 +129,52 @@ public class AutomationHelper {
 		}
 		if (!files.delete())
 			System.out.println("Maven project not present...creating new");
+	}
+	
+	
+	public static String fetchRootNode(File xsdFile) throws ParserConfigurationException, SAXException, IOException
+	{
+		String roodNode = null;
+		final Thread currentThread = Thread.currentThread();
+		final ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		final InputStream inputStream = contextClassLoader.getResourceAsStream(xsdFile.getName());
+		
+		//parse the document
+		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder;
+		docBuilder 		= docBuilderFactory.newDocumentBuilder();
+		Document doc 	= docBuilder.parse(inputStream);
+		NodeList list 	= doc.getElementsByTagName("xs:element"); 
+		
+		if(list != null && list.item(0) != null)
+		{
+			Element element = (Element)list.item(0) ;
+			roodNode =  element.getAttribute("name");
+		}
+		if(roodNode == null)
+		{
+			// Try searching by xsd
+			list 	= doc.getElementsByTagName("xsd:element"); 
+			if(list != null && list.item(0) != null)
+			{
+				Element element = (Element)list.item(0) ;
+				roodNode =  element.getAttribute("name");
+			}
+		}
+		
+		
+		return roodNode;
+	}
+	
+	public static <T> Class<T> getRootClass(File xsdFile) throws ParserConfigurationException, SAXException, IOException, ClassNotFoundException{
+		String rootElement = fetchRootNode(xsdFile);
+		String qualifiedName = Constants.packageName  +"."+rootElement;		
+		File file = new File(Constants.pathToRootClass);
+		URL urlList[] = {file.toURI().toURL()};
+		URLClassLoader loader = new URLClassLoader(urlList);
+		Class<T> rootClass = (Class<T>) loader.loadClass(qualifiedName);
+		
+		return rootClass;		
 	}
 }

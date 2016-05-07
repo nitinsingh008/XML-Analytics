@@ -14,6 +14,7 @@ public class Constants
 	public static final String jarFileName 		= mavenProjectName + "-1.0.jar";
 	public static final String xsdLocalPath     = mavenProjectPath + "/" + "temp";
 	public static final String settingsFilePath = "settings.xml";
+	public static final String pathToRootClass 	= targetPath + "/" + "classes";
 	
 	public enum DatabaseType
 	{
