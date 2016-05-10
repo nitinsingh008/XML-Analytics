@@ -6,8 +6,8 @@
 <title>XMLAnalysis</title>
 <link href="<c:url value="/resources/core/css/welcome.css" />"
 	rel="stylesheet">
+	
 
-<script src="<c:url value="/resources/core/js/welcome.js" />"></script>
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script
@@ -15,6 +15,8 @@
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="<c:url value="/resources/core/js/crawler.js" />"></script>
+
+<script src="<c:url value="/resources/core/js/welcome.js" />"></script>
 
 <script type="text/javascript">
 marqueeInit({

@@ -51,7 +51,7 @@
 		$("#alertCloseButton").click(function() {
 			$("#alert").hide();
 		});
-
+		
 	});
 	
 	function clickGenerate(){
@@ -65,6 +65,7 @@
 					return;
 				}
 			}
+			var add = setInterval("readLog()",10);
 				$.ajax({
 					    url: 'Generate',
 					    data: $('#captureParseSettings').serialize(),
@@ -73,7 +74,11 @@
 						
 					    success: function(data){
 					   		alert("success");
-					    }
+					   		clearInterval(add);
+					    },
+					    error :function(xhr, status, error) {
+					    	clearInterval(add);
+					    	}
 					  });
 			}else{
 					alert("Please Select Any Option");
@@ -90,4 +95,15 @@
 	
 	function initStep2(){
 		$('#databaseSetting').hide();
+	}
+	
+	function readLog(){
+		$.ajax({
+		    url: 'readLog',
+		    type: 'GET',
+		    success: function(data){
+		   		$("#consoleOutput").html(data);
+		    }
+		  });
+		
 	}

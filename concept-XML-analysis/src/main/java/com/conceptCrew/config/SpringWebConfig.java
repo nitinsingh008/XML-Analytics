@@ -14,7 +14,7 @@ import com.concept.crew.util.XSDParseRequest;
  
 @EnableWebMvc
 @Configuration
-@ComponentScan({ "com.conceptCrew.web" })
+@ComponentScan({ "com.conceptCrew.web"})
 public class SpringWebConfig extends WebMvcConfigurerAdapter {
  
 	@Override

@@ -1,8 +1,11 @@
 package com.conceptCrew.web.controller;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -126,5 +129,32 @@ public class HelloController {
 			return "Connected";
 		}
 		return "Connectivity Failed";
+	}
+	
+	@RequestMapping(value="/readLog")
+	public @ResponseBody String readLogFile(){
+		BufferedReader reader = null;
+		try{
+			StringBuilder logContent = new StringBuilder();
+			 reader = new BufferedReader(new FileReader(new File("log.txt")));
+			String line = reader.readLine();
+			while(line != null){
+				logContent.append(line).append("\n");
+				line = reader.readLine();
+			}
+			
+			return logContent.toString();
+		}catch (IOException e) {
+			// TODO: handle exception
+		}finally{
+			try{
+				if(reader !=null){
+					reader.close();
+				}
+			}catch (IOException e) {
+				//ignore
+			}
+		}
+		return "";
 	}
 }

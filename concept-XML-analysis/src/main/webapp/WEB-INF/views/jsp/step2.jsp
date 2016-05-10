@@ -131,7 +131,6 @@ function checkConnectivity()
 
 
 			</form:form>
-			
 			<div class="generatebtn" align ="center">
 					<button type="button" id="GenerateButton" class="upload"
 						value="Generate" onclick="clickGenerate()">
@@ -142,7 +141,10 @@ function checkConnectivity()
 						<span>Back</span>
 					</button>
 				</div>
-				
+				<div>
+					<h3>Output Console</h3>
+					<textarea id="consoleOutput" rows="10" cols="150" readonly="readonly"></textarea>
+				</div>
 
 
 		</div>
@@ -153,6 +155,5 @@ function checkConnectivity()
 			<h6 align="center">The Concept Crew &copy; markit.com 2016</h6>
 			<h6 align="center">Gaurav Agarwal | Nitin Singh | Parag Garg</h6>
 			 <img src="<c:url value='/resources/images/logo-1.png'/>" id="concpt_crew_logo" />  --%>
-		</div> 
 	
 
