@@ -79,7 +79,6 @@ marqueeInit({
 		</div> --%>
 
 		<div class="header">
-
 			<img src="<c:url value='/resources/images/xap_logo.png'/>"
 				id="xaplogo" title="XAP" />
 			<h6 align="right"><a href="#">
@@ -109,8 +108,28 @@ marqueeInit({
 				id="conceptlogo" />
 
 		</div>	 --%>	
-
-
+		
+		<div>
+								<!-- file not chosen alert div -->
+								<div class="alert alert-warning alert-dismissible" id="alert">
+									<button type="button" class="close" data-dismiss="alert"
+										id="alertCloseButton">
+										<span>&times;</span>
+									</button>
+									<strong>Warning!</strong>
+									<div id="alertMessage">Please Select XSD</div>
+								</div>
+								<br>
+								<div class="alert alert-warning alert-dismissible" id="success">
+									<button type="button" class="close" data-dismiss="alert"
+										id="successCloseButton">
+										<span>&times;</span>
+									</button>
+									<strong>Message!</strong>
+									<div id="successMessage"></div>
+								</div>
+								
+							</div>
 		<div id="step1jsp" class="container-fluid">
 			<div align="center">
 				<div class="upload_form">
@@ -126,18 +145,7 @@ marqueeInit({
 							</div>
 
 
-							<div>
-								<!-- file not chosen alert div -->
-								<div class="alert alert-warning alert-dismissible" id="alert">
-									<button type="button" class="close" data-dismiss="alert"
-										id="alertCloseButton">
-										<span>&times;</span>
-									</button>
-									<strong>Warning!</strong>
-									<div id="alertMessage">Please Select XSD</div>
-								</div>
-								<br>
-							</div>
+							
 
 
 

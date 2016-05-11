@@ -100,7 +100,7 @@ public class HelloController {
 		}
 		
 		if(request.getDoAll()){
-			
+		// have to remove just testing	
 			StartAutomation.doAll(request);
 			
 		}else if(request.getCreateFramework()){
@@ -116,8 +116,10 @@ public class HelloController {
 			StartAutomation.createScript(request);
 			
 		}
-		
-		return null;
+		if(request.getDoAll()){
+			model.put("canUploadFiles", true);
+		}
+		return "fileUpload";
 
 	}
 	
@@ -156,5 +158,15 @@ public class HelloController {
 			}
 		}
 		return "";
+	}
+	
+	@RequestMapping(value = "/uploadXMLs", method = RequestMethod.POST)
+	public @ResponseBody String uploadXMLFile(MultipartHttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		Iterator<String> itr = request.getFileNames();
+		while(itr.hasNext()){
+			MultipartFile file = request.getFile(itr.next());
+			
+		}
+		return "All files uploaded Successfully";
 	}
 }

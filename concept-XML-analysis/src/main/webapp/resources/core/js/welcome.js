@@ -5,6 +5,7 @@
 	//	$("#step2jsp").attr("disabled", true);
 	//	$("#step3jsp").attr("disabled", true);
 		$("#alert").hide();
+		$("#success").hide();
 
 		$("#step1Nav").click(function() {
 			alert("step1Nav .click() called.");
@@ -52,6 +53,12 @@
 			$("#alert").hide();
 		});
 		
+		$("#successCloseButton").click(function() {
+			$("#success").hide();
+		});
+		
+		
+		
 	});
 	
 	function clickGenerate(){
@@ -73,8 +80,12 @@
 					    type: 'POST',
 						
 					    success: function(data){
-					   		alert("success");
 					   		clearInterval(add);
+					   		$("#step2jsp").hide();
+					    	$("#step1jsp").hide();
+					    	
+					    	$("#step3jsp").html(data);
+					    	$("#step3jsp").show();
 					    },
 					    error :function(xhr, status, error) {
 					    	clearInterval(add);
@@ -105,5 +116,42 @@
 		   		$("#consoleOutput").html(data);
 		    }
 		  });
+		
+	}
+	
+	function clickBackToHome(){
+		$('#step1jsp').show();
+		$('#step3jsp').hide();
+	}
+
+	function uploadXMLButton(){
+		
+			
+			var fileName = $("#inputXML").val();
+			alert(fileName);
+			if (fileName == null || fileName == '') {
+				$("#alertMessage").html('Select files to upload');
+				 $("#alert").show();
+				return;
+			}else if(!fileName.endsWith(".xml")){
+				 $('#alertMessage').html('invalid file format');
+				 $("#alert").show();
+				 return;
+			}
+			 var oMyForm = new FormData();
+			  oMyForm.append(fileName, inputXML.files[0]);
+			  $.ajax({
+				    url: 'uploadXMLs',
+				    data:oMyForm,
+				    dataType: 'text',
+				    processData: false,
+				    contentType: false,
+				    type: 'POST',
+				    success: function(data){
+				   		$("#successMessage").html(data);
+				   		$("#success").show();
+				    }
+				  });
+		
 		
 	}
