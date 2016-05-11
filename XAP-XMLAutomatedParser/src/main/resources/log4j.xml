@@ -4,12 +4,12 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
     <appender name="file" class="org.apache.log4j.RollingFileAppender">
-        <param name="File" value="C:/XAP/log/xap.log"/>
+        <param name="File" value="xap.log"/>
         <param name="Append" value="false" />
         <param name="MaxFileSize" value="100MB"/>
         <param name="MaxBackupIndex" value="10"/>
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d %-5r %-5p %t [%F: %L] %m%n"/>
+            <param name="ConversionPattern" value="%m%n"/>
         </layout>
     </appender>
 
@@ -21,7 +21,7 @@
 
 
     <root>
-        <priority value="info"/>
+        <priority value="warn"/>
         <appender-ref ref="file"/>
     </root>
 
