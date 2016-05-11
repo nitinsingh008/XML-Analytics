@@ -42,26 +42,26 @@ public class StartAutomation
 		if(createScripts)
 		{
 			//1. Create maven project
-			logger.info("Creating maven project");
+			logger.warn("Creating maven project");
 			AutomationHelper.createMavenProject(xsdFile);
 			
 			//2. Generate Jaxb object in new maven project from the input XSD
-			logger.info("Generating Jaxb object in new maven project from the input XSD");		
+			logger.warn("Generating Jaxb object in new maven project from the input XSD");		
 			JaxbInfoGenerator gen = new JaxbInfoGenerator();
 			gen.generateInfos(xsdFile.getAbsolutePath());
 
 			//3. Build Maven project
-			logger.info("Build Maven project");
+			logger.warn("Build Maven project");
 			AutomationHelper.buildMavenProject();
 			
 			// 4. Generate tables from XSD
-			logger.info("Generating Table Scripts");
+			logger.warn("Generating Table Scripts");
 			tableGenerator(xsdFile, request.getUserName());
 			
 			// 5. Generate loaders automatically - Main/Schedules
 			
 			// 6. Last Step = > Build Maven project again
-			logger.info("Build Maven project");
+			logger.warn("Build Maven project");
 			AutomationHelper.buildMavenProject();
 		}
 
@@ -72,7 +72,7 @@ public class StartAutomation
 		
 		if(createTable)
 		{
-			logger.info("Creating Tables in schema");
+			logger.warn("Creating Tables in schema");
 			XapDBRoutine.initializeDBRoutine(request.getDatabaseType(), request.getTnsEntry(), request.getUserName(), request.getPassword());
 			
 			if(XapDBRoutine.testAndValidateDBConnection())
@@ -84,7 +84,7 @@ public class StartAutomation
 				System.out.println("Db Connectivity Test failed");
 			}
 			
-			logger.info("Table created....");
+			logger.warn("Table created....");
 		}
 	}
 
