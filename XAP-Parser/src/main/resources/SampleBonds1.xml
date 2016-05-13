@@ -170,7 +170,7 @@
     <Redemption>
       <redemptionSource>redemptionSource</redemptionSource>
       <amount>0.0</amount>
-      <date>2001-01-01</date>
+      <RedDate>2001-01-01</RedDate>
       <redemptionMethod>redemptionMethod</redemptionMethod>
       <redemptionStrikePrice>0.0</redemptionStrikePrice>
       <redemptionType>redemptionType</redemptionType>
