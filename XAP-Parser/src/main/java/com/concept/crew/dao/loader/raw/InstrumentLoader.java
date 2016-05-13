@@ -20,22 +20,23 @@ import com.concept.crew.util.ResultSetHelper;
 public final class InstrumentLoader extends AbstractDataLoader 
 {
 
-	private static final String RAW_INSERT = "  INSERT INTO CORE_FEED.SE_RAW_MARKITBOND "
+	private static final String RAW_INSERT = " INSERT INTO CORE_REF_DATA.INSTRUMENT_RAW "
 												+ "("
-												+ "BOND_ID,   "
+												+ " INSTRUMENT_SEQ.NEXTVAL"
+												+ "INSTRUMENTID,   "
 												+ "MARKIT_PKEY,  "
-												+ "PKEY, 	      "
-												+ "TITLEOFNOTES, "
-												+ "MARKITISSUERNAME, "
-												+ "ISSUEDATE, "
-												+ "DOCUMENTDATE, "
-												+ "DOCUMENTTYPE, "
-												+ "PARSINGDATE, 	"
-												+ "DOCUMENTNAME"
+												+ "VERSION, 	      "
+												+ "NEWISSUE, "
+												+ "INSTRUMENTGRADE, "
+												+ "LASTMODIFIEDDATE, "
+												+ "SOURCE, "
+												+ "HASADDITIONALCREDIT, "
+												+ "ALTERNATIVEPRINCIPALCCYCODE, 	"
+												+ "AMTISSUEDPUBLIC"
 												+ ") "
-												+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+												+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
-	private static final String RAW_SELECT_MARKITPKEY = " SELECT * FROM SE_RAW_MARKITBOND WHERE MARKIT_PKEY "
+	private static final String RAW_SELECT_MARKITPKEY = " SELECT * FROM INSTRUMENT_RAW WHERE MARKIT_PKEY "
 													  + " IN ( ? )";
 	
 	@Override

@@ -19,6 +19,7 @@ import java.util.concurrent.Future;
 import org.apache.log4j.Logger;
 
 import com.concept.crew.dao.loaderUtil.DataReaderImpl;
+import com.concept.crew.dao.loaderUtil.DataWriterImpl;
 import com.concept.crew.dao.loaderUtil.IDataReader;
 import com.concept.crew.dao.loaderUtil.raw.LoadersType.BondDomain;
 import com.concept.crew.dao.loaderUtil.raw.LoadersType.BondFilter;
@@ -371,9 +372,9 @@ public class DataLoader {
 
 				for (Collection<Pair<InstrumentRaw, List<IDataDomainLoader>>> partition : partitions) 
 				{
-/*					Callable<Void> call = new BRDWriterImpl<MarkitBondRaw, IInstrumentDomainLoader>(logKey, partition);
+					Callable<Void> call = new DataWriterImpl<InstrumentRaw, IDataDomainLoader>(logKey, partition);
 					Future<Void> task = completionService.submit(call);
-					writeBondTasks.add(task);*/
+					writeBondTasks.add(task);
 				}
 
 				ThreadManager.handleTaskCompletion(writeBondTasks, completionService);

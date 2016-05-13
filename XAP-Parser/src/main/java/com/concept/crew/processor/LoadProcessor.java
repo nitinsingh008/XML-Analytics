@@ -20,7 +20,7 @@ public class LoadProcessor
 	{
 		try 
 		{		
-		     String xmlFileToBeParsed = "D:\\eclipse-Luna\\svn_checkouts\\trunk\\LoadersFrameworkTemplate\\src\\main\\resources/SampleBonds1.xml";
+		     String xmlFileToBeParsed = "C:\\XAP/SampleBonds1.xml";
 		    
 		     StartingTag startingTag = null;
 		     File file;
