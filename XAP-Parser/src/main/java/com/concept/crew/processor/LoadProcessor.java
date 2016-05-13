@@ -42,7 +42,7 @@ public class LoadProcessor
 			 } 
 		     catch (Exception e) 
 		     {
-				 log.error("Error processing zip file" + e.getMessage());	
+				 log.error("Error processing XML file" + e.getMessage());	
 				 log.error(e,e);
 			 }			  
 		}
