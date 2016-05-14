@@ -68,6 +68,7 @@ public class XSDParser {
     	
     	return br.toString();
     }
+    
 }
 
 class SchemaElement {

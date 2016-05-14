@@ -6,7 +6,7 @@
 <title>XMLAnalysis</title>
 <link href="<c:url value="/resources/core/css/welcome.css" />"
 	rel="stylesheet">
-	
+
 
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -40,7 +40,7 @@ marqueeInit({
 	persist: true,
 	savedirection: true
 });
-</script> 
+</script>
 
 </head>
 
@@ -50,7 +50,7 @@ marqueeInit({
 	<div id="parent" class="snap12">
 
 		<!-- http://www.dynamicdrive.com/dynamicindex2/crawler/ use this link for reference for crawler marquee -->
-<%-- 		<div class="marquee" id="mycrawler">
+		<%-- 		<div class="marquee" id="mycrawler">
 			| <img src="<c:url value='/resources/images/xap_logo.png'/>" id="xap_crawler" /> 
 			<img src="<c:url value='/resources/images/text1.png'/>" id="text1_crawler" />
 <!-- 			XAP - XML Automated Parser | Features  -->	
@@ -77,28 +77,26 @@ marqueeInit({
 			, Nitin Singh
 			, Parag Garg
 		</div> --%>
-
-		<div class="header">
+	<div class="container"> 
+		<div class="header row">
 			<img src="<c:url value='/resources/images/xap_logo.png'/>"
 				id="xaplogo" title="XAP" />
-			<h6 align="right"><a href="#">
-			<img src="<c:url value='/resources/images/home_icon.png'/>"
-				id="home_icon"/>			
-          &nbsp;HOME
-        </a> | <a href="#">
-			<img src="<c:url value='/resources/images/about_us.png'/>"
-				id="aboutus_icon"/>			
-          &nbsp;ABOUT US
-        </a> | <a href="#">
-			<img src="<c:url value='/resources/images/help.png'/>"
-				id="help_icon"/>			
-          &nbsp;HELP
-        </a> | <a href="#">
-			<img src="<c:url value='/resources/images/contact.png'/>"
-				id="contact_icon"/>			
-          &nbsp;CONTACT US&nbsp;&nbsp;
-        </a></h6>
-			
+			<h6 align="right">
+				<a href="#"> <img
+					src="<c:url value='/resources/images/home_icon.png'/>"
+					id="home_icon" /> &nbsp;HOME
+				</a> | <a href="#"> <img
+					src="<c:url value='/resources/images/about_us.png'/>"
+					id="aboutus_icon" /> &nbsp;ABOUT US
+				</a> | <a href="#"> <img
+					src="<c:url value='/resources/images/help.png'/>" id="help_icon" />
+					&nbsp;HELP
+				</a> | <a href="#"> <img
+					src="<c:url value='/resources/images/contact.png'/>"
+					id="contact_icon" /> &nbsp;CONTACT US&nbsp;&nbsp;
+				</a>
+			</h6>
+
 		</div>
 
 		<%-- 		<div class="header snap12" align = "right">
@@ -107,84 +105,124 @@ marqueeInit({
 				src="<c:url value='/resources/images/concept_crew.png'/>"
 				id="conceptlogo" />
 
-		</div>	 --%>	
-		
+		</div>	 --%>
+
 		<div>
-								<!-- file not chosen alert div -->
-								<div class="alert alert-warning alert-dismissible" id="alert">
-									<button type="button" class="close" data-dismiss="alert"
-										id="alertCloseButton">
-										<span>&times;</span>
-									</button>
-									<strong>Warning!</strong>
-									<div id="alertMessage">Please Select XSD</div>
-								</div>
-								<br>
-								<div class="alert alert-warning alert-dismissible" id="success">
-									<button type="button" class="close" data-dismiss="alert"
-										id="successCloseButton">
-										<span>&times;</span>
-									</button>
-									<strong>Message!</strong>
-									<div id="successMessage"></div>
-								</div>
-								
-							</div>
-		<div id="step1jsp" class="container-fluid">
-			<div align="center">
-				<div class="upload_form">
-					<form action="/uploadXSD" method="post"
-						enctype="multipart/form-data" id="uploadXSD">
-						<div class="row col-xs-12" id="divborder">
-
-
-							<div>
-								<h3>
-									<span class="selectxsd">Please Upload XSD </span>
-								</h3>
-							</div>
-
-
-							
-
-
-
-							<div>
-								<input id="inputXsd" name="inputXsd" type="file"
-									class="file-loading form-control" 
-									value="Please Select XSD"></input>
-
-
-
-								<button type="button" id="uploadButton"
-									title="Upload selected files" class="upload" value="Upload">
-									<span>Upload</span>
-								</button>
-
-								<!-- <input type="button" id="uploadButton"
-												title="Upload selected files" class="upload"
-												value="Upload" />-->
-
-							</div>
-
-
-						</div>
-					</form>
-				</div>
+			<!-- file not chosen alert div -->
+			<div class="alert alert-warning alert-dismissible" id="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					id="alertCloseButton">
+					<span>&times;</span>
+				</button>
+				<strong>Warning!</strong>
+				<div id="alertMessage">Please Select XSD</div>
 			</div>
-			
+			<br>
+			<div class="alert alert-warning alert-dismissible" id="success">
+				<button type="button" class="close" data-dismiss="alert"
+					id="successCloseButton">
+					<span>&times;</span>
+				</button>
+				<strong>Message!</strong>
+				<div id="successMessage"></div>
+			</div>
 
 		</div>
+		
+		<div id="step1jsp" class="row">
+			<div align="center">
+				<div class="upload_form">
+					<!-- <form action="/uploadXSD" method="post"
+						enctype="multipart/form-data" id="uploadXSD"> -->
+						<div class="container" id="divborder">
+							<div class="row">
+								<div class="btn-group" data-toggle="buttons" onchange="changeIT(this)">
+									<label class="btn btn-primary">
+										<input name="inputType" value="XML" type="radio" class="active">XML
+									</label>
+									<label class="btn btn-primary">
+										<input name="inputType" value="DELIMITED" type="radio" >DELIMITED
+									</label>
+						        </div>
+							</div>
+							<div id="xmlMetaDeta" class="row">
+								<div class="container">
+									<div class="row">
+									<h3>
+										<span class="selectxsd">Please Upload XSD</span>
+									</h3>
+									</div>
+									<div class="row">
+										<input id="inputXsd" name="inputXsd" type="file"
+											class="file-loading form-control" value="Please Select XSD"></input>
+										<button type="button" id="uploadButtonXsd"
+											title="Upload selected files" class="upload" value="Upload">
+											<span>Upload</span>
+										</button>
+									</div>
+								</div>
+							</div>
+							<div id="delimtedMetaDeta" class="row">
+								<div class="container">
+									<div class="row">
+									<h3>
+										<span class="selectxsd">Please Upload Data File</span>
+									</h3>
+									<br>
+									</div>
+									<div class="row">
+										<div class="col-xs-2"></div>
+										<div class="col-xs-2">
+											File Demilimter By : 
+										</div>
+										<div class="col-xs-2">
+											<select class="dropdown" id="csvDelimiter">
+												<option></option>
+												<option value="\t">TAB</option>
+												<option value=",">,(comma)</option>
+												<option value="|">|(pipe)</option>
+											</select> 
+										</div>
+										<div class="col-xs-2">
+											File Have Header data : 
+										</div>
+										<div class="col-xs-2">
+											<select class="dropdown" id="haveHeader">
+												<option value="Y">Yes</option>
+												<option value="N">No</option>
+											</select> 
+										</div>
+										<div class="col-xs-2"></div>
+									</div>
+									<div>
+										<input id="inputDelimited" name="inputXsd" type="file"
+											class="file-loading form-control" value="Please Select XSD"></input>
+										<button type="button" id="uploadButtonDelimited"
+											title="Upload selected files" class="upload" value="Upload">
+											<span>Upload</span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+				<!-- 	</form> -->
+				</div>
+			</div>
+		</div>
+		
+		<div class="row" id="step2jsp"></div>
 
-		<div id="step2jsp"></div>
+		<div class="row" id="step3jsp"></div>
+		<div class = "row" id="consoleJsp">
+			<h3>Output Console</h3>
+			<textarea id="consoleOutput" rows="10" cols="150" readonly="readonly"></textarea>
+		</div>
 
-		<div id="step3jsp"></div>
-
-
-			<div class="footer">			
+		<div class="footer row">
 			<h6 align="center">The Concept Crew &copy; markit.com 2016</h6>
 			<h6 align="center">Gaurav Agarwal | Nitin Singh | Parag Garg</h6>
-			 <img src="<c:url value='/resources/images/concept_crew.png'/>" id="concpt_crew_logo" /> 
+			<img src="<c:url value='/resources/images/concept_crew.png'/>"
+				id="concpt_crew_logo" />
 		</div>
 	</div>
 

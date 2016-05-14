@@ -49,6 +49,57 @@ public class HelloController {
 
 	}
 
+	
+	
+	@RequestMapping(value = "/uploadCSV", method = RequestMethod.POST)
+	public String uploadCSVqFileHandler(MultipartHttpServletRequest request,@RequestParam("delimited")String delimiter,@RequestParam("haveHeader") String hasHeaderData, HttpServletResponse response, ModelMap model) {
+
+		Iterator<String> itr = request.getFileNames();
+		MultipartFile file = request.getFile(itr.next());
+		model.put("databaseType", Arrays.asList(new String[] { "ORACLE", "SQL SERVER" , "MySQL" }));
+		String csvFile = null;
+		if (!file.isEmpty()) {
+			
+			try {
+				byte[] bytes = file.getBytes();
+
+				// Creating the directory to store file
+				String rootPath = Constants.xsdLocalPath;
+				File dir = new File(rootPath);
+				if (!dir.exists())
+					dir.mkdirs();
+				csvFile = (file.getName().contains(File.separator)) ? file.getName().substring(
+						file.getName().lastIndexOf(File.separator)+1, file.getName().length()) : file.getName();
+				// Create the file on server
+				File serverFile = new File(dir.getAbsolutePath() + File.separator + csvFile);
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				stream.write(bytes);
+				stream.close();
+				reuest.setInputType(Constants.inputType.DELIMITED.toString());
+				reuest.setDelimiter(delimiter);
+				if(hasHeaderData.equals("Y")){
+					reuest.setHaveHeaderData(Boolean.TRUE);
+				}else{
+					reuest.setHaveHeaderData(Boolean.FALSE);
+				}
+				reuest.setParsedXSDPath(serverFile.getAbsolutePath());
+				reuest.setTnsEntry("jdbc:oracle:thin:@ (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = lon2odcdvscan01.markit.partners)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = BRD02DV)))");
+//				xsdParser.parseXSD(tempXSDName);
+			//	reuest = new XSDParseRequest();
+				//reuest.setParsedXSD(xsdParser.getXSDToPreview(tempXSDName));
+				
+
+			} catch (Exception e) {
+				model.put("parsedInString", "You failed to upload " + file.getName() + " => " + e.getMessage());
+				e.printStackTrace();
+			}
+		} else {
+			model.put("parsedInString", "You have Uplaoded Blank file");
+		}
+		model.put("xsdParseRequest", reuest);
+		model.put("parsedInString", (xsdParser.getXSDToPreview(csvFile)));
+		return "step2";
+	}
 
 	@RequestMapping(value = "/uploadXSD", method = RequestMethod.POST)
 	public String uploadFileHandler(MultipartHttpServletRequest request, HttpServletResponse response, ModelMap model) {
@@ -72,6 +123,7 @@ public class HelloController {
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
+				reuest.setInputType(Constants.inputType.XML.toString());
 				reuest.setParsedXSDPath(serverFile.getAbsolutePath());
 				reuest.setTnsEntry("jdbc:oracle:thin:@ (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = lon2odcdvscan01.markit.partners)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = BRD02DV)))");
 //				xsdParser.parseXSD(tempXSDName);

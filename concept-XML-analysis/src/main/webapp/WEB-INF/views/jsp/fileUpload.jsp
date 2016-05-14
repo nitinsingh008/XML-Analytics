@@ -11,7 +11,7 @@
 
 
 <div id="step11" class="span12" align="center">
-	<div class="col-span-12">
+	<div class="row">
 		<c:choose>
 			<c:when test="${canUploadFiles eq 'true'}">
 				<input id="inputXML" name="inputXML" type="file"
@@ -27,7 +27,7 @@
 			</c:otherwise>
 		</c:choose>						
 	</div>
-	<div class="col-span-12">
+	<div class="row">
 		<button type="button" id="BackHome" class="upload"
 						value="Back" onclick="clickBackToHome()">
 						<span>Home</span>

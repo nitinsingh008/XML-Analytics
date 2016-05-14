@@ -22,4 +22,9 @@ public class Constants
 		MySQL,
 		SQL_Server;
 	}
+	
+	public enum inputType{
+		XML,
+		DELIMITED;
+	}
 }

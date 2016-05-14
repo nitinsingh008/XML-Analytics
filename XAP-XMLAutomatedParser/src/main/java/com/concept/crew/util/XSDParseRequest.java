@@ -8,6 +8,10 @@ public class XSDParseRequest implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	String inputType;
+	String databaseTablePostFix;
+	String delimiter;
+	Boolean haveHeaderData;
 	String parsedXSDPath;
 	Boolean doAll;
 	Boolean createScript;
@@ -71,6 +75,30 @@ public class XSDParseRequest implements Serializable{
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getInputType() {
+		return inputType;
+	}
+	public void setInputType(String inputType) {
+		this.inputType = inputType;
+	}
+	public String getDatabaseTablePostFix() {
+		return databaseTablePostFix;
+	}
+	public void setDatabaseTablePostFix(String databaseTablePostFix) {
+		this.databaseTablePostFix = databaseTablePostFix;
+	}
+	public String getDelimiter() {
+		return delimiter;
+	}
+	public void setDelimiter(String delimiter) {
+		this.delimiter = delimiter;
+	}
+	public Boolean getHaveHeaderData() {
+		return haveHeaderData;
+	}
+	public void setHaveHeaderData(Boolean haveHeaderData) {
+		this.haveHeaderData = haveHeaderData;
 	}
 	
 	

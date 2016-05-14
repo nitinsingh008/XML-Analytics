@@ -77,83 +77,88 @@ function checkConnectivity()
 
 
 
-	<div class="container-fluid" id="container-jsp2">
-		<div class="xsd_container">
-
-			<div class="xsdview_blck">
+<div class="container" id="container-jsp2">
+	<div class="xsd_container">
+		<div class="row">
+			<div class="xsdview_blck col-xs-6">
 				<h4>
-					<strong> XSD View </strong>
+					<strong> Input File View </strong>
 				</h4>
-				<textarea rows="15" cols="50" readonly="readonly">${parsedInString}</textarea>
+				<textarea rows="15" cols="70%" readonly="readonly">${parsedInString}</textarea>
 			</div>
+			<div class="col-xs-1"></div>
+			<div class="setting_blck col-xs-5">
+				<form:form commandName="xsdParseRequest" id="captureParseSettings"
+					name="captureSettings">
+					<div>
+						<h4>
+							<strong>Select Setting</strong> <br>
+						</h4>
+						<form:checkbox path="doAll" id="doAll"></form:checkbox>
+						<span class="settng_span">Select All</span> <br>
 
-			<form:form commandName="xsdParseRequest" id="captureParseSettings"
-				name="captureSettings">
-				<div class="setting_blck">
-				<h4>
-					<strong>Select Setting</strong> <br>
-				</h4>
-					<form:checkbox path="doAll" id="doAll"></form:checkbox>
-					<span class="settng_span">Select All</span> <br>
+						<form:checkbox path="createScript" id="createScript" />
+						<span class="settng_span">Create Database Script</span> <br>
 
-					<form:checkbox path="createScript" id="createScript"/>
-					<span class="settng_span">Create Database Script</span> <br> 
+						<form:checkbox path="createFramework" id="createFramework" />
+						<span class="settng_span">Generate Parsing framework</span> <br>
+						<form:checkbox path="createTable" id="createTable" />
+						<span class="settng_span">Create Table in Database</span> <br>
 
-					<form:checkbox path="createFramework" id="createFramework" />
-					<span class="settng_span">Generate Parsing framework</span> <br>
-					<form:checkbox path="createTable" id="createTable"/>
-					<span class="settng_span">Create Table in Database</span> <br>
-					
-					<span class="settng_span">Choose
-						Database Type</span> 
-					<form:select path="databaseType" items="${databaseType}"></form:select>
-					<br>
-					<div id="databaseSetting">
-						 <span class="settng_span">Database Connection String</span> <br>
-						<form:textarea path="tnsEntry" rows="2" cols="45" id="tnsEntry"/>
-						
-						<br> <span class="settng_span">UserName&nbsp;</span>
-						<form:input path="userName" id="username"  oninput="hideUserIcon()" />
+						<span class="settng_span">Choose Database Type</span>
+						<form:select path="databaseType" items="${databaseType}"></form:select>
 						<br>
-						 <span class="settng_span">Password&nbsp;&nbsp;&nbsp;</span>
-						<form:input path="password" type="password" id="password" oninput="hidePsswdIcon()"/>
-						<br>
-						<input type="button" value="Test Connectivity" onclick="checkConnectivity()" id="testconn"/>
-						
-						
+						<div id="databaseSetting">
+							<span class="settng_span">Table Name PostFix</span>
+							<form:input path="databaseTablePostFix" id="databaseTablePostFix" />
+							<br> <span class="settng_span">Database Connection
+								String</span> <br>
+							<form:textarea path="tnsEntry" rows="2" cols="45" id="tnsEntry" />
+
+							<br> <span class="settng_span">UserName&nbsp;</span>
+							<form:input path="userName" id="username"
+								oninput="hideUserIcon()" />
+							<br> <span class="settng_span">Password&nbsp;&nbsp;&nbsp;</span>
+							<form:input path="password" type="password" id="password"
+								oninput="hidePsswdIcon()" />
+							<br> <input type="button" value="Test Connectivity"
+								onclick="checkConnectivity()" id="testconn" />
+
+
+						</div>
+
+						<input type="hidden" path="parsedXSDPath" id="parsedXSDPath"
+							name="parsedXSDPath" value="${xsdParseRequest.parsedXSDPath}" />
+						<input type="hidden" path="inputType" id="inputType"
+							name="inputType" value="${xsdParseRequest.inputType}" /> <input
+							type="hidden" path="delimiter" id="delimiter" name="delimiter"
+							value="${xsdParseRequest.delimiter}" /> <input type="hidden"
+							path="haveHeaderData" id="haveHeaderData" name="haveHeaderData"
+							value="${xsdParseRequest.haveHeaderData}" />
+
 					</div>
 
-					 <input type="hidden" path="parsedXSDPath"
-						id="parsedXSDPath" name="parsedXSDPath"
-						value="${xsdParseRequest.parsedXSDPath}"/> 
 
-				</div>
-
-
-			</form:form>
-			<div class="generatebtn" align ="center">
-					<button type="button" id="GenerateButton" class="upload"
-						value="Generate" onclick="clickGenerate()">
-						<span>Generate</span>
-					</button>
-					<button type="button" id="Back" class="upload"
-						value="Back" onclick="clickBack()">
-						<span>Back</span>
-					</button>
-				</div>
-				<div>
-					<h3>Output Console</h3>
-					<textarea id="consoleOutput" rows="10" cols="150" readonly="readonly"></textarea>
-				</div>
-
-
+				</form:form>
+			</div>
 		</div>
-		
-			
+		<div class="generatebtn row" align="center">
+			<button type="button" id="GenerateButton" class="upload"
+				value="Generate" onclick="clickGenerate()">
+				<span>Generate</span>
+			</button>
+			<button type="button" id="Back" class="upload" value="Back"
+				onclick="clickBack()">
+				<span>Back</span>
+			</button>
+		</div>
 	</div>
-				<%-- <div class="footer_jsp2">			
+
+
+</div>
+<%-- <div class="footer_jsp2">			
 			<h6 align="center">The Concept Crew &copy; markit.com 2016</h6>
 			<h6 align="center">Gaurav Agarwal | Nitin Singh | Parag Garg</h6>
 			 <img src="<c:url value='/resources/images/logo-1.png'/>" id="concpt_crew_logo" />  --%>
-	
+
 

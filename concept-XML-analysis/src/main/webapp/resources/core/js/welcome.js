@@ -2,6 +2,8 @@
 		// hide remaining divs
 	//	$("#step2jsp").hide();
 		$("#step3jsp").hide();
+		$("#consoleJsp").hide();
+		$("#delimtedMetaDeta").hide();
 	//	$("#step2jsp").attr("disabled", true);
 	//	$("#step3jsp").attr("disabled", true);
 		$("#alert").hide();
@@ -19,7 +21,7 @@
 			alert("step3Nav .click() called.");
 		});
 		
-		$("#uploadButton").click(function() {
+		$("#uploadButtonXsd").click(function() {
 			var fileName = $("#inputXsd").val();
 			if (fileName == null || fileName == '') {
 				$("#alert").show();
@@ -34,6 +36,38 @@
 				  $.ajax({
 					    url: 'uploadXSD',
 					    data:oMyForm,
+					    dataType: 'text',
+					    processData: false,
+					    contentType: false,
+					    type: 'POST',
+					    success: function(data){
+					   		 $("#step2jsp").show();
+					    	 $("#step1jsp").hide();
+					    	 //$("#step2jsp").attr("disabled", false);
+							 //$("#step1jsp").attr("disabled", true);
+					    	 $("#step2jsp").html(data);
+					    }
+					  });
+			}
+		});
+		
+		$("#uploadButtonDelimited").click(function() {
+			
+			var fileName = $("#inputDelimited").val();
+			var delimiter = $("#csvDelimiter").val();
+			if (fileName == null || fileName == '' || delimiter == null || delimiter == '') {
+				$('#alertMessage').html('either inputfile or delimiter not provided');
+				$("#alert").show();
+				return;
+			}
+			else{
+				 var oMyForm = new FormData();
+				  oMyForm.append(fileName, inputDelimited.files[0]);
+				  oMyForm.append("delimited", $("#csvDelimiter").val());
+				  oMyForm.append("haveHeader",  $("#haveHeader").val());
+				  $.ajax({
+					    url: 'uploadCSV',
+					    data: oMyForm,
 					    dataType: 'text',
 					    processData: false,
 					    contentType: false,
@@ -114,6 +148,7 @@
 		    type: 'GET',
 		    success: function(data){
 		   		$("#consoleOutput").html(data);
+		   		$("#consoleJsp").show();
 		    }
 		  });
 		
@@ -153,5 +188,18 @@
 				    }
 				  });
 		
+		
+	}
+	
+	function changeIT(ele){
+		//alert($(event).val());
+		var selected = $(ele).find("input[name='inputType']:checked").val();
+		if(selected == 'DELIMITED'){
+			$("#xmlMetaDeta").hide();
+			$("#delimtedMetaDeta").show();
+		}else if(selected == 'XML'){
+			$("#xmlMetaDeta").show();
+			$("#delimtedMetaDeta").hide();
+		}
 		
 	}
