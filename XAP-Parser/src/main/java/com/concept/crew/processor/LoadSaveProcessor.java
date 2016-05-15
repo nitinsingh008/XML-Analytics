@@ -52,7 +52,6 @@ public class LoadSaveProcessor
 			
 			// Generate unique Key using sequence and assign to Bond
 			Long pkeyId = createUniquekey();
-			
 			raw.setPkeyId(pkeyId);	
 
 			rawDataList.add(raw);

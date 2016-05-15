@@ -51,23 +51,16 @@ public class LoadersType
 	@SuppressWarnings("unchecked")
 	public static enum BondDomain implements IDomainLoader
 	{
-
-/*		SE_RAW_MARKITBOND
-		(CollectionsUtil.<Class<? extends InstrumentDomainLoader>> toList(MarkitBondLoader.class), // SELECT
-		 CollectionsUtil.<Class<? extends InstrumentDomainLoader>> newList(MarkitBondLoader.class, MarkitBondLoader.class), // DELETE, INSERT
-		 "ORDER BY LEG"), //
-*/
-		 SE_RAW_MARKITBOND
+		INSTRUMENT_RAW
 		 (CollectionsUtil.<Class<? extends IDataDomainLoader>> toList(InstrumentLoader.class), // SELECT - Reader
 		  CollectionsUtil.<Class<? extends IDataDomainLoader>> toList(InstrumentLoader.class)  // INSERT - Writer
 		  ),
 			
-		 SE_RAW_ACCRETIONSCHEDULE
+		CALLSCHEDULE_RAW
 		 (CollectionsUtil.<Class<? extends IDataDomainLoader>> toList(CallScheduleLoader.class), // SELECT - Reader
 		  CollectionsUtil.<Class<? extends IDataDomainLoader>> toList(CallScheduleLoader.class)  // INSERT - Writer
 		  )
-		  
-
+		 
 	                           
 		// ******* ADD NEW LOADER ABOVE THIS COMMENT *******
 		;
