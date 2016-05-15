@@ -1,10 +1,6 @@
 package com.concept.crew.batch;
 
 
-import java.lang.management.ManagementFactory;
-import java.lang.management.MemoryMXBean;
-import java.lang.management.MemoryUsage;
-
 import org.apache.log4j.Logger;
 
 import com.concept.crew.dao.LoaderDBRoutine;
@@ -17,10 +13,6 @@ public class StartLoadRunner
 	
 	public static void main(String[] args) 
 	{
-		long start = System.currentTimeMillis();
-		MemoryMXBean memBean = ManagementFactory.getMemoryMXBean();
-		MemoryUsage heapBeforeCache = memBean.getHeapMemoryUsage();
-		log.info("Heap usage = " + heapBeforeCache);
 		try 
 		{	
 			/*
@@ -28,12 +20,9 @@ public class StartLoadRunner
 			 * b) Parse XML
 			 * c) Insert into RAW tables	
 			 */
-
-			ConfigCache.getInstance().initializeCache();	
+			//ConfigCache.getInstance().initializeCache();	
 			LoadProcessor.execute();
 
-			log.info("Heap usage = " + heapBeforeCache);
-	        log.info("Total Duration => " + (System.currentTimeMillis() - start)/1000 + " seconds");
 		} 
 		catch (Exception ex) 
 		{

@@ -170,7 +170,6 @@
     <Redemption>
       <redemptionSource>redemptionSource</redemptionSource>
       <amount>0.0</amount>
-      <RedDate>2001-01-01</RedDate>
       <redemptionMethod>redemptionMethod</redemptionMethod>
       <redemptionStrikePrice>0.0</redemptionStrikePrice>
       <redemptionType>redemptionType</redemptionType>
@@ -359,7 +358,6 @@
     <Redemption>
       <redemptionSource>redemptionSource</redemptionSource>
       <amount>0.0</amount>
-      <RedDate>2001-01-01</RedDate>
       <redemptionMethod>redemptionMethod</redemptionMethod>
       <redemptionStrikePrice>0.0</redemptionStrikePrice>
       <redemptionType>redemptionType</redemptionType>
