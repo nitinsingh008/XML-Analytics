@@ -69,8 +69,9 @@ public class AutomationHelper {
 		 }			 
 	 }
 	 
-	public static void createMavenProject(File xsdFile) throws IOException,
-			MavenInvocationException {
+	public static void createMavenProject(File xsdFile) 
+										throws IOException,MavenInvocationException 
+	{
 		File srcDir = new File(Constants.mavenProjectPath);
 		if (!srcDir.exists()) 
 		{
@@ -84,7 +85,7 @@ public class AutomationHelper {
 		InvocationRequest request = new DefaultInvocationRequest();
 		request.setGoals(Collections.singletonList("archetype:generate"));
 		request.setInteractive(false);
-		request.setGlobalSettingsFile(new File(Constants.settingsFilePath));
+		//request.setGlobalSettingsFile(new File(Constants.settingsFilePath));
 		Properties properties = new Properties();
 		properties.setProperty("groupId", "com.concept.crew.app");
 		properties.setProperty("artifactId", "LoadersFramework");
@@ -93,9 +94,8 @@ public class AutomationHelper {
 		request.setProperties(properties);
 		Invoker invoker = new DefaultInvoker();
 		invoker.setWorkingDirectory(srcDir);
-		// For setting repo directory
-/*		File localRepo = new File("C://Documents and Settings//others//.m2\\repository");
-		invoker.setLocalRepositoryDirectory(localRepo);*/
+		// Setting repo directory location 
+		invoker.setLocalRepositoryDirectory(new File(Constants.m2_repository));
 		
 		InvocationResult result = invoker.execute(request);
 

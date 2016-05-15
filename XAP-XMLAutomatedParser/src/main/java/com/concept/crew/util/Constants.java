@@ -16,6 +16,9 @@ public class Constants
 	public static final String settingsFilePath = "settings.xml";
 	public static final String pathToRootClass 	= targetPath + "/" + "classes";
 	
+	// Maven Specific
+	public static final String m2_repository     = mavenProjectPath + "/" + "m2_repository";
+	
 	public enum DatabaseType
 	{
 		ORACLE,
