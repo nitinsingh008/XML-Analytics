@@ -4,37 +4,23 @@ import com.concept.crew.info.jaxb.Instrument;
 
 public class InstrumentRaw
 {
-	private Instrument markitBond;
-	private Long bondId;
-	private String markitPkey;
-
-	public Long getBondId() 
+	private Instrument instrument;
+	private Long 		pkeyId;
+	
+	public Instrument getInstrument() 
 	{
-		return bondId;
+		return instrument;
 	}
-
-	public void setBondId(Long bondId) 
-	{
-		this.bondId = bondId;
+	public void setInstrument(Instrument instrument) {
+		this.instrument = instrument;
 	}
-
-	public String getMarkitPkey() {
-		return markitPkey;
+	public Long getPkeyId() {
+		return pkeyId;
 	}
-
-	public void setMarkitPkey(String markitPkey) {
-		this.markitPkey = markitPkey;
+	public void setPkeyId(Long pkeyId) {
+		this.pkeyId = pkeyId;
 	}
-
-	public Instrument getMarkitBond() 
-	{
-		return markitBond;
-	}
-
-	public void setMarkitBond(Instrument markitBond) 
-	{
-		this.markitBond = markitBond;
-	}
+	
 
 
 	

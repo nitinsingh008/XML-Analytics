@@ -71,8 +71,8 @@ public final class InstrumentLoader extends AbstractDataLoader
 												throws SQLException 
 	{
 		//bond.setBondCopy(getBondCopy());
-		rawBond.setBondId(ResultSetHelper.toLong(rs, "BOND_ID"));
-		rawBond.setMarkitPkey(ResultSetHelper.toString(rs, "MARKIT_PKEY"));
+		rawBond.setPkeyId(ResultSetHelper.toLong(rs, "BOND_ID"));
+		
 		
 		Instrument bond = new Instrument();
 /*		rawBond.setMarkitBond(bond);
@@ -92,7 +92,7 @@ public final class InstrumentLoader extends AbstractDataLoader
 					   PreparedStatement statement) 
 							   				throws SQLException 
 	{
-		Instrument bond = rawBond.getMarkitBond();
+		Instrument bond = rawBond.getInstrument();
 		
 		int index = 1;
 		

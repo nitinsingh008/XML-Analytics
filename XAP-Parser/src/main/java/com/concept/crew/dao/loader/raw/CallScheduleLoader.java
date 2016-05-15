@@ -60,7 +60,7 @@ public final class CallScheduleLoader extends AbstractDataLoader
 					   PreparedStatement statement) 
 			throws SQLException 
 	{
-		Instrument bond = rawBond.getMarkitBond();
+		Instrument bond = rawBond.getInstrument();
 
 		int total = 0;
 /*

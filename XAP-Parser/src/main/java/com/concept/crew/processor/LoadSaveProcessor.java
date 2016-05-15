@@ -26,7 +26,7 @@ import com.concept.crew.util.GroupBy;
 public class LoadSaveProcessor 
 {
 	private static final Logger log = Logger.getLogger(LoadSaveProcessor.class);
-
+	private static long  pkCounter  = 0;
 	 /**
      * Iterate over ROOT bonds, transform them and persist all Bonds in RAW tables
      */
@@ -44,20 +44,17 @@ public class LoadSaveProcessor
 		
 		Collection<InstrumentRaw> rawDataList = new ArrayList<InstrumentRaw>();
 		
-		long tempCount = 0;
+		
 		for(Instrument instrument: instruments)
 		{
 			InstrumentRaw raw = new InstrumentRaw();
-			raw.setMarkitBond(instrument);
+			raw.setInstrument(instrument);
 			
 			// Generate unique Key using sequence and assign to Bond
-			Long bondId = ++tempCount;
-			raw.setBondId(bondId);		
-			String markitPkey = createUniquekey();
-			raw.setMarkitPkey(markitPkey);
+			Long pkeyId = createUniquekey();
 			
-			pkey.add(markitPkey);
-			
+			raw.setPkeyId(pkeyId);	
+
 			rawDataList.add(raw);
 		}
 		
@@ -99,9 +96,10 @@ public class LoadSaveProcessor
 	}
 	
 
-	private static String createUniquekey()
+	private static Long createUniquekey()
 	{
-		return "UniqueKey";
+		pkCounter++;	
+		return pkCounter;
 	}
 	
 	public static final class GroupByBondCopy implements GroupBy<InstrumentRaw, BondCopy> {
