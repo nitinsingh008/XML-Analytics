@@ -42,11 +42,11 @@ public class StartAutomation
 		if(createScripts)
 		{
 			//1. Create maven project
-			logger.warn("Creating maven project");
+			logger.warn("Start creating new Maven Project");
 			AutomationHelper.createMavenProject(xsdFile);
 			
 			//2. Generate Jaxb object in new maven project from the input XSD
-			logger.warn("Generating Jaxb object in new maven project from the input XSD");		
+			logger.warn("Generating JAXB Objects in new maven project");		
 			JaxbInfoGenerator gen = new JaxbInfoGenerator();
 			gen.generateInfos(xsdFile.getAbsolutePath());
 

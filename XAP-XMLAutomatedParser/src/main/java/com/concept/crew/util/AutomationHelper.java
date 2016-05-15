@@ -13,6 +13,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.log4j.Logger;
 import org.apache.maven.shared.invoker.DefaultInvocationRequest;
 import org.apache.maven.shared.invoker.DefaultInvoker;
 import org.apache.maven.shared.invoker.InvocationRequest;
@@ -24,8 +25,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class AutomationHelper {
-
+public class AutomationHelper 
+{
+	private static Logger 		logger 			= Logger.getLogger(AutomationHelper.class);
+	
 	  private static void runProcess(String command) throws Exception {
 	    Process pro = Runtime.getRuntime().exec(command, null, new File(Constants.compilationPath));	    
 	    pro.waitFor();
@@ -72,6 +75,7 @@ public class AutomationHelper {
 	public static void createMavenProject(File xsdFile) 
 										throws IOException,MavenInvocationException 
 	{
+		logger.warn("Initializing at " + Constants.mavenProjectPath);
 		File srcDir = new File(Constants.mavenProjectPath);
 		if (!srcDir.exists()) 
 		{
@@ -96,12 +100,15 @@ public class AutomationHelper {
 		invoker.setWorkingDirectory(srcDir);
 		// Setting repo directory location 
 		invoker.setLocalRepositoryDirectory(new File(Constants.m2_repository));
-		
+		logger.warn("----------------------------------");
+		logger.warn("Generating project in Batch mode");
+		logger.warn("----------------------------------");
 		InvocationResult result = invoker.execute(request);
-
+		
 		if (result.getExitCode() != 0) {
 			throw new IllegalStateException("archetype:generate failed.");
 		}
+		logger.warn("Maven project created successfully : " + Constants.mavenProjectName);
 		
 		File resourcesDir = new File(Constants.resourcePath);
 		if(!resourcesDir.exists()){
@@ -110,13 +117,17 @@ public class AutomationHelper {
 		//Files.copy(srcDir.toPath(), resourcesDir.toPath(), StandardCopyOption.ATOMIC_MOVE);
 	}
 	
-	public static void buildMavenProject() throws MavenInvocationException{
+	public static void buildMavenProject() throws MavenInvocationException
+	{
 		InvocationRequest request = new DefaultInvocationRequest();
 		request.setPomFile(new File(Constants.pomPath));
 		//request.setGoals( Collections.singletonList( "install" ) );
 		request.setGoals( Arrays.asList( "install", "-DskipTests=true" ) );
 		Invoker invoker = new DefaultInvoker();
 		InvocationResult result = invoker.execute( request );
+		logger.warn("-----------------------------");
+		logger.warn("Building project");
+		logger.warn("-----------------------------");
 		if (result.getExitCode() != 0) {
 			throw new IllegalStateException("maven build failed.");
 		}
