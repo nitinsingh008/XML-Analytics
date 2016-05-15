@@ -100,6 +100,9 @@ public class AutomationHelper
 		invoker.setWorkingDirectory(srcDir);
 		// Setting repo directory location 
 		invoker.setLocalRepositoryDirectory(new File(Constants.m2_repository));
+		
+		setMavenHome(invoker); // Setting Maven Home(if wrongly set)
+		
 		logger.warn("----------------------------------");
 		logger.warn("Generating project in Batch mode");
 		logger.warn("----------------------------------");
@@ -108,7 +111,7 @@ public class AutomationHelper
 		if (result.getExitCode() != 0) {
 			throw new IllegalStateException("archetype:generate failed.");
 		}
-		logger.warn("Maven project created successfully : " + Constants.mavenProjectName);
+		logger.warn("Project created successfully : " + Constants.mavenProjectName);
 		
 		File resourcesDir = new File(Constants.resourcePath);
 		if(!resourcesDir.exists()){
@@ -124,6 +127,9 @@ public class AutomationHelper
 		//request.setGoals( Collections.singletonList( "install" ) );
 		request.setGoals( Arrays.asList( "install", "-DskipTests=true" ) );
 		Invoker invoker = new DefaultInvoker();
+		
+		setMavenHome(invoker); // Setting Maven Home(if wrongly set)
+		
 		InvocationResult result = invoker.execute( request );
 		logger.warn("-----------------------------");
 		logger.warn("Building project");
@@ -187,5 +193,16 @@ public class AutomationHelper
 		Class<T> rootClass = (Class<T>) loader.loadClass(qualifiedName);
 		
 		return rootClass;		
+	}
+	
+	public static void setMavenHome(Invoker invoker)
+	{
+		String mavenHomePath = "";
+        if (System.getProperty("maven.home").contains("EMBEDDED"))
+        {
+        	// i.e. running from Eclipse, need to set correct Home
+        	mavenHomePath = System.getenv().get("M2_HOME");
+        	invoker.setMavenHome(new File(mavenHomePath));
+        }
 	}
 }
