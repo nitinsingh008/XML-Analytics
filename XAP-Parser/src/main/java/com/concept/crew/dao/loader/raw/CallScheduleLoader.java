@@ -16,7 +16,7 @@ import com.concept.crew.util.Pair;
 public final class CallScheduleLoader extends AbstractDataLoader 
 {
 
-	private static final String GOLDEN_INSERT = "  INSERT INTO CORE_FEED.SE_RAW_ACCRETIONSCHEDULE ("
+	private static final String GOLDEN_INSERT = "  INSERT INTO CALLSCHEDULE_RAW ("
 												+ "BOND_ID, ACCRETIONENDDATE, ACCRETIONRATE, LEG) "
 												+ "VALUES (?, ?, ?, ?)";
 	
