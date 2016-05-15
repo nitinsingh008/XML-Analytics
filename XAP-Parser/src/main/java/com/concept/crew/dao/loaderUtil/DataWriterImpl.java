@@ -55,6 +55,7 @@ public class DataWriterImpl<T, W extends IDataWriter<T>>
 	{
 		DBRoutinePoolTx brdDBRoutineTx = new DBRoutinePoolTx(LoaderDBRoutine.getPoolname());
 		brdDBRoutineTx.beginTransaction();
+		
 		Connection brdDbConnection = brdDBRoutineTx.getConnection();
 
 		Map<W, PreparedStatement> writerStatementsCache = new LinkedHashMap<W, PreparedStatement>();
@@ -70,7 +71,6 @@ public class DataWriterImpl<T, W extends IDataWriter<T>>
 		catch (Throwable throwable) 
 		{
 			brdDBRoutineTx.rollbackTransaction();
-			// TODO : Do wee need to throw Exception
 			throw new RuntimeException("Failed writing data" + " - " + throwable.getMessage(), throwable);
 		} 
 		finally 

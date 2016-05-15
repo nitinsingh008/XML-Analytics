@@ -19,7 +19,7 @@ public class LoaderDBRoutine
 {
 	private static 			Logger 					log 				= Logger.getLogger(LoaderDBRoutine.class);
 	private static 			DBRoutine 				coreDBRoutine;
-	private static final 	String 					poolName 		    = "BRDDB";
+	private static final 	String 					poolName 		    = "LOADDB";
 	private static final 	String				    PROG_NAME			= "LOADER-SERVICE";
 	private static final 	String				    MAX_CONNECTIONS		= "10";	
 	private static    	    String 					environment;
@@ -78,17 +78,15 @@ public class LoaderDBRoutine
 	}
 	
 
-	public static Map<String,String> getAllFeedConfigProperties()
+	public static Map<String,String> testConnectivity()
 			throws SQLException 
 	{		
-		String query = "SELECT * FROM CORE_FEED.FEED_CONFIG WHERE (ENV = '?' or ENV is null) AND TYPE = 'SEMANTICS'";
+		String queryToExecute = "SELECT SYSDATE FROM DUAL";
 	
 		final Map<String,String> bbgPropertyMap = new HashMap<String,String>();
 		
 		List<Object> paramList = new ArrayList<Object>();		
 	
-		StringBuffer sBuffer	=	new StringBuffer(query);
-		String queryToExecute 	= 	sBuffer.toString().replace("?", environment).intern();
 		log.info("Executing query:"+queryToExecute);
 		
 		coreDBRoutine.executeQuery(queryToExecute, new ResultSetRowMapper<String>() 
@@ -97,9 +95,6 @@ public class LoaderDBRoutine
 				public String mapRow(ResultSet result,int rowNum, String[] headers)
 						throws SQLException 
 				{
-					String name 			= result.getString("NAME");					
-					String value 	    	= result.getString("VALUE");
-					bbgPropertyMap.put(name, value);
 					return null;
 				}
 			}, paramList);

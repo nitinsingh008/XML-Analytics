@@ -3,9 +3,7 @@ package com.concept.crew.batch;
 
 import org.apache.log4j.Logger;
 
-import com.concept.crew.dao.LoaderDBRoutine;
 import com.concept.crew.processor.LoadProcessor;
-import com.concept.crew.util.ConfigCache;
 
 public class StartLoadRunner 
 {
@@ -16,25 +14,16 @@ public class StartLoadRunner
 		try 
 		{	
 			/*
-			 * a) Initialize Cache 
-			 * b) Parse XML
-			 * c) Insert into RAW tables	
+			 * a) Parse XML
+			 * b) Insert into RAW tables	
 			 */
-			//ConfigCache.getInstance().initializeCache();	
+			//LoaderDBRoutine.testConnectivity();
 			LoadProcessor.execute();
 
 		} 
 		catch (Exception ex) 
 		{
-			log.error("Fatal Exception occured" +ex);			
-			if(ConfigCache.getInstance().getPropertyMapValue("EMAIL_TO") != null)			
-			{
-				String environment 	= LoaderDBRoutine.getEnvironment();	
-				String subject 		= "Loader Service :";
-				
-				//EmailLogger.sendEmailOnFailure(environment, subject, ex);
-							
-			}						
+			log.error("Fatal Exception occured" +ex);								
 			return;
 		}				
 		
