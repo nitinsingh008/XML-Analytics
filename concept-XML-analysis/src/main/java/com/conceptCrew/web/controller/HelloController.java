@@ -190,7 +190,7 @@ public class HelloController {
 		BufferedReader reader = null;
 		try{
 			StringBuilder logContent = new StringBuilder();
-			 reader = new BufferedReader(new FileReader(new File("xap.log")));
+			 reader = new BufferedReader(new FileReader(new File(Constants.logFilePath)));
 			String line = reader.readLine();
 			while(line != null){
 				logContent.append(line).append("\n");

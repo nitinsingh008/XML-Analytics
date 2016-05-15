@@ -19,6 +19,8 @@ public class Constants
 	// Maven Specific
 	public static final String m2_repository     = mavenProjectPath + "/" + "m2_repository";
 	
+	public static final String logFilePath       = mavenProjectPath + "/" + "Logs" + "/" + "xap.log";
+	
 	public enum DatabaseType
 	{
 		ORACLE,
