@@ -3,8 +3,10 @@ package com.concept.crew.util;
 import java.io.File;
 import java.io.FileInputStream;
 
+import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
 
+import com.concept.crew.apis.StartAutomation;
 import com.sun.codemodel.JCodeModel;
 import com.sun.tools.xjc.api.S2JJAXBModel;
 import com.sun.tools.xjc.api.SchemaCompiler;
@@ -12,6 +14,7 @@ import com.sun.tools.xjc.api.XJC;
 
 public class JaxbInfoGenerator 
 {
+	private static Logger 		logger 			= Logger.getLogger(JaxbInfoGenerator.class);
 
 	
 	public static void main(String[] args) throws Exception
@@ -29,7 +32,7 @@ public class JaxbInfoGenerator
 	 */
 	public void generateInfos(String schemaFilePathName) throws Exception
 	{
-		System.out.println("*** Preparing for generation of Classes ****");
+		logger.warn("*** Preparing for generation of Classes ****");
         File outFile = new File(Constants.dirSrcJava);
 
         // Setup schema compiler
@@ -45,7 +48,7 @@ public class JaxbInfoGenerator
         schemaCompiler.parseSchema(is);
         S2JJAXBModel model = schemaCompiler.bind();
         JCodeModel jCodeModel = model.generateCode(null, null);
-        System.out.println("*** Start generating JAXB Classes ****");
+        logger.warn("*** Start generating JAXB Classes ****");
         jCodeModel.build(outFile);
 	}
 

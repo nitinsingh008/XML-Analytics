@@ -14,17 +14,21 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.concept.crew.apis.StartAutomation;
 import com.concept.crew.info.DBColumns;
 import com.concept.crew.util.Constants;
 import com.google.common.collect.Multimap;
 
 public abstract class TableGenerator 
 {	
+	private static Logger 		logger 			= Logger.getLogger(TableGenerator.class);
+
 	protected static Set<String> xsdDataTypes = new HashSet<String>();
 	protected String xsdName ;
 	
@@ -45,7 +49,7 @@ public abstract class TableGenerator
 	public void tableScripts(Multimap<String, DBColumns> tableMap, String tableSuffix, String rootNode , String schema)
 							 					throws Exception
 	{
-		System.out.println("Start Generating scripts for " +tableSuffix);
+		logger.warn("Start Generating scripts for " +tableSuffix);
 		String fileName = Constants.resourcePath + "createTable";
 		String parentTableName = null;
 
@@ -127,7 +131,7 @@ public abstract class TableGenerator
 			}
 			
 			sb.append("\n);");
-			System.out.println(sb);
+			logger.warn(sb);
 			bw.write(sb.toString());
 			bw.newLine();
 			sb = new StringBuffer();
@@ -215,7 +219,7 @@ public abstract class TableGenerator
 			return;
 		}
 		
-		System.out.println("Start Generating Insert's scripts for " +tableSuffix);
+		logger.warn("Start Generating Insert's scripts for " +tableSuffix);
 		StringBuffer sb = new StringBuffer();
 		
 		Iterator<String> tableMapIt =  tableMap.keySet().iterator();
@@ -274,7 +278,7 @@ public abstract class TableGenerator
 			}
 			sb.deleteCharAt(sb.length()-2);
 			sb.append(")");
-			System.out.println(sb);
+			logger.warn(sb);
 			bw.write(sb.toString());
 			bw.close();
 			sb = new StringBuffer();
