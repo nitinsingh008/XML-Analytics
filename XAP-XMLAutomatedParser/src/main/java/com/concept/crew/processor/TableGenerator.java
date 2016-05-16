@@ -207,4 +207,77 @@ public abstract class TableGenerator
 		bw.write(sb.toString());
 		bw.newLine();
 	}
+
+	public void insertScripts(Multimap<String, DBColumns> tableMap,
+							  String tableSuffix, String rootNode, String schema) throws Exception {
+		
+		if(tableMap.isEmpty()){
+			return;
+		}
+		
+		System.out.println("Start Generating Insert's scripts for " +tableSuffix);
+		StringBuffer sb = new StringBuffer();
+		
+		Iterator<String> tableMapIt =  tableMap.keySet().iterator();
+		while(tableMapIt.hasNext()){
+			String tableName = tableMapIt.next();
+			if(tableName == null ||  tableName.contains("$") || tableName.toUpperCase().contains("OBJECTFACTORY")){
+				continue;
+			}
+			String fileName = null;
+			int columnCount = 0;
+			
+			fileName =  tableName.toUpperCase();
+			
+			if(tableSuffix != null && tableSuffix != ""){
+				fileName =  tableName.toUpperCase() + "_" + tableSuffix.toUpperCase();
+			}
+			
+			File file = new File(Constants.resourcePath + fileName);
+			if (!file.exists()){
+				try 
+				{
+					file.createNewFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			if(schema != null && schema != ""){
+				fileName = schema.toUpperCase()+ "." + fileName;
+			}
+			
+			sb.append("INSERT INTO ").append(fileName).append("(");
+			
+			if(tableName.equals(rootNode)){
+				sb.append("PKEY, ");	
+				columnCount++;
+			}else{
+				sb.append("PARENT_KEY, ");
+				columnCount++;
+			}
+			
+			Collection<DBColumns> columnList = tableMap.get(tableName);
+			
+			for(DBColumns columns :columnList){
+				sb.append(columns.getName().toUpperCase()).append(", ");
+				columnCount++;
+			}
+			sb.deleteCharAt(sb.length()-2);
+			sb.append(") ").append("VALUES (");
+			
+			for(int i = 0 ; i < columnCount ; i++){
+				sb.append("?, ");
+			}
+			sb.deleteCharAt(sb.length()-2);
+			sb.append(")");
+			System.out.println(sb);
+			bw.write(sb.toString());
+			bw.close();
+			sb = new StringBuffer();
+		}
+	}
 }

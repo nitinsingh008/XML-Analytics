@@ -99,11 +99,9 @@ public class StartAutomation
 		// RAW Table
 		Multimap<String, DBColumns> tableMap = generator.parse(false);	
 		generator.tableScripts(tableMap, "RAW", rootNode, username);
-
+		generator.insertScripts(tableMap, "RAW", rootNode, username);
 		
-		// TODO
-		// can Create Separate sql scripts for each table (Optional)
-		// Login to Database and create table (Drop and recreate tables)
+
 	}	
 	
 	public static boolean validateInputs(String args){
