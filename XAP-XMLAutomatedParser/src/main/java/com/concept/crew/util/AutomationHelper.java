@@ -99,7 +99,11 @@ public class AutomationHelper
 		Invoker invoker = new DefaultInvoker();
 		invoker.setWorkingDirectory(srcDir);
 		// Setting repo directory location 
-		invoker.setLocalRepositoryDirectory(new File(Constants.m2_repository));
+		File m2Repo =  new File(Constants.m2_repository);
+		if(!m2Repo.exists()){
+			m2Repo.mkdirs();
+		}
+		invoker.setLocalRepositoryDirectory(m2Repo);
 		
 		setMavenHome(invoker); // Setting Maven Home(if wrongly set)
 		
@@ -198,7 +202,7 @@ public class AutomationHelper
 	public static void setMavenHome(Invoker invoker)
 	{
 		String mavenHomePath = "";
-        if (System.getProperty("maven.home").contains("EMBEDDED"))
+        if (System.getProperty("maven.home") != null && System.getProperty("maven.home").contains("EMBEDDED"))
         {
         	// i.e. running from Eclipse, need to set correct Home
         	mavenHomePath = System.getenv().get("M2_HOME");
