@@ -81,16 +81,42 @@ function checkConnectivity()
 	<div class="xsd_container">
 		<div class="row">
 			<div class="xsdview_blck col-xs-6">
-				<h4>
-					<strong> Input File View </strong>
-				</h4>
-				<textarea rows="15" cols="70%" readonly="readonly">${parsedInString}</textarea>
+			
+				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+				  <div class="panel panel-default">
+				    <div class="panel-heading" role="tab" id="headingOne">
+				      <h4 class="panel-title">
+				        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+				         Input File View 
+				        </a>
+				      </h4>
+				    </div>
+				    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+				      <div class="panel-body">
+				       	<textarea class="textareafull" readonly="readonly">${parsedInString}</textarea>
+				      </div>
+				    </div>
+				  </div>
+				  <div class="panel panel-default">
+				    <div class="panel-heading" role="tab" id="headingTwo">
+				      <h4 class="panel-title">
+				        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+				          Console Output
+				        </a>
+				      </h4>
+				    </div>
+				    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+				      <div class="panel-body">
+				      	<textarea class="textareafull" id="consoleOutput" readonly="readonly"></textarea>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			</div>
 			<div class="col-xs-1"></div>
 			<div class="setting_blck col-xs-5">
 				<form:form commandName="xsdParseRequest" id="captureParseSettings"
 					name="captureSettings">
-					<div>
 						<h4>
 							<strong>Select Setting</strong> <br>
 						</h4>
@@ -135,22 +161,23 @@ function checkConnectivity()
 							value="${xsdParseRequest.delimiter}" /> <input type="hidden"
 							path="haveHeaderData" id="haveHeaderData" name="haveHeaderData"
 							value="${xsdParseRequest.haveHeaderData}" />
-
-					</div>
-
-
+							<br>
+						<button type="button" id="GenerateButton" class="upload"
+								value="Generate" onclick="clickGenerate()">
+								<span>Generate</span>
+							</button>
+							<!-- <button type="button" id="Back" class="upload" value="Back"
+								onclick="clickBack()">
+								<span>Back</span>
+							</button> -->
+					
 				</form:form>
 			</div>
 		</div>
-		<div class="generatebtn row" align="center">
-			<button type="button" id="GenerateButton" class="upload"
-				value="Generate" onclick="clickGenerate()">
-				<span>Generate</span>
-			</button>
-			<button type="button" id="Back" class="upload" value="Back"
-				onclick="clickBack()">
-				<span>Back</span>
-			</button>
+		<div class="row">
+			<div class="col-xs-5" id="step3jsp">
+			
+			</div>
 		</div>
 	</div>
 

@@ -2,7 +2,7 @@
 		// hide remaining divs
 	//	$("#step2jsp").hide();
 		$("#step3jsp").hide();
-		$("#consoleJsp").hide();
+		//$("#consoleJsp").hide();
 		$("#delimtedMetaDeta").hide();
 	//	$("#step2jsp").attr("disabled", true);
 	//	$("#step3jsp").attr("disabled", true);
@@ -115,10 +115,7 @@
 						
 					    success: function(data){
 					   		clearInterval(add);
-					   		$("#step2jsp").hide();
-					    	$("#step1jsp").hide();
-					    	
-					    	$("#step3jsp").html(data);
+					   		$("#step3jsp").html(data);
 					    	$("#step3jsp").show();
 					    },
 					    error :function(xhr, status, error) {
@@ -148,7 +145,7 @@
 		    type: 'GET',
 		    success: function(data){
 		   		$("#consoleOutput").html(data);
-		   		$("#consoleJsp").show();
+		   		//$("#consoleJsp").show();
 		    }
 		  });
 		

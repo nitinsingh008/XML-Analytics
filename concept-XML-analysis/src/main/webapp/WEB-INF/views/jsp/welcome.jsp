@@ -82,7 +82,7 @@ marqueeInit({
 			<img src="<c:url value='/resources/images/xap_logo.png'/>"
 				id="xaplogo" title="XAP" />
 			<h6 align="right">
-				<a href="#"> <img
+				<a href="#" onclick="clickBack()"> <img
 					src="<c:url value='/resources/images/home_icon.png'/>"
 					id="home_icon" /> &nbsp;HOME
 				</a> | <a href="#"> <img
@@ -212,11 +212,10 @@ marqueeInit({
 		
 		<div class="row" id="step2jsp"></div>
 
-		<div class="row" id="step3jsp"></div>
-		<div class = "row" id="consoleJsp">
+	<!-- 	<div class = "row" id="consoleJsp">
 			<h3>Output Console</h3>
-			<textarea id="consoleOutput" rows="10" cols="150" readonly="readonly"></textarea>
-		</div>
+			
+		</div> -->
 
 		<div class="footer row">
 			<h6 align="center">The Concept Crew &copy; markit.com 2016</h6>
