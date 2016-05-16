@@ -52,8 +52,6 @@ public class StartAutomation
 				logger.warn("Generating JAXB Objects in new maven project");		
 				JaxbInfoGenerator gen = new JaxbInfoGenerator();
 				gen.generateInfos(inputMetaDataFile.getAbsolutePath());
-			}else if(request.getInputType().equals(Constants.inputType.DELIMITED.toString())){
-				logger.warn("Generating Pojo in new Maven Project");
 			}
 			
 			//3. Build Maven project
@@ -62,7 +60,11 @@ public class StartAutomation
 			
 			// 4. Generate tables from XSD
 			logger.warn("Generating Table Scripts");
-			tableGenerator(inputMetaDataFile, request);
+			Multimap<String, DBColumns> tableInfo = tableGenerator(inputMetaDataFile, request);
+			// pojo for delimiter files
+			if(request.getInputType().equals(Constants.inputType.DELIMITED.toString())){
+				logger.warn("Generating Pojo in new Maven Project");
+			}
 			
 			// 5. Generate loaders automatically - Main/Schedules
 			
