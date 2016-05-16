@@ -14,6 +14,7 @@ import com.concept.crew.util.Constants.BondCopy;
 import com.concept.crew.util.Constants.QueryIDType;
 import com.concept.crew.util.Pair;
 import com.concept.crew.util.ResultSetHelper;
+import com.concept.crew.util.StatementHelper;
 
 
 
@@ -22,19 +23,13 @@ public final class InstrumentLoader extends AbstractDataLoader
 
 	private static final String RAW_INSERT = " INSERT INTO CORE_REF_DATA.INSTRUMENT_RAW "
 												+ "("
-												+ " PKEY"
-												+ " INSTRUMENTID"
+												+ " PKEY, "
+												+ " INSTRUMENTID, "
 												+ " DATASETID,   "
 												+ " VERSION,  "
-												+ " NEWISSUE, "
-												+ " INSTRUMENTGRADE, "
-												+ " LASTMODIFIEDDATE, "
-												+ " SOURCE, "
-												+ " HASADDITIONALCREDIT, "
-												+ " ALTERNATIVEPRINCIPALCCYCODE, "
-												+ " AMTISSUEDPUBLIC"
+												+ " NEWISSUE"
 												+ ") "
-												+ "VALUES (INSTRUMENT_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+												+ "VALUES (CORE_REF_DATA.INSTRUMENT_SEQ.NEXTVAL, ?, ?, ?, ?)";
 	
 	private static final String RAW_SELECT_MARKITPKEY = " SELECT * FROM INSTRUMENT_RAW WHERE MARKIT_PKEY "
 													  + " IN ( ? )";
@@ -96,17 +91,11 @@ public final class InstrumentLoader extends AbstractDataLoader
 		
 		int index = 1;
 		
-/*		StatementHelper.setLong(statement, index++, rawBond.getBondId());
-		StatementHelper.setString(statement, index++, rawBond.getMarkitPkey());
-		StatementHelper.setString(statement, index++, bond.getPkey());
-		StatementHelper.setString(statement, index++, bond.getTitleOfNotes());
-		StatementHelper.setString(statement, index++, bond.getMarkitIssuerName());
-		StatementHelper.setDate(statement, index++, getSqlDateFromXMLGregorianCalendar(bond.getIssueDate()));
-		
-		StatementHelper.setDate(statement, index++, getSqlDateFromXMLGregorianCalendar(bond.getDocumentDate()));
-		StatementHelper.setString(statement, index++, bond.getDocumentType());
-		StatementHelper.setDate(statement, index++, getSqlDateFromXMLGregorianCalendar(bond.getParsingDate()));
-		StatementHelper.setString(statement, index++, bond.getDocumentName());*/
+		StatementHelper.setLong(statement, index++, bond.getInstrumentId());
+		StatementHelper.setLong(statement, index++, bond.getDatasetId());
+		StatementHelper.setLong(statement, index++, bond.getVersion());
+		StatementHelper.setString(statement, index++, bond.getNewIssue());
+
 		statement.addBatch();
 
 		return 1;

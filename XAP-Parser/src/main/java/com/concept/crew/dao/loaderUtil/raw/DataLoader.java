@@ -116,7 +116,7 @@ public class DataLoader {
 	 */
 	public static final BondWriter createWriter(BondCopy... bondCopies) 
 	{
-		return createWriter(BondSchema.CORE_FEED, bondCopies);
+		return createWriter(BondSchema.CORE_REF_DATA, bondCopies);
 	}
 
 

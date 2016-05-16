@@ -4,21 +4,26 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.concept.crew.dao.loaderUtil.AbstractDataLoader;
+import com.concept.crew.info.jaxb.CallSchedule;
 import com.concept.crew.info.jaxb.Instrument;
 import com.concept.crew.info.raw.InstrumentRaw;
+import com.concept.crew.util.CollectionsUtil;
 import com.concept.crew.util.Constants.BondCopy;
 import com.concept.crew.util.Constants.QueryIDType;
+import com.concept.crew.util.GeneralUtil;
 import com.concept.crew.util.Pair;
+import com.concept.crew.util.StatementHelper;
 
 public final class CallScheduleLoader extends AbstractDataLoader 
 {
 
 	private static final String GOLDEN_INSERT = "  INSERT INTO CALLSCHEDULE_RAW ("
-												+ "BOND_ID, ACCRETIONENDDATE, ACCRETIONRATE, LEG) "
-												+ "VALUES (?, ?, ?, ?)";
+												+ "CALLSCHEDULESOURCE, ISCALLDEFEASED) "
+												+ "VALUES (?, ?)";
 	
 	@Override
 	public Map<Pair<BondCopy, QueryIDType>, String> getReadQueryMap() 
@@ -63,25 +68,25 @@ public final class CallScheduleLoader extends AbstractDataLoader
 		Instrument bond = rawBond.getInstrument();
 
 		int total = 0;
-/*
-		List<CallSchedule> instrumentHolidayCodes = bond.getAccretionSchedule();
+
+		List<CallSchedule> instrumentHolidayCodes = bond.getCallSchedule();
+		
 		for (int i = 0; CollectionsUtil.isNotEmpty(instrumentHolidayCodes) && i < instrumentHolidayCodes.size(); i++) 
 		{
-			CallSchedule holidayCode = instrumentHolidayCodes.get(i);
+			CallSchedule callSchedule = instrumentHolidayCodes.get(i);
 
-			if (GeneralUtil.isNotNull(holidayCode)) 
+			if (GeneralUtil.isNotNull(callSchedule)) 
 			{
 				total++;
 				int index = 1;
-				StatementHelper.setLong(statement, index++, rawBond.getBondId());
-				StatementHelper.setDate(statement, index++, getSqlDateFromXMLGregorianCalendar(holidayCode.getAccretionEndDate()));
-				StatementHelper.setDouble(statement, index++, holidayCode.getAccretionRate());
-				StatementHelper.setLong(statement, index++, new Long(total));
-
+				//StatementHelper.setLong(statement, index++, rawBond.getPkeyId());
+				StatementHelper.setString(statement,index++, callSchedule.getCallScheduleSource());
+				StatementHelper.setBoolean(statement,index++, callSchedule.isIsCallDefeased());
+				
 				statement.addBatch();
 				
 			}
-		}*/
+		}
 
 		return total;	
 	}

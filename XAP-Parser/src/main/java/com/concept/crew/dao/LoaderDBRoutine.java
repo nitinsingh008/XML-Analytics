@@ -15,6 +15,7 @@ import com.concept.crew.util.DBRoutine;
 import com.concept.crew.util.DBRoutinePool;
 import com.concept.crew.util.ResultSetRowMapper;
 
+
 public class LoaderDBRoutine 
 {
 	private static 			Logger 					log 				= Logger.getLogger(LoaderDBRoutine.class);
@@ -22,26 +23,37 @@ public class LoaderDBRoutine
 	private static final 	String 					poolName 		    = "LOADDB";
 	private static final 	String				    PROG_NAME			= "LOADER-SERVICE";
 	private static final 	String				    MAX_CONNECTIONS		= "10";	
-	private static    	    String 					environment;
+
+	private static String DB_DRIVER ;
+	private static String DB_CONNECTION;
+	private static String DB_USER;
+	private static String DB_PASSWORD ;
 	
-	static 
+	public static void initializeDBRoutine(String dbType, 
+										   String jdbcUrl, 
+										   String user, 
+										   String password) 
 	{
 		
-		if(DBProps.getProperty("ENV") != null)
+/*		if(DatabaseType.ORACLE.toString().equals(dbType))
 		{
-			environment = DBProps.getProperty("ENV");
+			DB_DRIVER = "oracle.jdbc.driver.OracleDriver";
+		}
+		else if(DatabaseType.MySQL.toString().equals(dbType))
+		{
+			DB_DRIVER = "com.mysql.jdbc.Driver";
 		}
 		else
 		{
-			environment = "QA";
-		}
+			// DB Driver for MS SQL Server
+			//DB_DRIVER = "com.mysql.jdbc.Driver";
+		}*/
+		
+		DB_CONNECTION = jdbcUrl;
+		DB_USER 	  = user;
+		DB_PASSWORD   = password;
 		
 		createCoreDBRoutine();
-	}
-	
-	public static String getEnvironment() 
-	{
-		return environment;
 	}
 	
 	public static DBRoutine getCoreDBRoutine() 
@@ -63,11 +75,11 @@ public class LoaderDBRoutine
 		
 		Properties coreDBProperties = new Properties();
 	
-		coreDBProperties.setProperty("JDBCURL", DBProps.getProperty("JDBCURL"));
-		coreDBProperties.setProperty("DBUSER",  DBProps.getProperty("DBUSER"));
-		coreDBProperties.setProperty("DBPASS",  DBProps.getProperty("DBPASS"));
+		coreDBProperties.setProperty("JDBCURL", DB_CONNECTION);
+		coreDBProperties.setProperty("DBUSER",  DB_USER);
+		coreDBProperties.setProperty("DBPASS",  DB_PASSWORD);
 		coreDBProperties.setProperty("MAX_CONNECTIONS", MAX_CONNECTIONS);
-		coreDBProperties.setProperty("MAX_CONNECTION_WAIT_TIME",DBProps.getProperty("MAX_CONNECTION_WAIT_TIME"));
+		coreDBProperties.setProperty("MAX_CONNECTION_WAIT_TIME","5000");
 		coreDBProperties.setProperty("PROGRAM_NAME",PROG_NAME);
 		
 		ConnectionPool.initialize(poolName, coreDBProperties);
@@ -76,6 +88,8 @@ public class LoaderDBRoutine
 		
 		return coreDBRoutine;
 	}
+	
+
 	
 
 	public static Map<String,String> testConnectivity()
