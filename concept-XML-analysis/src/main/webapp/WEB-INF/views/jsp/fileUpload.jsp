@@ -19,7 +19,7 @@
 									value="Please Select XSD" multiple="multiple"></input>
 				<button type="button" id="uploadXMLButton"
 									title="Upload selected files" class="upload" value="Upload" onclick="uploadXMLButton()">
-									<span>Upload</span>
+									<span>Parse</span>
 								</button>	
 			</c:when>
 			<c:otherwise>
@@ -27,10 +27,10 @@
 			</c:otherwise>
 		</c:choose>						
 	</div>
-	<div class="row">
+	<!-- <div class="row">
 		<button type="button" id="BackHome" class="upload"
 						value="Back" onclick="clickBackToHome()">
 						<span>Home</span>
 					</button>
-	</div>
+	</div> -->
  </div>
