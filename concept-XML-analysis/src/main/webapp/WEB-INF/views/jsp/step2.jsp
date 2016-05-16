@@ -101,7 +101,7 @@ function checkConnectivity()
 				    <div class="panel-heading" role="tab" id="headingTwo">
 				      <h4 class="panel-title">
 				        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-				          Console Output
+				          What's Happening??
 				        </a>
 				      </h4>
 				    </div>
