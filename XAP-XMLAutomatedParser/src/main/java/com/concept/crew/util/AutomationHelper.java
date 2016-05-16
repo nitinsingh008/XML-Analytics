@@ -22,6 +22,7 @@ import org.apache.maven.shared.invoker.Invoker;
 import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -155,7 +156,7 @@ public class AutomationHelper
 	
 	public static String fetchRootNode(File xsdFile) throws ParserConfigurationException, SAXException, IOException
 	{
-		String roodNode = null;
+/*		String roodNode = null;
 		final Thread currentThread = Thread.currentThread();
 		final ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
@@ -182,10 +183,65 @@ public class AutomationHelper
 				Element element = (Element)list.item(0) ;
 				roodNode =  element.getAttribute("name");
 			}
-		}
+		}*/
 		
+		String mainElement = "";
+		final Thread currentThread = Thread.currentThread();
+		final ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		final InputStream inputStream = contextClassLoader.getResourceAsStream(xsdFile.getName());
 		
-		return roodNode;
+		//parse the document
+		DocumentBuilderFactory  docBuilderFactory 	= DocumentBuilderFactory.newInstance();
+		DocumentBuilder 		docBuilder 			= docBuilderFactory.newDocumentBuilder();
+		Document 				doc 				= docBuilder.parse(inputStream);
+
+		Element rootElement = doc.getDocumentElement();  // Will contain either xsd:schema or xsd:element
+		
+		NodeList children = rootElement.getChildNodes(); // List all Child
+		
+		// Iterate to find 1st Complex Element
+	    for (int i = 0; i < children.getLength(); i++) 
+	    {
+	    	Node current = children.item(i);
+	    	if (current.getNodeType() == Node.ELEMENT_NODE) 
+	    	{
+	    		Element element = (Element) current;
+	    		if (element.getTagName().contains("complexType")) 
+	    		{
+	    			System.out.println("Tag Name is : " + element.getTagName());
+	    			// Find 1st Child of COMPLEX element
+	    			NodeList complexChilds = element.getChildNodes(); // List all Child
+	    			for (int j = 0; j < complexChilds.getLength(); j++) 
+	    			{
+	    				 Node childCurrent = complexChilds.item(j);
+	    				 if (childCurrent.getNodeType() == Node.ELEMENT_NODE) 
+	    				 {
+	    					 Element ele = (Element) childCurrent;
+	    					 
+	    					 if (ele.getTagName().contains("sequence"))
+	    					 {
+	    						 // Find 1st Child
+	    						 NodeList seqChilds = ele.getChildNodes();
+	    						 for (int k = 0; k < seqChilds.getLength(); k++) 
+	    						 {
+	    							 Node childCurr = seqChilds.item(k);
+	    							 if (childCurr.getNodeType() == Node.ELEMENT_NODE) 
+	    							 {
+	    								 Element targetElement = (Element) childCurr;
+	    								 
+	    								 System.out.println("Tag Name is : " + targetElement.getAttribute("name"));
+	    								 mainElement = targetElement.getAttribute("name");
+	    								 return mainElement;
+	    							 }
+	    						 }
+	    					 }
+	    				 }
+	    			}
+	    		}
+	    	}
+	    }
+		
+		return mainElement;
 	}
 	
 	public static <T> Class<T> getRootClass(File xsdFile) throws ParserConfigurationException, SAXException, IOException, ClassNotFoundException{
@@ -209,4 +265,64 @@ public class AutomationHelper
         	invoker.setMavenHome(new File(mavenHomePath));
         }
 	}
+	
+	public static void main(String args[]) throws Exception
+	{
+		String mainElement = "";
+		final Thread currentThread = Thread.currentThread();
+		final ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		final InputStream inputStream = contextClassLoader.getResourceAsStream("SampleBondsXSD.xsd");
+		
+		//parse the document
+		DocumentBuilderFactory  docBuilderFactory 	= DocumentBuilderFactory.newInstance();
+		DocumentBuilder 		docBuilder 			= docBuilderFactory.newDocumentBuilder();
+		Document 				doc 				= docBuilder.parse(inputStream);
+
+		Element rootElement = doc.getDocumentElement();  // Will contain either xsd:schema or xsd:element
+		
+		NodeList children = rootElement.getChildNodes(); // List all Child
+		
+		// Iterate to find 1st Complex Element
+	    for (int i = 0; i < children.getLength(); i++) 
+	    {
+	    	Node current = children.item(i);
+	    	if (current.getNodeType() == Node.ELEMENT_NODE) 
+	    	{
+	    		Element element = (Element) current;
+	    		if (element.getTagName().contains("complexType")) 
+	    		{
+	    			System.out.println("Tag Name is : " + element.getTagName());
+	    			// Find 1st Child of COMPLEX element
+	    			NodeList complexChilds = element.getChildNodes(); // List all Child
+	    			for (int j = 0; j < complexChilds.getLength(); j++) 
+	    			{
+	    				 Node childCurrent = complexChilds.item(j);
+	    				 if (childCurrent.getNodeType() == Node.ELEMENT_NODE) 
+	    				 {
+	    					 Element ele = (Element) childCurrent;
+	    					 
+	    					 if (ele.getTagName().contains("sequence"))
+	    					 {
+	    						 // Find 1st Child
+	    						 NodeList seqChilds = ele.getChildNodes();
+	    						 for (int k = 0; k < seqChilds.getLength(); k++) 
+	    						 {
+	    							 Node childCurr = seqChilds.item(k);
+	    							 if (childCurr.getNodeType() == Node.ELEMENT_NODE) 
+	    							 {
+	    								 Element targetElement = (Element) childCurr;
+	    								 
+	    								 System.out.println("Tag Name is : " + targetElement.getAttribute("name"));
+	    								 mainElement = targetElement.getAttribute("name");
+	    								 break;
+	    							 }
+	    						 }
+	    					 }
+	    				 }
+	    			}
+	    		}
+	    	}
+	    }
+	}
+	
 }
