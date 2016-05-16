@@ -73,7 +73,7 @@ public class AutomationHelper
 		 }			 
 	 }
 	 
-	public static void createMavenProject(File xsdFile) 
+	public static void createMavenProject() 
 										throws IOException,MavenInvocationException 
 	{
 		logger.warn("Initializing at " + Constants.mavenProjectPath);

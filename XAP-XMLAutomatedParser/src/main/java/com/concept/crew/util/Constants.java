@@ -32,4 +32,6 @@ public class Constants
 		XML,
 		DELIMITED;
 	}
+	
+	public static final String delimiterTableHeaderPrefi = "DELIMITER_";
 }

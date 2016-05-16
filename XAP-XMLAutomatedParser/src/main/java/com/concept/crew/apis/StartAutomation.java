@@ -4,10 +4,12 @@ import java.io.File;
 import org.apache.log4j.Logger;
 import com.concept.crew.dao.XapDBRoutine;
 import com.concept.crew.info.DBColumns;
+import com.concept.crew.processor.CsvTableGenerator;
 import com.concept.crew.processor.DBScriptRunner;
 import com.concept.crew.processor.JaxbTableGenerator;
 import com.concept.crew.processor.TableGenerator;
 import com.concept.crew.util.AutomationHelper;
+import com.concept.crew.util.Constants;
 import com.concept.crew.util.JaxbInfoGenerator;
 import com.concept.crew.util.XSDParseRequest;
 import com.google.common.collect.Multimap;
@@ -37,26 +39,30 @@ public class StartAutomation
 							  Boolean 		  createTable, 
 							  Boolean 		  createFramework) throws Exception
 	{
-		File xsdFile = new File(request.getParsedXSDPath()); 
+		File inputMetaDataFile = new File(request.getParsedXSDPath()); 
 		
 		if(createScripts)
 		{
 			//1. Create maven project
 			logger.warn("Start creating new Maven Project");
-			AutomationHelper.createMavenProject(xsdFile);
+			AutomationHelper.createMavenProject();
 			
-			//2. Generate Jaxb object in new maven project from the input XSD
-			logger.warn("Generating JAXB Objects in new maven project");		
-			JaxbInfoGenerator gen = new JaxbInfoGenerator();
-			gen.generateInfos(xsdFile.getAbsolutePath());
-
+			if(request.getInputType().equals(Constants.inputType.XML.toString())){
+				//2. Generate Jaxb object in new maven project from the input XSD
+				logger.warn("Generating JAXB Objects in new maven project");		
+				JaxbInfoGenerator gen = new JaxbInfoGenerator();
+				gen.generateInfos(inputMetaDataFile.getAbsolutePath());
+			}else if(request.getInputType().equals(Constants.inputType.DELIMITED.toString())){
+				logger.warn("Generating Pojo in new Maven Project");
+			}
+			
 			//3. Build Maven project
 			logger.warn("Build Maven project");
 			AutomationHelper.buildMavenProject();
 			
 			// 4. Generate tables from XSD
 			logger.warn("Generating Table Scripts");
-			tableGenerator(xsdFile, request.getUserName());
+			tableGenerator(inputMetaDataFile, request);
 			
 			// 5. Generate loaders automatically - Main/Schedules
 			
@@ -92,16 +98,23 @@ public class StartAutomation
 	 * Generate tables from XSD or Info       - Tables
 	 * Script will be created at /resource Folder
 	 */
-	public static void tableGenerator(File xsdFile, String username) throws Exception
+	public static Multimap<String, DBColumns> tableGenerator(File xsdFile, XSDParseRequest request) throws Exception
 	{
-		TableGenerator generator =  new JaxbTableGenerator(xsdFile.getName());
-		String rootNode = AutomationHelper.fetchRootNode(xsdFile);
+		TableGenerator generator =  null;
+		String rootNode = null;
+		if(request.getInputType().equals(Constants.inputType.XML.toString())){
+			generator =  new JaxbTableGenerator(xsdFile.getName());
+			rootNode = AutomationHelper.fetchRootNode(xsdFile);
+		} else if(request.getInputType().equals(Constants.inputType.DELIMITED.toString())){
+			generator =  new CsvTableGenerator(xsdFile.getName(),request.getDelimiter());
+			rootNode = xsdFile.getName().substring(0,xsdFile.getName().lastIndexOf(".")).toUpperCase();
+		}
+		
 		// RAW Table
 		Multimap<String, DBColumns> tableMap = generator.parse(false);	
-		generator.tableScripts(tableMap, "RAW", rootNode, username);
-		generator.insertScripts(tableMap, "RAW", rootNode, username);
-		
-
+		generator.tableScripts(tableMap, request.getDatabaseTablePostFix(), rootNode, request.getUserName());
+		generator.insertScripts(tableMap, request.getDatabaseTablePostFix(), rootNode, request.getUserName());
+		return tableMap;
 	}	
 	
 	public static boolean validateInputs(String args){
