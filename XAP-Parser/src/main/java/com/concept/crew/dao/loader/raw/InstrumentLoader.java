@@ -22,19 +22,19 @@ public final class InstrumentLoader extends AbstractDataLoader
 
 	private static final String RAW_INSERT = " INSERT INTO CORE_REF_DATA.INSTRUMENT_RAW "
 												+ "("
-												+ " INSTRUMENT_SEQ.NEXTVAL"
-												+ "INSTRUMENTID,   "
-												+ "MARKIT_PKEY,  "
-												+ "VERSION, 	      "
-												+ "NEWISSUE, "
-												+ "INSTRUMENTGRADE, "
-												+ "LASTMODIFIEDDATE, "
-												+ "SOURCE, "
-												+ "HASADDITIONALCREDIT, "
-												+ "ALTERNATIVEPRINCIPALCCYCODE, 	"
-												+ "AMTISSUEDPUBLIC"
+												+ " PKEY"
+												+ " INSTRUMENTID"
+												+ " DATASETID,   "
+												+ " VERSION,  "
+												+ " NEWISSUE, "
+												+ " INSTRUMENTGRADE, "
+												+ " LASTMODIFIEDDATE, "
+												+ " SOURCE, "
+												+ " HASADDITIONALCREDIT, "
+												+ " ALTERNATIVEPRINCIPALCCYCODE, "
+												+ " AMTISSUEDPUBLIC"
 												+ ") "
-												+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+												+ "VALUES (INSTRUMENT_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	private static final String RAW_SELECT_MARKITPKEY = " SELECT * FROM INSTRUMENT_RAW WHERE MARKIT_PKEY "
 													  + " IN ( ? )";
