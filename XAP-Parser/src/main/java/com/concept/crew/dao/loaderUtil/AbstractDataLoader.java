@@ -35,16 +35,10 @@ public abstract class AbstractDataLoader implements IDataDomainLoader
 
 	private static 	SimpleDateFormat yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd"); // e.g. <issueDate>2012-09-30</issueDate>
 
-	private BondSchema 		bondSchema;
-	private IDomainLoader 	bondDomain;
-	private BondCopy 		bondCopy;
 
 	protected List<Pair<BondFilter, Object>> filters;
-	private Set<QueryIDType> 				 queryIDTypes;
-	private List<Pair<Integer, Object>> 	 readerQueryParameters;
 	
 	private String 	orderBy;
-	private String 	readQuery;
 	private int 	readerRecordCount = 0;
 
 	private String writeQuery;
@@ -53,30 +47,12 @@ public abstract class AbstractDataLoader implements IDataDomainLoader
 
 	private ConcurrentMap<Long, InstrumentRaw> cache;
 
-	@Override
-	public void setBondSchema(BondSchema bondSchema) {
-		this.bondSchema = bondSchema;
-	}
-
-	@Override
-	public void setBondDomain(IDomainLoader bondDomain) {
-		this.bondDomain = bondDomain;
-	}
-
-	@Override
-	public void setBondCopy(BondCopy bondCopy) {
-		this.bondCopy = bondCopy;
-	}
 
 	@Override
 	public void setFilterCriteria(List<Pair<BondFilter, Object>> filters) {
 		this.filters = filters;
 	}
-
-	@Override
-	public void setQueryIDType(Set<QueryIDType> queryIDTypes) {
-		this.queryIDTypes = queryIDTypes;
-	}
+	
 
 	@Override
 	public void setOrderBy(String orderBy) {
@@ -88,26 +64,6 @@ public abstract class AbstractDataLoader implements IDataDomainLoader
 		this.cache = cache;
 	}
 
-	public BondSchema getBondSchema() {
-		return bondSchema;
-	}
-
-	@Override
-	public BondCopy getBondCopy() {
-		return bondCopy;
-	}
-
-	@Override
-	public String getReadQuery() {
-		readQuery = GeneralUtil.nvl(readQuery, buildReadQuery());
-		return readQuery;
-	}
-
-	@Override
-	public List<Pair<Integer, Object>> getReaderQueryParameters() {
-		readerQueryParameters = GeneralUtil.nvl(readerQueryParameters, buildReaderQueryParameters());
-		return readerQueryParameters;
-	}
 
 	@Override
 	public String getWriteQuery() {
@@ -134,39 +90,10 @@ public abstract class AbstractDataLoader implements IDataDomainLoader
 	}
 
 	@Override
-	public InstrumentRaw mapRow(ResultSet rs, int rowNum, String[] headers) throws SQLException {
-		ThreadManager.checkInterruption();
-		long instrumentId = ResultSetHelper.toLong(rs, INST_ID);
-		InstrumentRaw bond = new InstrumentRaw();
-		bond = GeneralUtil.nvl(cache.putIfAbsent(instrumentId, bond), bond);
-		//bond.setInstrumentId(instrumentId);
-		populate(bond, rs);
-		readerRecordCount = rowNum + 1;
-		return bond;
-	}
-
-	@Override
 	public void setParam(PreparedStatement statement, int rowNum, InstrumentRaw bond) throws SQLException {
 		ThreadManager.checkInterruption();
 		int prepared = prepare(bond, statement);
 		writerRecordCount += prepared;
-	}
-
-	private final String buildReadQuery() {
-		Map<Pair<BondCopy, QueryIDType>, String> queryMap = getReadQueryMap();
-
-		Collection<String> queries = new ArrayList<String>();
-		for (QueryIDType idType : queryIDTypes) {
-			applyReaderQuery(queryMap, queries, idType);
-		}
-
-		if (CollectionsUtil.isEmpty(queries))
-			return StringUtil.emptyString();
-
-		StringBuilder queryBuilder = new StringBuilder(StringUtil.join(queries, UNION));
-		queryBuilder = applyOrderBy(queryBuilder, queries.size());
-
-		return queryBuilder.toString();
 	}
 
 	private StringBuilder applyOrderBy(StringBuilder queryBuilder, int numberOfUnions)
@@ -191,40 +118,7 @@ public abstract class AbstractDataLoader implements IDataDomainLoader
 		return queryBuilder;
 	}
 
-	private List<Pair<Integer, Object>> buildReaderQueryParameters() {
-		Map<Pair<BondCopy, QueryIDType>, String> queryMap = getReadQueryMap();
-
-		List<Pair<Integer, Object>> sqlQueryParameters = new ArrayList<Pair<Integer, Object>>();
-		for (QueryIDType idType : queryIDTypes) {
-			applyReaderQueryParameter(queryMap, sqlQueryParameters, idType);
-		}
-
-		return sqlQueryParameters;
-	}
-
-	private void applyReaderQueryParameter(Map<Pair<BondCopy, QueryIDType>, String> queryMap, List<Pair<Integer, Object>> sqlQueryParameters, QueryIDType idType) {
-		String query = queryMap.get(new Pair<BondCopy, QueryIDType>(bondCopy, idType));
-		if (StringUtil.isNotEmpty(query))
-			addReaderQueryParameter(sqlQueryParameters);
-	}
-
-	private void addReaderQueryParameter(List<Pair<Integer, Object>> sqlQueryParameters) 
-	{
-/*		for (Pair<BondFilter, Object> filter : filters) 
-		{
-			BondFilter bondFilter = filter.getLeft();
-			Integer sqlType = bondFilter.getSqlType();
-			Object value = filter.getRight();
-			sqlQueryParameters.add(new Pair<Integer, Object>(sqlType, value));
-		}*/
-	}
-
-	private void applyReaderQuery(Map<Pair<BondCopy, QueryIDType>, String> queryMap, Collection<String> queries, QueryIDType idType) {
-		String query = queryMap.get(new Pair<BondCopy, QueryIDType>(bondCopy, idType));
-		if (StringUtil.isNotEmpty(query)) {
-			queries.add(addFilter(query));
-		}
-	}
+	
 
 	protected String addFilter(String query) {
 		StringBuilder filterBuilder = new StringBuilder(query);
@@ -242,22 +136,17 @@ public abstract class AbstractDataLoader implements IDataDomainLoader
 
 	private String buildWriteQuery() 
 	{
-		Map<BondCopy, String> writeQueryMap = getWriteQueryMap();
-		if (MapUtil.isEmpty(writeQueryMap))
-			return StringUtil.emptyString();
-
-		String writeQuery = writeQueryMap.get(bondCopy);
-
+		String writeQuery = getWriteQuery();
 		return GeneralUtil.nvl(writeQuery, StringUtil.emptyString());
 	}
 
 
-	@Override
+	/*@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((bondCopy == null) ? 0 : bondCopy.hashCode());
-		result = prime * result + ((bondDomain == null) ? 0 : bondDomain.hashCode());
+		result = prime * result ;
+		
 		return result;
 	}
 
@@ -279,11 +168,7 @@ public abstract class AbstractDataLoader implements IDataDomainLoader
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return this.getClass().getSimpleName() + " [bondSchema=" + bondSchema + ", bondDomain=" + bondDomain + ", bondCopy=" + bondCopy + "]";
-	}
+*/
 	
 	protected static Date getSqlDateFromXMLGregorianCalendar(XMLGregorianCalendar date) 
 	{

@@ -7,8 +7,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
-import com.concept.crew.dao.loaderUtil.raw.DataLoader;
-import com.concept.crew.dao.loaderUtil.raw.DataLoader.BondWriter;
 import com.concept.crew.info.raw.InstrumentRaw;
 import com.concept.crew.util.Constants.BondCopy;
 
@@ -117,8 +115,8 @@ public abstract class AbstractDataWriter
 
 		@Override
 		public Collection<InstrumentRaw> write(Collection<InstrumentRaw> bonds) {
-			BondWriter writer = DataLoader.createWriter(bondCopy);
-			writer.writeBonds(bonds);
+		/*	//BondWriter writer = DataLoader.createWriter(bondCopy);
+			writer.writeBonds(bonds);*/
 			return bonds;
 		}
 
