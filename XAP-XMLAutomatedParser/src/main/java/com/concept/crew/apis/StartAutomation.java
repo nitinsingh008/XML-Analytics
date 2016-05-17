@@ -1,11 +1,14 @@
 package com.concept.crew.apis;
 
 import java.io.File;
+
 import org.apache.log4j.Logger;
+
 import com.concept.crew.dao.XapDBRoutine;
 import com.concept.crew.info.DBColumns;
 import com.concept.crew.processor.CsvTableGenerator;
 import com.concept.crew.processor.DBScriptRunner;
+import com.concept.crew.processor.FrameworkGenerator;
 import com.concept.crew.processor.JaxbTableGenerator;
 import com.concept.crew.processor.TableGenerator;
 import com.concept.crew.util.AutomationHelper;
@@ -40,7 +43,7 @@ public class StartAutomation
 							  Boolean 		  createFramework) throws Exception
 	{
 		File inputMetaDataFile = new File(request.getParsedXSDPath()); 
-		
+		Multimap<String, DBColumns> tableInfo = null;
 		if(createScripts)
 		{
 			//1. Create maven project
@@ -60,22 +63,22 @@ public class StartAutomation
 			
 			// 4. Generate tables from XSD
 			logger.warn("Generating Table Scripts");
-			Multimap<String, DBColumns> tableInfo = tableGenerator(inputMetaDataFile, request);
+			tableInfo = tableGenerator(inputMetaDataFile, request);
 			// pojo for delimiter files
 			if(request.getInputType().equals(Constants.inputType.DELIMITED.toString())){
 				logger.warn("Generating Pojo in new Maven Project");
 			}
-			
-			// 5. Generate loaders automatically - Main/Schedules
 			
 			// 6. Last Step = > Build Maven project again
 			logger.warn("Build Maven project");
 			AutomationHelper.buildMavenProject();
 		}
 
+		// Generate loaders automatically - Main/Schedules
 		if(createFramework)
 		{
-			
+			FrameworkGenerator.initialize();
+			FrameworkGenerator.generate(tableInfo);
 		}
 		
 		if(createTable)
@@ -138,6 +141,10 @@ public class StartAutomation
 		request.setUserName("CORE_REF_DATA");
 		request.setPassword("CORE_REF_DATA");
 		request.setCreateScript(true);
-		doAll(request);
+		
+		request.setInputType(Constants.inputType.XML.toString());
+		request.setCreateTable(false);
+		createFrameWork(request);
+		//doAll(request);
 	}
 }

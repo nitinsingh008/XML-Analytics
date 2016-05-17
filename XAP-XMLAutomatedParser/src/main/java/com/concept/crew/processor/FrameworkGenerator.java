@@ -2,48 +2,81 @@ package com.concept.crew.processor;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
-public class FrameworkGenerator {
+import com.concept.crew.info.DBColumns;
+import com.google.common.collect.Multimap;
 
+public class FrameworkGenerator 
+{
+	private static VelocityEngine velocityEngine;
+	private static VelocityContext context;
+
+	public static void initialize()
+	{
+		velocityEngine = new VelocityEngine();
+		velocityEngine.init();
+        context = new VelocityContext();
+	}
+	
+	public static void generate(Multimap<String, DBColumns> tableMap)
+	{
+		Iterator<String> tableMapIt =  tableMap.keySet().iterator();
+		while(tableMapIt.hasNext())
+		{
+
+			String tableName = tableMapIt.next();
+			if(tableName == null ||  tableName.contains("$") || tableName.toUpperCase().contains("OBJECTFACTORY"))
+			{
+				continue;
+			}
+			
+			Collection<DBColumns> columnList = tableMap.get(tableName);
+			
+			for(DBColumns columns :columnList)
+			{
+				String columnName = columns.getName();
+				if(columnName.length() > 30)
+				{
+					columns.setName(columnName.substring(0, 30));
+				}
+				columns.setName(columnName.substring(0, 1).toUpperCase() + columnName.substring(1));
+				//sb.append(columns.getName().toUpperCase()).append("\t\t").
+				  // append(columns.getDataType().toUpperCase()).append(",\n");
+			}
+	        String infoName = tableName;
+	        context.put("Info", infoName);
+	        context.put("ClassName", infoName + "Loader");
+	        context.put("columnList", columnList);
+			
+	        Template template = velocityEngine.getTemplate("./src/main/resources/ScheduleLoader.java.vtl" );
+	        StringWriter writer = new StringWriter();
+	        template.merge( context, writer );
+	        System.out.println( writer.toString() );  
+		}
+		
+		
+
+		
+	}
+	
 	public static void main(String[] args) throws Exception
 	{
-		VelocityEngine ve = new VelocityEngine();
-        ve.init();
-
-        // Data
-        ArrayList list = new ArrayList();
+		initialize();
         
-        Map map = new HashMap();
-
-        map.put("name", "Cow");
-        map.put("price", "$100.00");
-        list.add( map );
- 
-        map = new HashMap();
-        map.put("name", "Eagle");
-        map.put("price", "$59.99");
-        list.add( map );
-
-        map = new HashMap();
-        map.put("ClassName", "InstrumentLoader");
-        list.add( map );
-
-
-
-        VelocityContext context = new VelocityContext();
-        //context.put("petList", list);
         String infoName = "Instrument";
         context.put("Info", infoName);
         context.put("ClassName", infoName + "Loader");
 
 
-        Template template = ve.getTemplate("./src/main/resources/scheduleLoaders.java.vtl" );
+        Template template = velocityEngine.getTemplate("./src/main/resources/scheduleLoaders.java.vtl" );
 
         StringWriter writer = new StringWriter();
         //BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/resources/JavaClasses/InstrumentLoader.java"));
