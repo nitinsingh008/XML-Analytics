@@ -2,30 +2,18 @@ package com.concept.crew.dao.loaderUtil;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import com.concept.crew.dao.loaderUtil.raw.LoadersType.BondFilter;
-import com.concept.crew.dao.loaderUtil.raw.LoadersType.BondSchema;
 import com.concept.crew.dao.loaderUtil.raw.IDataDomainLoader;
 import com.concept.crew.info.raw.InstrumentRaw;
-import com.concept.crew.util.CollectionsUtil;
-import com.concept.crew.util.Constants.BondCopy;
-import com.concept.crew.util.Constants.QueryIDType;
 import com.concept.crew.util.GeneralUtil;
-import com.concept.crew.util.MapUtil;
-import com.concept.crew.util.Pair;
-import com.concept.crew.util.ResultSetHelper;
 import com.concept.crew.util.StringUtil;
 import com.concept.crew.util.ThreadManager;
 
@@ -35,9 +23,6 @@ public abstract class AbstractDataLoader implements IDataDomainLoader
 
 	private static 	SimpleDateFormat yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd"); // e.g. <issueDate>2012-09-30</issueDate>
 
-
-	protected List<Pair<BondFilter, Object>> filters;
-	
 	private String 	orderBy;
 	private int 	readerRecordCount = 0;
 
@@ -48,12 +33,7 @@ public abstract class AbstractDataLoader implements IDataDomainLoader
 	private ConcurrentMap<Long, InstrumentRaw> cache;
 
 
-	@Override
-	public void setFilterCriteria(List<Pair<BondFilter, Object>> filters) {
-		this.filters = filters;
-	}
 	
-
 	@Override
 	public void setOrderBy(String orderBy) {
 		this.orderBy = orderBy;

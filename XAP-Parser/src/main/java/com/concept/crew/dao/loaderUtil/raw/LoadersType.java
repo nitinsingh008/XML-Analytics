@@ -1,6 +1,5 @@
 package com.concept.crew.dao.loaderUtil.raw;
 
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,40 +15,8 @@ import com.concept.crew.util.StringUtil;
 public class LoadersType
 {
 
-	public static enum BondSchema 
-	{
-		CORE_FEED,
-		CORE_REF_DATA, 
-	}
-
-	public static enum BondFilter 
-	{
-		SOURCE("M.SOURCE", Types.VARCHAR), //
-		VERSION("M.VERSION", Types.VARCHAR), //
-		NONE("", Types.NULL);
-
-		private final String name;
-		private final Integer sqlType;
-
-		private BondFilter(String name, Integer sqlType) 
-		{
-			this.name = name;
-			this.sqlType = sqlType;
-		}
-
-		public String getName() 
-		{
-			return name;
-		}
-
-		public Integer getSqlType() 
-		{
-			return sqlType;
-		}
-	}
-
 	@SuppressWarnings("unchecked")
-	public static enum BondDomain implements IDomainLoader
+	public static enum Domain implements IDomainLoader
 	{
 		INSTRUMENT_RAW
 		 (CollectionsUtil.<Class<? extends IDataDomainLoader>> toList(InstrumentLoader.class), // SELECT - Reader
@@ -66,8 +33,8 @@ public class LoadersType
 		;
 
 		private static Set<String> 		domainNamesCache;
-		private static List<BondDomain> readersCache;
-		private static List<BondDomain> writersCache;
+		private static List<Domain> readersCache;
+		private static List<Domain> writersCache;
 
 		private static final ReentrantLock domainNamesCacheLock = new ReentrantLock();
 		private static final ReentrantLock readersCacheLock 	= new ReentrantLock();
@@ -84,7 +51,7 @@ public class LoadersType
 		/*
 		 * Constructor for setting enum parameters
 		 */
-		private BondDomain(List<Class<? extends IDataDomainLoader>> domainReaders, 
+		private Domain(List<Class<? extends IDataDomainLoader>> domainReaders, 
 						   List<Class<? extends IDataDomainLoader>> domainWriters) 
 		{
 			this(domainReaders, domainWriters, StringUtil.emptyString());
@@ -93,7 +60,7 @@ public class LoadersType
 		/*
 		 * Overloaded constructor
 		 */
-		private BondDomain(List<Class<? extends IDataDomainLoader>> domainReaders, 
+		private Domain(List<Class<? extends IDataDomainLoader>> domainReaders, 
 						   List<Class<? extends IDataDomainLoader>> domainWriters, 
 						   String orderBy) 
 		{
@@ -134,15 +101,15 @@ public class LoadersType
 			return this.orderBy;
 		}
 
-		public static List<BondDomain> getReaders() 
+		public static List<Domain> getReaders() 
 		{
 			readersCacheLock.lock();
 			try {
 				if (CollectionsUtil.isNotEmpty(readersCache))
 					return readersCache;
 
-				readersCache = new ArrayList<BondDomain>();
-				for (BondDomain bondDomain : BondDomain.values()) {
+				readersCache = new ArrayList<Domain>();
+				for (Domain bondDomain : Domain.values()) {
 					if (bondDomain.isReader())
 						readersCache.add(bondDomain);
 				}
@@ -153,15 +120,15 @@ public class LoadersType
 			}
 		}
 
-		public static List<BondDomain> getWriters() 
+		public static List<Domain> getWriters() 
 		{
 			writersCacheLock.lock();
 			try {
 				if (CollectionsUtil.isNotEmpty(writersCache))
 					return writersCache;
 
-				writersCache = new ArrayList<BondDomain>();
-				for (BondDomain bondDomain : BondDomain.values()) {
+				writersCache = new ArrayList<Domain>();
+				for (Domain bondDomain : Domain.values()) {
 					if (bondDomain.isWriter())
 						writersCache.add(bondDomain);
 				}
@@ -179,7 +146,7 @@ public class LoadersType
 					return domainNamesCache;
 
 				domainNamesCache = new HashSet<String>();
-				for (BondDomain bondDomain : BondDomain.values()) {
+				for (Domain bondDomain : Domain.values()) {
 					domainNamesCache.add(bondDomain.name());
 				}
 

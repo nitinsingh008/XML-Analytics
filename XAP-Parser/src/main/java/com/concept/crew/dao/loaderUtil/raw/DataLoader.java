@@ -11,7 +11,7 @@ import java.util.concurrent.Future;
 import org.apache.log4j.Logger;
 
 import com.concept.crew.dao.loaderUtil.DataWriterImpl;
-import com.concept.crew.dao.loaderUtil.raw.LoadersType.BondDomain;
+import com.concept.crew.dao.loaderUtil.raw.LoadersType.Domain;
 import com.concept.crew.info.raw.InstrumentRaw;
 import com.concept.crew.util.CollectionsUtil;
 import com.concept.crew.util.Command;
@@ -98,7 +98,7 @@ public class DataLoader {
 				ThreadManager.handleTaskCompletion(writeBondTasks, completionService);
 				logger.info(new StringBuilder(logKey).append("Finished "));
 
-			} catch (InterruptedException e) 
+			} catch (InterruptedException e)
 			{
 				throw new RuntimeException(e);
 			} 
@@ -130,12 +130,12 @@ public class DataLoader {
 		
 		@Override
 		public void execute(InstrumentRaw bond) {
-			Collection<BondDomain> bondDomains = BondDomain.getWriters();
+			Collection<Domain> domainList = Domain.getWriters();
 			List<IDataDomainLoader> instrumentDomainWriters = new ArrayList<IDataDomainLoader>();
-			for (BondDomain bondDomain : bondDomains) {
+			for (Domain domain : domainList) {
 				List<IDataDomainLoader> newInstrumentDomainWriters;
 				try {
-					newInstrumentDomainWriters = createInstrumentDomainWriters(bondDomain, null);
+					newInstrumentDomainWriters = createInstrumentDomainWriters(domain, null);
 					instrumentDomainWriters.addAll(newInstrumentDomainWriters);
 				} catch (InstantiationException e) {
 					throw new RuntimeException(e);
@@ -147,10 +147,10 @@ public class DataLoader {
 		}
 
 
-		private List<IDataDomainLoader> createInstrumentDomainWriters(BondDomain bondDomain, BondCopy bondCopy) 
+		private List<IDataDomainLoader> createInstrumentDomainWriters(Domain domain, BondCopy bondCopy) 
 						throws InstantiationException, IllegalAccessException 
 		{
-			List<IDataDomainLoader> newInstrumentDomainWriters = createDomainWriterInstances(bondDomain);
+			List<IDataDomainLoader> newInstrumentDomainWriters = createDomainWriterInstances(domain);
 
 			List<IDataDomainLoader> instrumentDomainWriters = new ArrayList<IDataDomainLoader>();
 			
@@ -164,10 +164,10 @@ public class DataLoader {
 			return instrumentDomainWriters;
 		}
 
-		private final List<IDataDomainLoader> createDomainWriterInstances(BondDomain bondDomain) 
+		private final List<IDataDomainLoader> createDomainWriterInstances(Domain domain) 
 					throws InstantiationException, IllegalAccessException 
 		{
-			List<Class<? extends IDataDomainLoader>> domainWriters = bondDomain.getDomainWriters();
+			List<Class<? extends IDataDomainLoader>> domainWriters = domain.getDomainWriters();
 
 			List<IDataDomainLoader> newInstrumentDomainWriters = new ArrayList<IDataDomainLoader>();
 			for (Class<? extends IDataDomainLoader> domainWriter : domainWriters) {
