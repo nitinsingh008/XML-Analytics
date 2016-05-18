@@ -60,9 +60,9 @@ public class QueryReaderUtil {
 		return sb.toString();
 	}
 	
-	private static final String SQL_SELECT_NEW_PK = "select level CORE_REF_DATA.INSTRUMENT_SEQ.nextval id from dual connect by level <= ";
+	private static final String SQL_SELECT_NEW_PK = "select level, CORE_REF_DATA.INSTRUMENT_SEQ.nextval id from dual connect by level <= ";
 	
-	public static List<Integer> loadNewGoldenInstId(int cacheSize)
+	public static List<Integer> loadNewPKeys(int cacheSize)
 			throws Exception {
 
 		DBRoutinePoolTx brdDBRoutineTx = new DBRoutinePoolTx(LoaderDBRoutine.getPoolname());
@@ -79,7 +79,6 @@ public class QueryReaderUtil {
 			while (rs.next()) {
 				retvalList.add(rs.getInt("id"));
 			}
-
 		} catch (SQLException e) {
 			brdDBRoutineTx.rollbackTransaction();
 		} finally {
