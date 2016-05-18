@@ -1,5 +1,6 @@
 package com.concept.crew.processor;
 
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,6 +13,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
 import com.concept.crew.info.DBColumns;
+import com.concept.crew.util.Constants;
 import com.google.common.collect.Multimap;
 
 public class FrameworkGenerator 
@@ -67,25 +69,44 @@ public class FrameworkGenerator
 		
 	}
 	
+	public static void generateParentWrapper(String root){
+		context = null;
+		context = new VelocityContext(); 
+		// check to be added for XSD and Delimited file for setting Import
+	     context.put("Import", Constants.packageName + "."+root);
+		 context.put("Root", root);
+		 Template template = velocityEngine.getTemplate("./src/main/resources/ParentInfoWrapper.java.vtl" );
+		 StringWriter writer = new StringWriter();
+		//BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/resources/JavaClasses/ParentInfoWrapper.java"));
+	     template.merge( context, writer );
+	     System.out.println( writer.toString() );  
+	     try {
+	    	 writer.flush();
+	         writer.close();
+		} catch (IOException e) {
+			
+		}
+	}
+	
 	public static void main(String[] args) throws Exception
 	{
 		initialize();
-        
-        String infoName = "Instrument";
+		generateParentWrapper("Instrument");
+       /* String infoName = "Instrument";
         context.put("Info", infoName);
         context.put("ClassName", infoName + "Loader");
 
 
-        Template template = velocityEngine.getTemplate("./src/main/resources/scheduleLoaders.java.vtl" );
+        Template template = velocityEngine.getTemplate("./src/main/resources/ParentInfoWrapper.java.vtl" );
 
         StringWriter writer = new StringWriter();
         //BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/resources/JavaClasses/InstrumentLoader.java"));
         
         template.merge( context, writer );
-/*        writer.flush();
-        writer.close();*/
+        writer.flush();
+        writer.close();
 
-        System.out.println( writer.toString() );        
+        System.out.println( writer.toString() );    */    
 	}
 
 }
