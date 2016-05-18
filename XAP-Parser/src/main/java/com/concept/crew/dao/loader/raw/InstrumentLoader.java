@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import com.concept.crew.dao.loaderUtil.AbstractDataLoader;
 import com.concept.crew.info.jaxb.Instrument;
-import com.concept.crew.info.raw.InstrumentRaw;
+import com.concept.crew.info.raw.ParentInfoWrapper;
 import com.concept.crew.util.StatementHelper;
 
 
@@ -33,14 +33,14 @@ public final class InstrumentLoader extends AbstractDataLoader
 	/**
 	 * 
 	 */
-	public int prepare(InstrumentRaw rawBond, 
+	public int prepare(ParentInfoWrapper parentInfo, 
 					   PreparedStatement statement) 
 							   				throws SQLException 
 	{
-		Instrument bond = rawBond.getInstrument();
+		Instrument bond = parentInfo.getInstrument();
 		
 		int index = 1;
-		StatementHelper.setLong(statement, index++, rawBond.getPkeyId());
+		StatementHelper.setLong(statement, index++, parentInfo.getPkeyId());
 		StatementHelper.setLong(statement, index++, bond.getInstrumentId());
 		StatementHelper.setLong(statement, index++, bond.getDatasetId());
 		StatementHelper.setLong(statement, index++, bond.getVersion());

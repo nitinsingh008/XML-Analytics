@@ -7,7 +7,7 @@ import java.util.List;
 import com.concept.crew.dao.loaderUtil.AbstractDataLoader;
 import com.concept.crew.info.jaxb.CallSchedule;
 import com.concept.crew.info.jaxb.Instrument;
-import com.concept.crew.info.raw.InstrumentRaw;
+import com.concept.crew.info.raw.ParentInfoWrapper;
 import com.concept.crew.util.CollectionsUtil;
 import com.concept.crew.util.GeneralUtil;
 import com.concept.crew.util.StatementHelper;
@@ -30,11 +30,11 @@ public final class CallScheduleLoader extends AbstractDataLoader
 	/*
 	 * For inserting into Database
 	 */
-	public int prepare(InstrumentRaw rawBond, 
+	public int prepare(ParentInfoWrapper parentInfo, 
 					   PreparedStatement statement) 
 			throws SQLException 
 	{
-		Instrument bond = rawBond.getInstrument();
+		Instrument bond = parentInfo.getInstrument();
 
 		int total = 0;
 
@@ -48,7 +48,7 @@ public final class CallScheduleLoader extends AbstractDataLoader
 			{
 				total++;
 				int index = 1;
-				StatementHelper.setLong(statement, index++, rawBond.getPkeyId());
+				StatementHelper.setLong(statement, index++, parentInfo.getPkeyId());
 				StatementHelper.setString(statement,index++, schedule.getCallScheduleSource());
 				StatementHelper.setBoolean(statement,index++, schedule.isIsCallDefeased());
 				
