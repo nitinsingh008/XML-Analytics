@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentMap;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.concept.crew.dao.loaderUtil.raw.IDataDomainLoader;
-import com.concept.crew.info.raw.InstrumentRaw;
+import com.concept.crew.info.raw.ParentInfoWrapper;
 import com.concept.crew.util.GeneralUtil;
 import com.concept.crew.util.StringUtil;
 import com.concept.crew.util.ThreadManager;
@@ -30,7 +30,7 @@ public abstract class AbstractDataLoader implements IDataDomainLoader
 	private List<List<String>> writerQueryParameters;
 	private int writerRecordCount = 0;
 
-	private ConcurrentMap<Long, InstrumentRaw> cache;
+	private ConcurrentMap<Long, ParentInfoWrapper> cache;
 
 
 	
@@ -40,7 +40,7 @@ public abstract class AbstractDataLoader implements IDataDomainLoader
 	}
 
 	@Override
-	public void setCache(ConcurrentMap<Long, InstrumentRaw> cache) {
+	public void setCache(ConcurrentMap<Long, ParentInfoWrapper> cache) {
 		this.cache = cache;
 	}
 
@@ -70,7 +70,7 @@ public abstract class AbstractDataLoader implements IDataDomainLoader
 	}
 
 	@Override
-	public void setParam(PreparedStatement statement, int rowNum, InstrumentRaw bond) throws SQLException {
+	public void setParam(PreparedStatement statement, int rowNum, ParentInfoWrapper bond) throws SQLException {
 		ThreadManager.checkInterruption();
 		int prepared = prepare(bond, statement);
 		writerRecordCount += prepared;

@@ -2,7 +2,7 @@ package com.concept.crew.info.raw;
 
 import com.concept.crew.info.jaxb.Instrument;
 
-public class InstrumentRaw
+public class ParentInfoWrapper
 {
 	private Instrument instrument;
 	private Long 		pkeyId;

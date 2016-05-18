@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.concept.crew.dao.loaderUtil.DataWriterImpl;
 import com.concept.crew.dao.loaderUtil.raw.LoadersType.Domain;
-import com.concept.crew.info.raw.InstrumentRaw;
+import com.concept.crew.info.raw.ParentInfoWrapper;
 import com.concept.crew.util.CollectionsUtil;
 import com.concept.crew.util.Command;
 import com.concept.crew.util.Constants.BondCopy;
@@ -42,7 +42,7 @@ public class DataLoader {
 		 * 
 		 * @param bonds
 		 */
-		public abstract void writeData(Collection<InstrumentRaw> bonds);
+		public abstract void writeData(Collection<ParentInfoWrapper> bonds);
 	}
 
 	/**
@@ -71,10 +71,10 @@ public class DataLoader {
 		}
 
 		@Override
-		public void writeData(Collection<InstrumentRaw> bonds) 
+		public void writeData(Collection<ParentInfoWrapper> bonds) 
 		{
 
-			Collection<Pair<InstrumentRaw, List<IDataDomainLoader>>> bondsAndDomainWriters = new ArrayList<Pair<InstrumentRaw, List<IDataDomainLoader>>>();
+			Collection<Pair<ParentInfoWrapper, List<IDataDomainLoader>>> bondsAndDomainWriters = new ArrayList<Pair<ParentInfoWrapper, List<IDataDomainLoader>>>();
 
 			Iterate.forEach(bonds, new PairInstrumentWithItsTargetedWriters(bondsAndDomainWriters));
 			try 
@@ -87,10 +87,10 @@ public class DataLoader {
 				final CompletionService<Void> completionService = ThreadManager.newCompletionService(bondWriterThreadManager);
 				final List<Future<Void>> writeBondTasks = new ArrayList<Future<Void>>();
 
-				Collection<Collection<Pair<InstrumentRaw, List<IDataDomainLoader>>>> partitions = CollectionsUtil.partition(bondsAndDomainWriters, 1);
+				Collection<Collection<Pair<ParentInfoWrapper, List<IDataDomainLoader>>>> partitions = CollectionsUtil.partition(bondsAndDomainWriters, 1);
 
-				for (Collection<Pair<InstrumentRaw, List<IDataDomainLoader>>> partition : partitions){
-					Callable<Void> call = new DataWriterImpl<InstrumentRaw, IDataDomainLoader>(logKey, partition);
+				for (Collection<Pair<ParentInfoWrapper, List<IDataDomainLoader>>> partition : partitions){
+					Callable<Void> call = new DataWriterImpl<ParentInfoWrapper, IDataDomainLoader>(logKey, partition);
 					Future<Void> task = completionService.submit(call);
 					writeBondTasks.add(task);
 				}
@@ -118,18 +118,18 @@ public class DataLoader {
 	 * Helper Command
 	 * 
 	 */
-	private static final class PairInstrumentWithItsTargetedWriters implements Command<InstrumentRaw> {
+	private static final class PairInstrumentWithItsTargetedWriters implements Command<ParentInfoWrapper> {
 
 		private static final Logger logger = Logger.getLogger(PairInstrumentWithItsTargetedWriters.class);
 
-		private final Collection<Pair<InstrumentRaw, List<IDataDomainLoader>>> bondsAndDomainWriters;
+		private final Collection<Pair<ParentInfoWrapper, List<IDataDomainLoader>>> bondsAndDomainWriters;
 
-		private PairInstrumentWithItsTargetedWriters(Collection<Pair<InstrumentRaw, List<IDataDomainLoader>>> bondsAndDomainWriters) {
+		private PairInstrumentWithItsTargetedWriters(Collection<Pair<ParentInfoWrapper, List<IDataDomainLoader>>> bondsAndDomainWriters) {
 			this.bondsAndDomainWriters = bondsAndDomainWriters;
 		}
 		
 		@Override
-		public void execute(InstrumentRaw bond) {
+		public void execute(ParentInfoWrapper bond) {
 			Collection<Domain> domainList = Domain.getWriters();
 			List<IDataDomainLoader> instrumentDomainWriters = new ArrayList<IDataDomainLoader>();
 			for (Domain domain : domainList) {
@@ -143,7 +143,7 @@ public class DataLoader {
 					throw new RuntimeException(e);
 				}				
 			}
-			bondsAndDomainWriters.add(new Pair<InstrumentRaw, List<IDataDomainLoader>>(bond, instrumentDomainWriters));
+			bondsAndDomainWriters.add(new Pair<ParentInfoWrapper, List<IDataDomainLoader>>(bond, instrumentDomainWriters));
 		}
 
 

@@ -9,10 +9,8 @@ import org.apache.log4j.Logger;
 import com.concept.crew.dao.loaderUtil.DataWriter;
 import com.concept.crew.info.jaxb.Instrument;
 import com.concept.crew.info.jaxb.StartingTag;
-import com.concept.crew.info.raw.InstrumentRaw;
+import com.concept.crew.info.raw.ParentInfoWrapper;
 import com.concept.crew.util.CollectionsUtil;
-import com.concept.crew.util.Constants.BondCopy;
-import com.concept.crew.util.GroupBy;
 
 
 public class LoadSaveProcessor 
@@ -34,12 +32,12 @@ public class LoadSaveProcessor
 		
 		List<Instrument> instruments = startingTag.getInstrument(); // TODO : Dyanmic
 		
-		Collection<InstrumentRaw> rawDataList = new ArrayList<InstrumentRaw>();
+		Collection<ParentInfoWrapper> rawDataList = new ArrayList<ParentInfoWrapper>();
 		
 		
 		for(Instrument instrument: instruments)
 		{
-			InstrumentRaw raw = new InstrumentRaw();
+			ParentInfoWrapper raw = new ParentInfoWrapper();
 			raw.setInstrument(instrument);
 			
 			// Generate unique Key using sequence and assign to Bond
@@ -65,12 +63,4 @@ public class LoadSaveProcessor
 		return pkCounter;
 	}
 	
-	public static final class GroupByBondCopy implements GroupBy<InstrumentRaw, BondCopy> {
-
-		@Override
-		public BondCopy groupBy(InstrumentRaw bond) 
-		{
-			return BondCopy.RAW;
-		}
-	}
 }
