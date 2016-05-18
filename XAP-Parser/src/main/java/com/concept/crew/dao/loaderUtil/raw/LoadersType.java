@@ -109,9 +109,9 @@ public class LoadersType
 					return readersCache;
 
 				readersCache = new ArrayList<Domain>();
-				for (Domain bondDomain : Domain.values()) {
-					if (bondDomain.isReader())
-						readersCache.add(bondDomain);
+				for (Domain domain : Domain.values()) {
+					if (domain.isReader())
+						readersCache.add(domain);
 				}
 
 				return readersCache;
@@ -128,9 +128,9 @@ public class LoadersType
 					return writersCache;
 
 				writersCache = new ArrayList<Domain>();
-				for (Domain bondDomain : Domain.values()) {
-					if (bondDomain.isWriter())
-						writersCache.add(bondDomain);
+				for (Domain domain : Domain.values()) {
+					if (domain.isWriter())
+						writersCache.add(domain);
 				}
 
 				return writersCache;
@@ -146,8 +146,8 @@ public class LoadersType
 					return domainNamesCache;
 
 				domainNamesCache = new HashSet<String>();
-				for (Domain bondDomain : Domain.values()) {
-					domainNamesCache.add(bondDomain.name());
+				for (Domain domain : Domain.values()) {
+					domainNamesCache.add(domain.name());
 				}
 
 				return domainNamesCache;
