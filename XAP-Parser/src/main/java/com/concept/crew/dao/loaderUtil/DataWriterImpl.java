@@ -53,31 +53,31 @@ public class DataWriterImpl<T, W extends IDataWriter<T>>
 	 */
 	public Void call() throws Exception 
 	{
-		DBRoutinePoolTx brdDBRoutineTx = new DBRoutinePoolTx(LoaderDBRoutine.getPoolname());
-		brdDBRoutineTx.beginTransaction();
+		DBRoutinePoolTx dbRoutine = new DBRoutinePoolTx(LoaderDBRoutine.getPoolname());
+		dbRoutine.beginTransaction();
 		
-		Connection brdDbConnection = brdDBRoutineTx.getConnection();
+		Connection conn = dbRoutine.getConnection();
 
 		Map<W, PreparedStatement> writerStatementsCache = new LinkedHashMap<W, PreparedStatement>();
 		try 
 		{
-			Iterate.forEach(dataAndWriters, new PrepareWriterStatements<T, W>(brdDbConnection, writerStatementsCache));
+			Iterate.forEach(dataAndWriters, new PrepareWriterStatements<T, W>(conn, writerStatementsCache));
 
 			Set<Entry<W, PreparedStatement>> writerStatements = writerStatementsCache.entrySet();
 			Iterate.forEach(writerStatements, new ExecuteWriterStatements<T, W>());
 
-			brdDBRoutineTx.commitTransaction();
+			dbRoutine.commitTransaction();
 		} 
 		catch (Throwable throwable) 
 		{
-			brdDBRoutineTx.rollbackTransaction();
+			dbRoutine.rollbackTransaction();
 			throw new RuntimeException("Failed writing data" + " - " + throwable.getMessage(), throwable);
 		} 
 		finally 
 		{
 			Collection<PreparedStatement> preparedStatements = writerStatementsCache.values();
 			cleanup(preparedStatements);
-			brdDBRoutineTx.cleanup(brdDbConnection);
+			dbRoutine.cleanup(conn);
 		}
 
 		return null;
@@ -98,12 +98,12 @@ public class DataWriterImpl<T, W extends IDataWriter<T>>
 	private static final class PrepareWriterStatements<T, W extends IDataWriter<T>> implements Command<Pair<T, List<W>>> 
 	{
 		//private final String logKey;
-		private final Connection brdDbConnection;
+		private final Connection conn;
 		private final Map<W, PreparedStatement> writerStatementsCache;
 
-		private PrepareWriterStatements(Connection brdDbConnection, Map<W, PreparedStatement> writerStatementsCache) {
+		private PrepareWriterStatements(Connection conn, Map<W, PreparedStatement> writerStatementsCache) {
 			//this.logKey = logKey;
-			this.brdDbConnection = brdDbConnection;
+			this.conn = conn;
 			this.writerStatementsCache = writerStatementsCache;
 		}
 
@@ -119,12 +119,12 @@ public class DataWriterImpl<T, W extends IDataWriter<T>>
 				String writeQuery = writer.getWriteQuery();
 				if (StringUtil.isNotEmpty(writeQuery)) 
 				{
-					PreparedStatement brdDbStatement;
+					PreparedStatement stmt;
 					try 
 					{
-						brdDbStatement = GeneralUtil.nvl(writerStatementsCache.get(writer), brdDbConnection.prepareStatement(writeQuery));
-						writer.setParam(brdDbStatement, 1, data);
-						writerStatementsCache.put(writer, brdDbStatement);
+						stmt = GeneralUtil.nvl(writerStatementsCache.get(writer), conn.prepareStatement(writeQuery));
+						writer.setParam(stmt, 1, data);
+						writerStatementsCache.put(writer, stmt);
 					} 
 					catch (SQLException e) 
 					{
