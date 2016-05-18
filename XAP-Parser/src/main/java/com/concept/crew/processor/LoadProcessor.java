@@ -1,7 +1,6 @@
 package com.concept.crew.processor;
 
 import java.io.File;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -33,7 +32,7 @@ public class LoadProcessor
 					 startingTag = XMLParsingUtil.unmarshall(file.getCanonicalPath(), ISO_8859_2);		            		            
 		            
 		             // Save all Incoming Data into Tables
-					 List<String> pkey = LoadSaveProcessor.saveData(startingTag);						 					 
+					 LoadSaveProcessor.saveData(startingTag);						 					 
 				 }
 				 startingTag = null;
 			 } 
