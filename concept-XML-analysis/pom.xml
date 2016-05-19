@@ -186,9 +186,10 @@
                         </goals>
                         <phase>package</phase>
                         <configuration>
-                            <path>/</path>                               
+                            <path>/XAP</path>                               
                             <attachartifactclassifier>exec-war</attachartifactclassifier>
                             <attachartifactclassifiertype>jar</attachartifactclassifiertype>
+                            <finalName>XAP-Parser.jar</finalName>
                         </configuration>
                     </execution>
                 </executions>
