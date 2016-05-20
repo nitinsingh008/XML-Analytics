@@ -1,0 +1,50 @@
+package com.concept.crew.processor;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import org.apache.log4j.Logger;
+import com.concept.crew.dao.loaderUtil.DataWriter;
+import $ImportRootTag;
+import com.concept.crew.info.raw.ParentInfoWrapper;
+import com.concept.crew.util.QueryReaderUtil;
+
+
+public class LoadSaveProcessor 
+{
+	private static final Logger log = Logger.getLogger(LoadSaveProcessor.class);
+	private static List<Integer> uniqueKeys = new ArrayList<Integer>();
+	/**
+	 * Iterate over ROOT bonds, transform them and persist all Bonds in RAW
+	 * tables
+	 */
+	public static void saveData(List<$Root> records) throws Exception {
+		log.info("Start Processing");
+
+		Collection<ParentInfoWrapper> wrapperList = new ArrayList<ParentInfoWrapper>();
+
+		for ($Root record : records) {
+			ParentInfoWrapper wrapper = new ParentInfoWrapper();
+			wrapper.set$Root(record);
+			// Generate unique Key using sequence and assign to Bond
+			wrapper.setPkeyId(fetchPrimarykey(rawDataList.size()).longValue());
+
+			wrapperList.add(wrapper);
+		}
+		DataWriter writer = new DataWriter();
+		writer.write(wrapperList);
+	}
+
+	private static Integer fetchPrimarykey(int size) {		
+		try {
+			if (uniqueKeys.size() <= 1) {
+				uniqueKeys.addAll(QueryReaderUtil.loadNewPKeys(size));
+			}
+
+		} catch (Exception e) {
+			throw new RuntimeException(	"Failed while fetching keys from Sequence" ,  e);
+		}
+		return uniqueKeys.remove(0);
+	}
+	
+}
