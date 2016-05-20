@@ -60,6 +60,9 @@ public class StartAutomation
 		{
 					
 			AutomationHelper ah = new AutomationHelper(projectSetting);
+			
+			ah.installMaven();
+			
 			//1. Create maven project
 			logger.warn("Start creating new Maven Project");
 			ah.createMavenProject();
@@ -155,7 +158,7 @@ public class StartAutomation
 		
 		request.setInputType(Constants.inputType.XML.toString());
 		request.setCreateTable(false);
-		new StartAutomation(request).createFrameWork();
-		//doAll(request);
+		//new StartAutomation(request).createFrameWork();
+		new StartAutomation(request).doAll();
 	}
 }

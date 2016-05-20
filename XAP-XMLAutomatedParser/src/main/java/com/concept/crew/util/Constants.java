@@ -12,6 +12,9 @@ public class Constants
 	
 	// Maven Specific
 	public static final String m2_repository     = mavenProjectPath + "/" + "m2_repository";
+	public static final String mavenVersion 	 = "apache-maven-3.2.2";
+	public static final String mavenHome 	 	 = mavenProjectPath + "/" + mavenVersion;
+	public static final String mavenZip 	     = mavenVersion + ".zip";
 	
 	public static final String logFilePath       = mavenProjectPath + "/" + "Logs" + "/" + "xap.log";
 	

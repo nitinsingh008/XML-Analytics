@@ -1,6 +1,9 @@
 package com.concept.crew.util;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -8,6 +11,8 @@ import java.net.URLClassLoader;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Properties;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -268,13 +273,16 @@ public class AutomationHelper
 	
 	public static void setMavenHome(Invoker invoker)
 	{
-		String mavenHomePath = "";
+/*		String mavenHomePath = "";
         if (System.getProperty("maven.home") != null && System.getProperty("maven.home").contains("EMBEDDED"))
         {
         	// i.e. running from Eclipse, need to set correct Home
         	mavenHomePath = System.getenv().get("M2_HOME");
         	invoker.setMavenHome(new File(mavenHomePath));
-        }
+        }*/
+
+        File file = new File(Constants.mavenHome);
+        invoker.setMavenHome(file);
 	}
 	
 	public static void main(String args[]) throws Exception
@@ -335,5 +343,58 @@ public class AutomationHelper
 	    	}
 	    }
 	}
+	
+	public void installMaven() throws IOException
+	{
+		String zipFilePath = Constants.mavenZip;
+		String destDirectory = Constants.mavenProjectPath;
+		
+		ClassLoader classLoader = getClass().getClassLoader();
+		File file = new File(classLoader.getResource(zipFilePath).getFile());
+		
+		
+        File destDir = new File(destDirectory);
+        if (!destDir.exists()) {
+            destDir.mkdir();
+        }
+        ZipInputStream zipIn = new ZipInputStream(new FileInputStream(file));
+        ZipEntry entry = zipIn.getNextEntry();
+        // iterates over entries in the zip file
+        while (entry != null) 
+        {
+            String filePath = destDirectory + File.separator + entry.getName();
+            if (!entry.isDirectory()) 
+            {
+                // if the entry is a file, extracts it
+                extractFile(zipIn, filePath);
+            } 
+            else 
+            {
+                // if the entry is a directory, make the directory
+                File dir = new File(filePath);
+                dir.mkdir();
+            }
+            zipIn.closeEntry();
+            entry = zipIn.getNextEntry();
+        }
+        zipIn.close();
+
+	}
+	
+    /**
+     * Extracts a zip entry (file entry)
+     * @param zipIn
+     * @param filePath
+     * @throws IOException
+     */
+    private void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
+        byte[] bytesIn = new byte[4096];
+        int read = 0;
+        while ((read = zipIn.read(bytesIn)) != -1) {
+            bos.write(bytesIn, 0, read);
+        }
+        bos.close();
+    }	
 	
 }
