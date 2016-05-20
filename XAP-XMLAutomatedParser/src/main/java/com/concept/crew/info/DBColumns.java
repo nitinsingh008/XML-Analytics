@@ -6,6 +6,8 @@ public class DBColumns
 	private String dataType;
 	private int    size;
 	private int position;
+	private String getterName;
+	private String setterName;
 	
 	public String getName() {
 		return name;
@@ -32,10 +34,24 @@ public class DBColumns
 	public void setPosition(int position) {
 		this.position = position;
 	}
+	
+	public String getGetterName() {
+		return getterName;
+	}
+	public void setGetterName(String getterName) {
+		this.getterName = getterName;
+	}
+	public String getSetterName() {
+		return setterName;
+	}
+	public void setSetterName(String setterName) {
+		this.setterName = setterName;
+	}
 	@Override
 	public String toString() {
-		return "DBColumns [name=" + name + ", dataType=" + dataType + ", size="
-				+ size + "]";
+		return "DBColumns [name=" + name + ", dataType=" + dataType + ", size=" + size + ", position=" + position
+				+ ", getterName=" + getterName + ", setterName=" + setterName + "]";
 	}
+	
 	
 }

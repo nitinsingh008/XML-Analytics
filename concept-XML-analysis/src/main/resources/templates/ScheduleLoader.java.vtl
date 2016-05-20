@@ -47,11 +47,11 @@ public final class $ClassName extends AbstractDataLoader
 				int index = 1;
 				#foreach( $column in $columnList )
 					#if( $column.getDataType() == "NUMBER" )
-			    StatementHelper.setLong(statement, index++, schedule.get$column.getName()());
+			    StatementHelper.setLong(statement, index++, schedule.$column.getGetterName() );
 					#elseif( $column.getDataType() == "DATE" )
-			    StatementHelper.setDate(statement, index++, schedule.get$column.getName()());
+			    StatementHelper.setDate(statement, index++, schedule.$column.getGetterName() );
 					#else
-StatementHelper.setString(statement, index++, schedule.get$column.getName()());
+				StatementHelper.setString(statement, index++, schedule.$column.getGetterName() );
 					#end
 				#end
 				

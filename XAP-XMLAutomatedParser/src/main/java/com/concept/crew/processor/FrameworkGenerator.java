@@ -2,11 +2,8 @@ package com.concept.crew.processor;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -58,7 +55,7 @@ public class FrameworkGenerator
 	        context.put("ClassName", infoName + "Loader");
 	        context.put("columnList", columnList);
 			
-	        Template template = velocityEngine.getTemplate("./src/main/resources/ScheduleLoader.java.vtl" );
+	        Template template = velocityEngine.getTemplate("./src/main/resources/templates/ScheduleLoader.java.vtl" );
 	        StringWriter writer = new StringWriter();
 	        template.merge( context, writer );
 	        System.out.println( writer.toString() );  

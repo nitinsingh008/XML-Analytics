@@ -40,6 +40,8 @@ public class PojoGenerator {
 				variableDeclaration.append("\t").append("@Parsed(index="+dbColumns.getPosition()+")").append("\n");
 				variableDeclaration.append("\t").append("private String "+dbColumns.getName().toLowerCase()+";").append("\n\n");
 				String methodName = dbColumns.getName().substring(0,1).toUpperCase()+dbColumns.getName().substring(1).toLowerCase();
+				dbColumns.setGetterName("get"+methodName+"()");
+				dbColumns.setSetterName("set"+methodName+"()");
 				// getter method
 				getterSetterDeclaration.append("\t").append("public String get"+methodName+"(){").append("\n");
 				getterSetterDeclaration.append("\t").append("\t").append("return "+dbColumns.getName().toLowerCase()+";").append("\n");
