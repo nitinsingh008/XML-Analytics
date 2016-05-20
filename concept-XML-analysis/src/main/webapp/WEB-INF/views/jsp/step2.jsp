@@ -156,10 +156,12 @@ function checkConnectivity()
 						<input type="hidden" path="parsedXSDPath" id="parsedXSDPath"
 							name="parsedXSDPath" value="${xsdParseRequest.parsedXSDPath}" />
 						<input type="hidden" path="inputType" id="inputType"
-							name="inputType" value="${xsdParseRequest.inputType}" /> <input
+							name="inputType" value="${xsdParseRequest.inputType}" /> 
+						<input
 							type="hidden" path="delimiter" id="delimiter" name="delimiter"
-							value="${xsdParseRequest.delimiter}" /> <input type="hidden"
-							path="haveHeaderData" id="haveHeaderData" name="haveHeaderData"
+							value="${xsdParseRequest.delimiter}" />
+						<input type="hidden"
+							id="haveHeaderData" name="haveHeaderData"
 							value="${xsdParseRequest.haveHeaderData}" />
 							<br>
 						<button type="button" id="GenerateButton" class="upload"

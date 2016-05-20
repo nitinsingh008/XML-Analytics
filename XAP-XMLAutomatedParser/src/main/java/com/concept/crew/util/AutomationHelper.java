@@ -29,14 +29,21 @@ import org.xml.sax.SAXException;
 public class AutomationHelper 
 {
 	private static Logger 		logger 			= Logger.getLogger(AutomationHelper.class);
-	
-	  private static void runProcess(String command) throws Exception {
-	    Process pro = Runtime.getRuntime().exec(command, null, new File(Constants.compilationPath));	    
+
+	private FrameworkSettings projectSetting = null; 
+
+	  public AutomationHelper(FrameworkSettings projectSetting) {
+		super();
+		this.projectSetting = projectSetting;
+	}
+
+	private void runProcess(String command) throws Exception {
+	    Process pro = Runtime.getRuntime().exec(command, null, new File(projectSetting.getCompilationPath()));	    
 	    pro.waitFor();
 	    System.out.println("compilation completed " + pro.exitValue());
 	  }
 
-	 public static void  compileJaxbInfos(){
+	 public void  compileJaxbInfos(){
 	    try {
 	      runProcess("javac *.java");
 	    } catch (Exception e) {
@@ -73,10 +80,13 @@ public class AutomationHelper
 		 }			 
 	 }
 	 
-	public static void createMavenProject() 
+	public void createMavenProject() 
 										throws IOException,MavenInvocationException 
 	{
 		logger.warn("Initializing at " + Constants.mavenProjectPath);
+
+	
+		
 		File srcDir = new File(Constants.mavenProjectPath);
 		if (!srcDir.exists()) 
 		{
@@ -84,8 +94,8 @@ public class AutomationHelper
 			if(!dirCreated)
 				throw new IOException(srcDir.getAbsolutePath() + " can't be created");
 		}
-
-		deleteExistingProject(new File(Constants.mavenProjectPath+ "/" +Constants.mavenProjectName));
+		// no need to delete any existing rpoject now
+		//deleteExistingProject(new File(Constants.mavenProjectPath+ "/" +Constants.mavenProjectName));
 		
 		InvocationRequest request = new DefaultInvocationRequest();
 		request.setGoals(Collections.singletonList("archetype:generate"));
@@ -93,7 +103,7 @@ public class AutomationHelper
 		//request.setGlobalSettingsFile(new File(Constants.settingsFilePath));
 		Properties properties = new Properties();
 		properties.setProperty("groupId", "com.concept.crew.app");
-		properties.setProperty("artifactId", "LoadersFramework");
+		properties.setProperty("artifactId", projectSetting.getProjectName());
 		properties.setProperty("archetypeArtifactId", "maven-archetype-quickstart");
 		properties.setProperty("version", "1.0");
 		request.setProperties(properties);
@@ -116,19 +126,19 @@ public class AutomationHelper
 		if (result.getExitCode() != 0) {
 			throw new IllegalStateException("archetype:generate failed.");
 		}
-		logger.warn("Project created successfully : " + Constants.mavenProjectName);
+		logger.warn("Project created successfully : " + projectSetting.getProjectName());
 		
-		File resourcesDir = new File(Constants.resourcePath);
+		File resourcesDir = new File(projectSetting.getResourcePath());
 		if(!resourcesDir.exists()){
 			resourcesDir.mkdirs();
 		}
 		//Files.copy(srcDir.toPath(), resourcesDir.toPath(), StandardCopyOption.ATOMIC_MOVE);
 	}
 	
-	public static void buildMavenProject() throws MavenInvocationException
+	public void buildMavenProject() throws MavenInvocationException
 	{
 		InvocationRequest request = new DefaultInvocationRequest();
-		request.setPomFile(new File(Constants.pomPath));
+		request.setPomFile(new File(projectSetting.getPomPath()));
 		//request.setGoals( Collections.singletonList( "install" ) );
 		request.setGoals( Arrays.asList( "install", "-DskipTests=true" ) );
 		Invoker invoker = new DefaultInvoker();
@@ -244,10 +254,10 @@ public class AutomationHelper
 		return mainElement;
 	}
 	
-	public static <T> Class<T> getRootClass(File xsdFile) throws ParserConfigurationException, SAXException, IOException, ClassNotFoundException{
+	public <T> Class<T> getRootClass(File xsdFile) throws ParserConfigurationException, SAXException, IOException, ClassNotFoundException{
 		String rootElement = fetchRootNode(xsdFile);
 		String qualifiedName = Constants.packageName  +"."+rootElement;		
-		File file = new File(Constants.pathToRootClass);
+		File file = new File(projectSetting.getPathToRootClass());
 		URL urlList[] = {file.toURI().toURL()};
 		URLClassLoader loader = new URLClassLoader(urlList);
 		Class<T> rootClass = (Class<T>) loader.loadClass(qualifiedName);

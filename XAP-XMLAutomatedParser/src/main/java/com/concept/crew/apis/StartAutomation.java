@@ -1,6 +1,8 @@
 package com.concept.crew.apis;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 
@@ -13,6 +15,7 @@ import com.concept.crew.processor.JaxbTableGenerator;
 import com.concept.crew.processor.TableGenerator;
 import com.concept.crew.util.AutomationHelper;
 import com.concept.crew.util.Constants;
+import com.concept.crew.util.FrameworkSettings;
 import com.concept.crew.util.JaxbInfoGenerator;
 import com.concept.crew.util.XSDParseRequest;
 import com.google.common.collect.Multimap;
@@ -20,50 +23,61 @@ import com.google.common.collect.Multimap;
 public class StartAutomation 
 {
 	private static Logger 		logger 			= Logger.getLogger(StartAutomation.class);
+	private FrameworkSettings projectSetting;
+	private XSDParseRequest request;
+	private static SimpleDateFormat ddmmyyyhhmm = new SimpleDateFormat("ddmmyyyyHHmm");
 	
-	public static void doAll(XSDParseRequest request) throws Exception{
-		start(request, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE);
-	}
-	
-	public static void createScript(XSDParseRequest request) throws Exception{
-		start(request , Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
-	}
-	
-	public static void createTable(XSDParseRequest request) throws Exception{
-		start(request, Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
-	}
-	
-	public static void createFrameWork(XSDParseRequest request) throws Exception{
-		start(request, Boolean.TRUE, request.getCreateTable(), Boolean.TRUE);
+	public StartAutomation(XSDParseRequest request) {
+		super();
+		this.request = request;
+		String inputFileName = request.getParsedXSDPath().substring(request.getParsedXSDPath().lastIndexOf(File.separator)+1, request.getParsedXSDPath().lastIndexOf("."));
+		projectSetting = new FrameworkSettings("LF"+"_"+inputFileName+"_"+ddmmyyyhhmm.format(new Date(System.currentTimeMillis())));
 	}
 
-	private static void start(XSDParseRequest request, 
-							  Boolean 		  createScripts , 
-							  Boolean 		  createTable, 
-							  Boolean 		  createFramework) throws Exception
+	public void doAll() throws Exception{
+		start(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE);
+	}
+	
+	public void createScript() throws Exception{
+		start(Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
+	}
+	
+	public void createTable() throws Exception{
+		start(Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
+	}
+	
+	public void createFrameWork() throws Exception{
+		start(Boolean.TRUE, request.getCreateTable(), Boolean.TRUE);
+	}
+
+	private void start( Boolean 		  createScripts , 
+						Boolean 		  createTable, 
+						Boolean 		  createFramework) throws Exception
 	{
 		File inputMetaDataFile = new File(request.getParsedXSDPath()); 
 		Multimap<String, DBColumns> tableInfo = null;
 		if(createScripts)
 		{
+					
+			AutomationHelper ah = new AutomationHelper(projectSetting);
 			//1. Create maven project
 			logger.warn("Start creating new Maven Project");
-			AutomationHelper.createMavenProject();
+			ah.createMavenProject();
 			
 			if(request.getInputType().equals(Constants.inputType.XML.toString())){
 				//2. Generate Jaxb object in new maven project from the input XSD
 				logger.warn("Generating JAXB Objects in new maven project");		
-				JaxbInfoGenerator gen = new JaxbInfoGenerator();
+				JaxbInfoGenerator gen = new JaxbInfoGenerator(projectSetting);
 				gen.generateInfos(inputMetaDataFile.getAbsolutePath());
+				
+				//3. Build Maven project
+				logger.warn("Build Maven project");
+				ah.buildMavenProject();
 			}
-			
-			//3. Build Maven project
-			logger.warn("Build Maven project");
-			AutomationHelper.buildMavenProject();
-			
+	
 			// 4. Generate tables from XSD
 			logger.warn("Generating Table Scripts");
-			tableInfo = tableGenerator(inputMetaDataFile, request);
+			tableInfo = tableGenerator(inputMetaDataFile);
 			// pojo for delimiter files
 			if(request.getInputType().equals(Constants.inputType.DELIMITED.toString())){
 				logger.warn("Generating Pojo in new Maven Project");
@@ -71,7 +85,7 @@ public class StartAutomation
 			
 			// 6. Last Step = > Build Maven project again
 			logger.warn("Build Maven project");
-			AutomationHelper.buildMavenProject();
+			ah.buildMavenProject();
 		}
 
 		// Generate loaders automatically - Main/Schedules
@@ -88,7 +102,7 @@ public class StartAutomation
 			
 			if(XapDBRoutine.testAndValidateDBConnection())
 			{
-				DBScriptRunner.executeScripts();
+				new DBScriptRunner(projectSetting).executeScripts();
 			}
 			else
 			{
@@ -103,20 +117,20 @@ public class StartAutomation
 	 * Generate tables from XSD or Info       - Tables
 	 * Script will be created at /resource Folder
 	 */
-	public static Multimap<String, DBColumns> tableGenerator(File xsdFile, XSDParseRequest request) throws Exception
+	public Multimap<String, DBColumns> tableGenerator(File xsdFile) throws Exception
 	{
 		TableGenerator generator =  null;
 		String rootNode = null;
 		if(request.getInputType().equals(Constants.inputType.XML.toString())){
-			generator =  new JaxbTableGenerator(xsdFile.getName());
+			generator =  new JaxbTableGenerator(xsdFile.getName(),projectSetting);
 			rootNode = AutomationHelper.fetchRootNode(xsdFile);
 		} else if(request.getInputType().equals(Constants.inputType.DELIMITED.toString())){
-			generator =  new CsvTableGenerator(xsdFile.getName(),request.getDelimiter());
+			generator =  new CsvTableGenerator(xsdFile.getName(),request.getDelimiter(),projectSetting);
 			rootNode = xsdFile.getName().substring(0,xsdFile.getName().lastIndexOf(".")).toUpperCase();
 		}
 		
 		// RAW Table
-		Multimap<String, DBColumns> tableMap = generator.parse(false);	
+		Multimap<String, DBColumns> tableMap = generator.parse(request.getHaveHeaderData());	
 		generator.tableScripts(tableMap, request.getDatabaseTablePostFix(), rootNode, request.getUserName());
 		generator.insertScripts(tableMap, request.getDatabaseTablePostFix(), rootNode, request.getUserName());
 		return tableMap;
@@ -144,7 +158,7 @@ public class StartAutomation
 		
 		request.setInputType(Constants.inputType.XML.toString());
 		request.setCreateTable(false);
-		createFrameWork(request);
+		new StartAutomation(request).createFrameWork();
 		//doAll(request);
 	}
 }

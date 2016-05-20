@@ -16,7 +16,12 @@ public class JaxbInfoGenerator
 {
 	private static Logger 		logger 			= Logger.getLogger(JaxbInfoGenerator.class);
 
+	private FrameworkSettings projectSetting;
 	
+	public JaxbInfoGenerator(FrameworkSettings projectSetting) {
+		super();
+		this.projectSetting = projectSetting;
+	}
 	public static void main(String[] args) throws Exception
 	{
 		final Thread currentThread = Thread.currentThread();
@@ -24,7 +29,7 @@ public class JaxbInfoGenerator
 
 		File file = new File(contextClassLoader.getResource("CustomersOrders.xsd").getFile()); //resource folder
 		
-		JaxbInfoGenerator gen = new JaxbInfoGenerator();
+		JaxbInfoGenerator gen = new JaxbInfoGenerator(new FrameworkSettings("test"));
 		gen.generateInfos(file.getAbsolutePath());
 	}
 	/*
@@ -33,7 +38,7 @@ public class JaxbInfoGenerator
 	public void generateInfos(String schemaFilePathName) throws Exception
 	{
 		logger.warn("*** Preparing for generation of Classes ****");
-        File outFile = new File(Constants.dirSrcJava);
+        File outFile = new File(projectSetting.getDirSrcJava());
 
         // Setup schema compiler
         SchemaCompiler schemaCompiler = XJC.createSchemaCompiler();

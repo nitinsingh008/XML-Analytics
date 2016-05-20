@@ -11,14 +11,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.concept.crew.dao.XapDBRoutine;
-import com.concept.crew.util.Constants;
+import com.concept.crew.util.FrameworkSettings;
 
 public class DBScriptRunner {
 
-	public static void executeScripts(){
+	private FrameworkSettings projectSetting;
+
+	public DBScriptRunner(FrameworkSettings projectSetting) {
+		super();
+		this.projectSetting = projectSetting;
+	}
+
+	public void executeScripts(){
 		Connection conn = XapDBRoutine.getConnection();
 		Statement stat  = null;
-		File sqlFile = getSqlFile(new File(Constants.resourcePath));
+		File sqlFile = getSqlFile(new File(projectSetting.getResourcePath()));
 		
 		if(sqlFile == null){
 			System.out.println("SQL file not generated yet");
@@ -26,7 +33,7 @@ public class DBScriptRunner {
 		}
 		
 		try {
-			BufferedReader br   = new BufferedReader(new FileReader(Constants.resourcePath+"/"+sqlFile));
+			BufferedReader br   = new BufferedReader(new FileReader(projectSetting.getResourcePath()+"/"+sqlFile));
 			StringBuffer sb 	= new StringBuffer();
 			String s            = new String();
 			
@@ -85,7 +92,7 @@ public class DBScriptRunner {
 		return null;
 	}
 	
-	private static void executeDropStatments(Statement stat, String[] queries){
+	private void executeDropStatments(Statement stat, String[] queries){
 		for (String query : queries) {
 			if (!query.trim().equals("") && query.contains("DROP")) {
 				System.out.println("DDL to be execute --> " + query);
@@ -98,7 +105,7 @@ public class DBScriptRunner {
 		}
 	}
 	
-	private static void createparentTables(Statement stat, String[] queries) throws SQLException{
+	private void createparentTables(Statement stat, String[] queries) throws SQLException{
 		for (String query : queries) {
 			if (!query.trim().equals("") && !query.contains("FOREIGN") && !query.contains("DROP")) {
 				System.out.println("DDL to be execute --> " + query);
@@ -107,7 +114,7 @@ public class DBScriptRunner {
 		}
 	}
 	
-	private static void creatChildTables(Statement stat, String[] queries) throws SQLException{
+	private void creatChildTables(Statement stat, String[] queries) throws SQLException{
 		for (String query : queries) {
 			if (!query.trim().equals("") && query.contains("FOREIGN")) {
 				System.out.println("DDL to be execute --> " + query);

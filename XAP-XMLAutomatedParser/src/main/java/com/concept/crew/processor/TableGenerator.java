@@ -5,10 +5,18 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -23,11 +31,14 @@ import org.xml.sax.SAXException;
 import com.concept.crew.apis.StartAutomation;
 import com.concept.crew.info.DBColumns;
 import com.concept.crew.util.Constants;
+import com.concept.crew.util.FrameworkSettings;
 import com.google.common.collect.Multimap;
 
 public abstract class TableGenerator 
 {	
 	private static Logger 		logger 			= Logger.getLogger(TableGenerator.class);
+	
+	protected FrameworkSettings projectSetting;
 
 	protected static Set<String> xsdDataTypes = new HashSet<String>();
 	protected String xsdName ;
@@ -39,18 +50,19 @@ public abstract class TableGenerator
 		xsdDataTypes.add("xs:dateTime");
 	}
 	
-	public TableGenerator(String xsdName)
+	public TableGenerator(String xsdName,FrameworkSettings projectSetting)
 	{
 		this.xsdName = xsdName;
+		this.projectSetting = projectSetting;
 	}
 	
-	public abstract Multimap<String, DBColumns> parse(boolean typed) throws Exception;
+	public abstract Multimap<String, DBColumns> parse(Boolean typed) throws Exception;
 	
 	public void tableScripts(Multimap<String, DBColumns> tableMap, String tableSuffix, String rootNode , String schema)
 							 					throws Exception
 	{
 		logger.warn("Start Generating scripts for " +tableSuffix);
-		String fileName = Constants.resourcePath + "createTable";
+		String fileName = projectSetting.getResourcePath() + "createTable";
 		String parentTableName = null;
 
 		if(tableSuffix != null && tableSuffix != "")
@@ -237,7 +249,7 @@ public abstract class TableGenerator
 				fileName =  tableName.toUpperCase() + "_" + tableSuffix.toUpperCase();
 			}
 			
-			File file = new File(Constants.resourcePath + fileName);
+			File file = new File(projectSetting.getResourcePath() + fileName);
 			if (!file.exists()){
 				try 
 				{
@@ -283,5 +295,43 @@ public abstract class TableGenerator
 			bw.close();
 			sb = new StringBuffer();
 		}
+	}
+	
+	
+	
+	protected List<Class> loadClassesFromJar()
+			throws IOException, MalformedURLException, ClassNotFoundException {
+		
+		
+		//String pathToJar = Constants.targetPath+ "\\" + Constants.jarFileName;
+		JarFile jarFile = new JarFile(projectSetting.getTargetPath()+ "\\" + projectSetting.getJarFileName());
+		Enumeration e = jarFile.entries();
+		List<Class> classes = new ArrayList<Class>();
+		URL[] urls = { new URL("jar:file:" + projectSetting.getTargetPath()+ "\\" + projectSetting.getJarFileName()+"!/") };
+		URLClassLoader loader = URLClassLoader.newInstance(urls);
+		
+		while (e.hasMoreElements()) 
+	    {
+	        JarEntry je = (JarEntry) e.nextElement();
+	        if(je.isDirectory() || !je.getName().endsWith(".class"))
+	        {
+	            continue;
+	        }
+		    // -6 because of .class
+		    String className = je.getName().substring(0,je.getName().length()-6);
+		    className = className.replace('/', '.');
+		    
+		    if(!className.contains(Constants.packageToCompile))
+		    {
+		    	continue;
+		    }
+		    
+		    Class cls = loader.loadClass(className);
+		    
+		    classes.add(cls);
+		    
+	    }
+		jarFile.close();
+		return classes;
 	}
 }

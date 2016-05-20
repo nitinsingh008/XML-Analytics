@@ -8,7 +8,9 @@ import java.io.Reader;
 import java.util.List;
 
 import com.concept.crew.info.DBColumns;
+import com.concept.crew.util.AutomationHelper;
 import com.concept.crew.util.Constants;
+import com.concept.crew.util.FrameworkSettings;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.univocity.parsers.common.processor.BeanListProcessor;
@@ -19,19 +21,16 @@ public class CsvTableGenerator<E> extends TableGenerator{
 
 	private String delimiter;
 	
-	public CsvTableGenerator(String xsdName) {
-		super(xsdName);
-	}
 	
-	public CsvTableGenerator(String xsdName,String delimiter) {
-		super(xsdName);
+	public CsvTableGenerator(String xsdName,String delimiter,FrameworkSettings projectSetting) {
+		super(xsdName,projectSetting);
 		this.delimiter = delimiter;
 	}
 
 	@Override
-	public Multimap<String, DBColumns> parse(boolean haveHeaderInFile) throws Exception {
+	public Multimap<String, DBColumns> parse(Boolean haveHeaderInFile) throws Exception {
 		Multimap<String, DBColumns> csvTableInfo =  ArrayListMultimap.create();
-		File csvFile = new File(xsdName);
+		File csvFile = new File(Constants.xsdLocalPath+File.separator+xsdName);
 		
 		if(csvFile.exists()){
 			String tableName = csvFile.getName().substring(0,csvFile.getName().lastIndexOf(".")).toUpperCase();
@@ -43,6 +42,7 @@ public class CsvTableGenerator<E> extends TableGenerator{
 				if(headers !=null){
 					int index = 1;
 					for (String head : headers) {
+						index++;
 						DBColumns column = new DBColumns();
 						if(haveHeaderInFile){
 							column.setName(head.toUpperCase());
@@ -50,9 +50,15 @@ public class CsvTableGenerator<E> extends TableGenerator{
 							column.setName(Constants.delimiterTableHeaderPrefi+index);
 						}
 						column.setDataType(sqlDataType(head,false));
+						column.setPosition(index-1);
 						csvTableInfo.put(tableName, column);
 					}
 				}
+				new PojoGenerator(projectSetting).generatePOJO(csvTableInfo);
+				// compile generated project
+				new AutomationHelper(projectSetting).buildMavenProject();
+				// load class file
+				loadClassesFromJar();
 				
 			}catch(IOException e){
 				
@@ -77,9 +83,8 @@ public class CsvTableGenerator<E> extends TableGenerator{
 	 * 	parse.parseFile(localPathWithFileName, DynamicInfo.class);
 	 * 
 	 */
-	public List<E> parse(boolean haveHeaderInFile, Class<E> className) throws Exception 
+	public List<E> parse(boolean haveHeaderInFile,String delimiter, Class<E> className) throws Exception 
 	{
-		Multimap<String, DBColumns> listOfInfo =  ArrayListMultimap.create();
 		if(xsdName == null )
 		{
 			throw new Exception("File name is mandatory for reading file");
@@ -89,7 +94,7 @@ public class CsvTableGenerator<E> extends TableGenerator{
 		// BeanListProcessor converts each parsed row to an instance of a given class, then stores each instance into a list.
 		BeanListProcessor<E> processor = new BeanListProcessor<E>(className);
 		
-		CsvParserSettings settings = newCsvInputSettings(null);
+		CsvParserSettings settings = newCsvInputSettings(null,delimiter);
 		
 		settings.setRowProcessor(processor);
 		settings.setHeaderExtractionEnabled(true);
@@ -114,7 +119,7 @@ public class CsvTableGenerator<E> extends TableGenerator{
 		return beans;
 	}	
 	
-	protected CsvParserSettings newCsvInputSettings(char[] lineSeparator) 
+	protected CsvParserSettings newCsvInputSettings(char[] lineSeparator,String delimiter) 
 	{
 		CsvParserSettings out = new CsvParserSettings();
 		if (lineSeparator == null) 
@@ -126,7 +131,7 @@ public class CsvTableGenerator<E> extends TableGenerator{
 			out.getFormat().setLineSeparator(lineSeparator);
 		}
 		
-		out.getFormat().setDelimiter('|');
+		out.getFormat().setDelimiter(delimiter.charAt(0));
 		
 		return out;
 	}
@@ -138,9 +143,11 @@ public class CsvTableGenerator<E> extends TableGenerator{
 	}	
 	 
 	public static void main(String[] args) {
-		CsvTableGenerator generator = new CsvTableGenerator("Delimiter_Sample.TXT", "\t");
+		FrameworkSettings projectSetting = new FrameworkSettings("LoaderFramework");
+		CsvTableGenerator generator = new CsvTableGenerator("Delimiter_Sample.TXT", "\t",projectSetting);
 		try {
-			generator.parse(true);
+			Multimap<String, DBColumns> tableInfo = generator.parse(true);
+			new PojoGenerator(projectSetting).generatePOJO(tableInfo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

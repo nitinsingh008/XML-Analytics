@@ -11,17 +11,18 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.concept.crew.info.DBColumns;
+import com.concept.crew.util.FrameworkSettings;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 public class XSDTableGenerator extends TableGenerator
 {	
-	public XSDTableGenerator(String xsdName) 
+	public XSDTableGenerator(String xsdName,FrameworkSettings projectSetting) 
 	{
-		super(xsdName);
+		super(xsdName,projectSetting);
 	}
 
-	public Multimap<String, DBColumns> parse(boolean typed) throws Exception
+	public Multimap<String, DBColumns> parse(Boolean typed) throws Exception
 	{
 		Multimap<String, DBColumns> tableMap = ArrayListMultimap.create();
 		final Thread currentThread = Thread.currentThread();
@@ -151,13 +152,6 @@ public class XSDTableGenerator extends TableGenerator
 		}	
 	    System.out.println(mainTable);		
 	    return tableMap;
-	}
-	
-
-	public static void main(String[] args) throws Exception
-	{
-		XSDTableGenerator tb = new XSDTableGenerator(null);
-		//Multimap<String, DBColumns> tableMap = tb.parseJaxbInfo(true);
 	}
 	
 }

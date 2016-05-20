@@ -125,6 +125,7 @@ public class HelloController {
 				stream.close();
 				reuest.setInputType(Constants.inputType.XML.toString());
 				reuest.setParsedXSDPath(serverFile.getAbsolutePath());
+				reuest.setHaveHeaderData(Boolean.FALSE);
 				reuest.setTnsEntry("jdbc:oracle:thin:@ (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = lon2odcdvscan01.markit.partners)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = BRD02DV)))");
 //				xsdParser.parseXSD(tempXSDName);
 			//	reuest = new XSDParseRequest();
@@ -151,21 +152,22 @@ public class HelloController {
 			return "Validation Failed";
 		}
 		
+		StartAutomation sa = new StartAutomation(request);
 		if(request.getDoAll()){
 		// have to remove just testing	
-			StartAutomation.doAll(request);
+			sa.doAll();
 			
 		}else if(request.getCreateFramework()){
 			
-			StartAutomation.createFrameWork(request);
+			sa.createFrameWork();
 			
 		}else if(request.getCreateTable()){
 			
-			StartAutomation.createTable(request);
+			sa.createTable();
 			
 		}else if(request.getCreateScript()){
 			
-			StartAutomation.createScript(request);
+			sa.createScript();
 			
 		}
 		if(request.getDoAll()){

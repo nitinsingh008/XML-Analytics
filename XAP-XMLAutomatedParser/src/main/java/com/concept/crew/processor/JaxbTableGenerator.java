@@ -1,15 +1,10 @@
 package com.concept.crew.processor;
 
 import java.lang.reflect.Field;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
@@ -20,14 +15,15 @@ import org.reflections.util.FilterBuilder;
 
 import com.concept.crew.info.DBColumns;
 import com.concept.crew.util.Constants;
+import com.concept.crew.util.FrameworkSettings;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 public class JaxbTableGenerator extends TableGenerator
 {		
-	public JaxbTableGenerator(String xsdName)
+	public JaxbTableGenerator(String xsdName,FrameworkSettings projectSetting)
 	{
-		super(xsdName);
+		super(xsdName,projectSetting);
 	}
 	/*
 	 * 
@@ -84,35 +80,13 @@ public class JaxbTableGenerator extends TableGenerator
 		return tableMap;
 	}
 
-	public Multimap<String, DBColumns> parse(boolean typed) throws Exception
+	public Multimap<String, DBColumns> parse(Boolean typed) throws Exception
 	{
 		Multimap<String, DBColumns> tableMap = ArrayListMultimap.create();
-		String pathToJar = Constants.targetPath+ "\\" + Constants.jarFileName;
-		JarFile jarFile = new JarFile(pathToJar);
-		Enumeration e = jarFile.entries();
-
-		URL[] urls = { new URL("jar:file:" + pathToJar+"!/") };
-		URLClassLoader loader = URLClassLoader.newInstance(urls);
+		List<Class> classes = loadClassesFromJar();
 		String currTableName = "";
-		while (e.hasMoreElements()) 
-	    {
-	        JarEntry je = (JarEntry) e.nextElement();
-	        if(je.isDirectory() || !je.getName().endsWith(".class"))
-	        {
-	            continue;
-	        }
-		    // -6 because of .class
-		    String className = je.getName().substring(0,je.getName().length()-6);
-		    className = className.replace('/', '.');
-		    
-		    if(!className.contains(Constants.packageName))
-		    {
-		    	continue;
-		    }
-		    
-		    Class cls = loader.loadClass(className);
-		    
-		    currTableName = cls.getName().substring(cls.getName().lastIndexOf('.') + 1);
+		for (Class cls : classes) {
+			currTableName = cls.getName().substring(cls.getName().lastIndexOf('.') + 1);
 		    
 		    Field[] fields = cls.getDeclaredFields();
  
@@ -128,16 +102,16 @@ public class JaxbTableGenerator extends TableGenerator
 				
 				tableMap.put(currTableName, column);
 			}
-		    
-		    
-	    }		
+		}
+
 		return tableMap;
 	}
+	
 
 
 	public static void main(String[] args) throws Exception
 	{		
-		JaxbTableGenerator tb = new JaxbTableGenerator("Sample_bond.xsd");
+		JaxbTableGenerator tb = new JaxbTableGenerator("Sample_bond.xsd",new FrameworkSettings("LoaderFramework"));
 		Multimap<String, DBColumns> tableMap = tb.parse(true);
 	}
 }
