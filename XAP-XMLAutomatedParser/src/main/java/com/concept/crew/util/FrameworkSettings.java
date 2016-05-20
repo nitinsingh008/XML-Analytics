@@ -18,10 +18,10 @@ public class FrameworkSettings {
 	public FrameworkSettings(String projectName) {
 		super();
 		this.projectName = projectName;
-		this.pojoPackagePath = dirSrcJava + File.separator + projectName + File.separator
+		this.dirSrcJava 		= mavenProjectPath + "/"+ projectName + "/src/main/java";
+		this.pojoPackagePath = dirSrcJava + File.separator 
 				+ "com" + File.separator + "concept" + File.separator + "crew" + File.separator + "info" + File.separator
 				+ "pojo";
-		this.dirSrcJava 		= mavenProjectPath + "/"+ projectName + "/src/main/java";
 		this.resourcePath 	= mavenProjectPath + "/" +projectName +"/" + dirSrcResource;
 		this.pomPath 			= mavenProjectPath + "/" +projectName + "/pom.xml";
 		this.targetPath 		= mavenProjectPath + "/" + projectName + "/target";

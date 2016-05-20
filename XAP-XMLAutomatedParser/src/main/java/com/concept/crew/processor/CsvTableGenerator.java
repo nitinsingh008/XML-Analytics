@@ -11,6 +11,7 @@ import com.concept.crew.info.DBColumns;
 import com.concept.crew.util.AutomationHelper;
 import com.concept.crew.util.Constants;
 import com.concept.crew.util.FrameworkSettings;
+import com.concept.crew.util.PomDependencyUpdater;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.univocity.parsers.common.processor.BeanListProcessor;
@@ -55,6 +56,8 @@ public class CsvTableGenerator<E> extends TableGenerator{
 					}
 				}
 				new PojoGenerator(projectSetting).generatePOJO(csvTableInfo);
+				// adding new dependency for apache unilocity
+				PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(),"univocity-parsers", "com.univocity", "2.0.2");
 				// compile generated project
 				new AutomationHelper(projectSetting).buildMavenProject();
 				// load class file

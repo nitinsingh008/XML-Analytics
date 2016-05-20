@@ -107,6 +107,7 @@ public class AutomationHelper
 		properties.setProperty("archetypeArtifactId", "maven-archetype-quickstart");
 		properties.setProperty("version", "1.0");
 		request.setProperties(properties);
+	
 		Invoker invoker = new DefaultInvoker();
 		invoker.setWorkingDirectory(srcDir);
 		// Setting repo directory location 
