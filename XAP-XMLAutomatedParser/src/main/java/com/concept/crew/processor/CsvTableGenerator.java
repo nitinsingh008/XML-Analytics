@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.concept.crew.info.DBColumns;
 import com.concept.crew.util.AutomationHelper;
 import com.concept.crew.util.Constants;
@@ -22,6 +24,7 @@ public class CsvTableGenerator<E> extends TableGenerator{
 
 	private String delimiter;
 	
+	private static final Logger LOGGER = Logger.getLogger(CsvTableGenerator.class);
 	
 	public CsvTableGenerator(String xsdName,String delimiter,FrameworkSettings projectSetting) {
 		super(xsdName,projectSetting);
@@ -55,6 +58,7 @@ public class CsvTableGenerator<E> extends TableGenerator{
 						csvTableInfo.put(tableName, column);
 					}
 				}
+				LOGGER.warn("Creating POJO for Mapping");
 				new PojoGenerator(projectSetting).generatePOJO(csvTableInfo);
 				// adding new dependency for apache unilocity
 				PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(),"univocity-parsers", "com.univocity", "2.0.2");
@@ -86,7 +90,7 @@ public class CsvTableGenerator<E> extends TableGenerator{
 	 * 	parse.parseFile(localPathWithFileName, DynamicInfo.class);
 	 * 
 	 */
-	public List<E> parse(boolean haveHeaderInFile,String delimiter, Class<E> className) throws Exception 
+	public List<E> parseFileData(Boolean haveHeaderInFile,String delimiter, Class<E> className) throws Exception 
 	{
 		if(xsdName == null )
 		{
@@ -100,7 +104,7 @@ public class CsvTableGenerator<E> extends TableGenerator{
 		CsvParserSettings settings = newCsvInputSettings(null,delimiter);
 		
 		settings.setRowProcessor(processor);
-		settings.setHeaderExtractionEnabled(true);
+		settings.setHeaderExtractionEnabled(haveHeaderInFile);
 		settings.setIgnoreLeadingWhitespaces(true);
 		settings.setIgnoreTrailingWhitespaces(true);
 

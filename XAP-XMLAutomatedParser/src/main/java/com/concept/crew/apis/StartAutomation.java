@@ -78,10 +78,7 @@ public class StartAutomation
 			// 4. Generate tables from XSD
 			logger.warn("Generating Table Scripts");
 			tableInfo = tableGenerator(inputMetaDataFile);
-			// pojo for delimiter files
-			if(request.getInputType().equals(Constants.inputType.DELIMITED.toString())){
-				logger.warn("Generating Pojo in new Maven Project");
-			}
+			
 			
 			// 6. Last Step = > Build Maven project again
 			logger.warn("Build Maven project");
