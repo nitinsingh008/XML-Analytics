@@ -134,9 +134,9 @@ public class StartAutomation
 		}
 		
 		// RAW Table
-		Multimap<String, DBColumns> tableMap = generator.parse(request.getHaveHeaderData());	
-		generator.tableScripts(tableMap, request.getDatabaseTablePostFix(), rootNode, request.getUserName());
-		generator.insertScripts(tableMap, request.getDatabaseTablePostFix(), rootNode, request.getUserName());
+		Multimap<String, DBColumns> tableMap = generator.parse(request.getHaveHeaderData(), request.getDatabaseType());	
+		generator.tableScripts(tableMap, request.getDatabaseTablePostFix(), rootNode, request.getDatabaseType());
+		generator.insertScripts(tableMap, request.getDatabaseTablePostFix(), rootNode, request.getDatabaseType());
 		return tableMap;
 	}	
 	

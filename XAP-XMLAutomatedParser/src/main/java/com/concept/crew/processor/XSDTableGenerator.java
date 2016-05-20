@@ -22,7 +22,8 @@ public class XSDTableGenerator extends TableGenerator
 		super(xsdName,projectSetting);
 	}
 
-	public Multimap<String, DBColumns> parse(Boolean typed) throws Exception
+	public Multimap<String, DBColumns> parse(Boolean typed,
+										     String dbType) throws Exception
 	{
 		Multimap<String, DBColumns> tableMap = ArrayListMultimap.create();
 		final Thread currentThread = Thread.currentThread();
@@ -64,7 +65,7 @@ public class XSDTableGenerator extends TableGenerator
 				//System.out.println(element.getAttribute("name")); 
 				DBColumns column = new DBColumns();
 				column.setName(element.getAttribute("name"));
-				column.setDataType(sqlDataType(element.getAttribute("type"), typed));
+				column.setDataType(sqlDataType(element.getAttribute("type"), typed,dbType));
 				tableMap.put(currTableName, column);
 				
 				Node sibling = element.getNextSibling();
@@ -89,7 +90,7 @@ public class XSDTableGenerator extends TableGenerator
 	}
 	
 	
-	public Multimap<String, DBColumns> parseSchema(boolean typed) throws Exception
+	public Multimap<String, DBColumns> parseSchema(boolean typed, String dbType) throws Exception
 	{
 		System.out.println("Start Parsing XSD");
 		Multimap<String, DBColumns> tableMap = ArrayListMultimap.create();
@@ -130,7 +131,7 @@ public class XSDTableGenerator extends TableGenerator
 				//System.out.println(element.getAttribute("name")); 
 				DBColumns column = new DBColumns();
 				column.setName(element.getAttribute("name"));
-				column.setDataType(sqlDataType(element.getAttribute("type"), typed));
+				column.setDataType(sqlDataType(element.getAttribute("type"), typed, dbType));
 				tableMap.put(currTableName, column);
 				
 				Node sibling = element.getNextSibling();

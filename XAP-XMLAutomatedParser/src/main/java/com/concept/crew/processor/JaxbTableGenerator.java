@@ -16,7 +16,8 @@ public class JaxbTableGenerator extends TableGenerator
 	}
 	
 
-	public Multimap<String, DBColumns> parse(Boolean typed) throws Exception
+	public Multimap<String, DBColumns> parse(Boolean typed,
+										     String dbType) throws Exception
 	{
 		Multimap<String, DBColumns> tableMap = ArrayListMultimap.create();
 		List<Class> classes = loadClassesFromJar();
@@ -37,7 +38,7 @@ public class JaxbTableGenerator extends TableGenerator
 				if(fieldType != null && fieldType.equalsIgnoreCase("LIST"))
 					continue;
 				
-				column.setDataType(sqlDataType(fieldType, typed));
+				column.setDataType(sqlDataType(fieldType, typed, dbType));
 				String methodName = column.getName().substring(0, 1).toUpperCase()+column.getName().substring(1);
 				column.setGetterName("get"+methodName+"()");
 				column.setSetterName("set"+methodName+"()");
@@ -53,6 +54,6 @@ public class JaxbTableGenerator extends TableGenerator
 	public static void main(String[] args) throws Exception
 	{		
 		JaxbTableGenerator tb = new JaxbTableGenerator("Sample_bond.xsd",new FrameworkSettings("LF_SampleBondsXSD_215920160159"));
-		Multimap<String, DBColumns> tableMap = tb.parse(true);
+		Multimap<String, DBColumns> tableMap = tb.parse(true,"Oracle");
 	}
 }

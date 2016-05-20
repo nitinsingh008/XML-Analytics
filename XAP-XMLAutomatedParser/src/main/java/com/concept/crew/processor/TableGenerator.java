@@ -56,12 +56,13 @@ public abstract class TableGenerator
 		this.projectSetting = projectSetting;
 	}
 	
-	public abstract Multimap<String, DBColumns> parse(Boolean typed) throws Exception;
+	public abstract Multimap<String, DBColumns> parse(Boolean typed,
+													  String dbType) throws Exception;
 	
 	public void tableScripts(Multimap<String, DBColumns> 	tableMap, 
 							 String 						tableSuffix, 
 							 String 						rootNode , 
-							 String 						schemaNotUsed)
+							 String 						dbType)
 							 					throws Exception
 	{
 		logger.warn("Start Generating scripts for " +tableSuffix);
@@ -96,7 +97,7 @@ public abstract class TableGenerator
 		
 		StringBuffer sb = new StringBuffer();
 		
-		addDropScripts(bw, sb, tableMap.keySet(), tableSuffix, rootNode,  schemaNotUsed);
+		addDropScripts(bw, sb, tableMap.keySet(), tableSuffix, rootNode,  dbType);
 		
 		if(rootNode != null){
 			sb = new StringBuffer();
@@ -125,11 +126,26 @@ public abstract class TableGenerator
 			
 			if(tableName.equals(rootNode))
 			{
-				sb.append("PKEY\t\tNUMBER PRIMARY KEY, \n");	
+				if(Constants.DatabaseType.JavaDB_DERBY.toString().equalsIgnoreCase(dbType))
+				{
+					sb.append("PKEY\t\tDECIMAL PRIMARY KEY, \n");		
+				}
+				else
+				{
+					sb.append("PKEY\t\tNUMBER PRIMARY KEY, \n");	
+				}
+				
 			}
 			else
 			{
-				sb.append("PARENT_KEY\t\tNUMBER, \n");
+				if(Constants.DatabaseType.JavaDB_DERBY.toString().equalsIgnoreCase(dbType))
+				{
+					sb.append("PARENT_KEY\t\tDECIMAL, \n");
+				}
+				else
+				{
+					sb.append("PARENT_KEY\t\tNUMBER, \n");	
+				}
 			}
 			
 			Collection<DBColumns> columnList = tableMap.get(tableName);
@@ -166,40 +182,49 @@ public abstract class TableGenerator
 		//Multimap<String, DBColumns> tableMap = tb.parseJaxbInfo(true);
 	}
 	
-	protected String sqlDataType(String xsdType, Boolean typed)
+	protected String sqlDataType(String xsdType, Boolean typed, String dbType)
 	{
-		String sqlType = "VARCHAR2(100)";
+		String sqlType = "VARCHAR(100)";
 		if(typed != null && typed.TRUE)
 		{
-			sqlType = sqlDataType(xsdType);
+			sqlType = sqlDataType(xsdType, dbType);
 		}
 		return sqlType;
 	}
 	
-	protected String sqlDataType(String xsdType)
+	protected String sqlDataType(String xsdType,
+								 String dbType)
 	{
 		String sqlType ="";
 		
 		if("xs:string".equalsIgnoreCase(xsdType)
 				|| "String".equalsIgnoreCase(xsdType))
 		{
-			sqlType = "VARCHAR2(100)";
+			// Supported for Oracle, JavaDB, MS-SQL Server
+			sqlType = "VARCHAR(100)";
 		}
 		else if("xs:decimal".equalsIgnoreCase(xsdType)
 					|| "LONG".equalsIgnoreCase(xsdType)
 						|| "DOUBLE".equalsIgnoreCase(xsdType)
 							|| "BIGDECIMAL".equalsIgnoreCase(xsdType))
 		{
+			// Supported for Oracle
 			sqlType = "NUMBER";
+			if(Constants.DatabaseType.JavaDB_DERBY.toString().equalsIgnoreCase(dbType))
+			{
+				sqlType = "DECIMAL";
+			}
 		}	
 		else if("xs:dateTime".equalsIgnoreCase(xsdType)
 				 || "XMLGregorianCalendar".equalsIgnoreCase(xsdType))
 		{
+			// Supported for Oracle, JavaDB
 			sqlType = "DATE";
 		}	
 		else if("BOOLEAN".equalsIgnoreCase(xsdType))
 		{
-			sqlType = "VARCHAR2(10)";
+			// Supported for Oracle, JavaDB, MS-SQL Server
+			sqlType = "CHAR(1)";
 		}			
 		else
 		{
@@ -213,7 +238,7 @@ public abstract class TableGenerator
 									   Set<String> 		tableName, 
 									   String 			tableSuffix, 
 									   String 			rootNode , 
-									   String 			schemaNotUsed ) 
+									   String 			dbType ) 
 											   			throws IOException
 	{	
 		Iterator<String> itr = tableName.iterator();
@@ -248,7 +273,7 @@ public abstract class TableGenerator
 	}
 
 	public void insertScripts(Multimap<String, DBColumns> tableMap,
-							  String tableSuffix, String rootNode, String schema) throws Exception {
+							  String tableSuffix, String rootNode, String dbType) throws Exception {
 		
 		if(tableMap.isEmpty()){
 			return;
@@ -288,10 +313,6 @@ public abstract class TableGenerator
 			
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
-			
-			if(schema != null && schema != ""){
-				fileName = schema.toUpperCase()+ "." + fileName;
-			}
 			
 			sb.append("INSERT INTO ").append(fileName).append("(");
 			

@@ -32,7 +32,9 @@ public class CsvTableGenerator<E> extends TableGenerator{
 	}
 
 	@Override
-	public Multimap<String, DBColumns> parse(Boolean haveHeaderInFile) throws Exception {
+	public Multimap<String, DBColumns> parse(Boolean haveHeaderInFile,
+											 String dbType) throws Exception 
+	{
 		Multimap<String, DBColumns> csvTableInfo =  ArrayListMultimap.create();
 		File csvFile = new File(Constants.xsdLocalPath+File.separator+xsdName);
 		
@@ -53,7 +55,7 @@ public class CsvTableGenerator<E> extends TableGenerator{
 						}else{
 							column.setName(Constants.delimiterTableHeaderPrefi+index);
 						}
-						column.setDataType(sqlDataType(head,false));
+						column.setDataType(sqlDataType(head,false, dbType));
 						column.setPosition(index-1);
 						csvTableInfo.put(tableName, column);
 					}
@@ -153,7 +155,7 @@ public class CsvTableGenerator<E> extends TableGenerator{
 		FrameworkSettings projectSetting = new FrameworkSettings("LoaderFramework");
 		CsvTableGenerator generator = new CsvTableGenerator("Delimiter_Sample.TXT", "\t",projectSetting);
 		try {
-			Multimap<String, DBColumns> tableInfo = generator.parse(true);
+			Multimap<String, DBColumns> tableInfo = generator.parse(true, "Oracle");
 			new PojoGenerator(projectSetting).generatePOJO(tableInfo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
