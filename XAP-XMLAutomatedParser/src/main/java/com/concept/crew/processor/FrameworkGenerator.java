@@ -3,7 +3,9 @@ package com.concept.crew.processor;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -11,6 +13,7 @@ import org.apache.velocity.app.VelocityEngine;
 
 import com.concept.crew.info.DBColumns;
 import com.concept.crew.util.Constants;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 public class FrameworkGenerator 
@@ -85,16 +88,64 @@ public class FrameworkGenerator
 		}
 	}
 	
+	public static void generateLoaderType(Multimap<String, DBColumns> tableMap,
+			String postFix) {
+		context = null;
+		context = new VelocityContext();
+
+		Map<String, StringBuffer> nameMap = new HashMap<String, StringBuffer>();
+		Iterator<String> tableMapIt = tableMap.keySet().iterator();
+		String tableNameWithPostFix = null;
+		while (tableMapIt.hasNext()) {
+			String tableName = tableMapIt.next();
+			StringBuffer sb = new StringBuffer(tableName);
+			if (tableName == null || tableName.contains("$")
+					|| tableName.toUpperCase().contains("OBJECTFACTORY")) {
+				continue;
+			}
+
+			if (postFix != null && !"".equals(postFix)) {
+				tableNameWithPostFix = (tableName + "_" + postFix).toUpperCase();
+			} else {
+				tableNameWithPostFix = tableName.toUpperCase();
+			}
+
+			nameMap.put(tableNameWithPostFix,  sb.append("Loader").append(".class"));
+		}
+		context.put("mapp", nameMap);
+		Template template = velocityEngine.getTemplate("./src/main/resources/LoadersType.java.vtl");
+		StringWriter writer = new StringWriter();
+		//BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/resources/JavaClasses/LoadersType.java"));
+		template.merge(context, writer);
+		System.out.println(writer.toString());
+		try {
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+
+		}
+	}
+	
 	public static void main(String[] args) throws Exception
 	{
 		initialize();
-		generateParentWrapper("Instrument");
+		//generateParentWrapper("Instrument");
        /* String infoName = "Instrument";
         context.put("Info", infoName);
-        context.put("ClassName", infoName + "Loader");
-
-
-        Template template = velocityEngine.getTemplate("./src/main/resources/ParentInfoWrapper.java.vtl" );
+        context.put("ClassName", infoName + "Loader");*/
+		
+		Multimap<String, DBColumns> tableMap =  ArrayListMultimap.create();
+		DBColumns column = new DBColumns();
+		tableMap.put("Instrument", column);
+		tableMap.put("CallSchedule", column);
+		tableMap.put("PutSchedule", column);
+		tableMap.put("Ratings", column);
+		tableMap.put("Redemption", column);
+		tableMap.put("ObjectFactory", column);
+		
+		generateLoaderType(tableMap,"raw");
+		
+        /*Template template = velocityEngine.getTemplate("./src/main/resources/LoadersType.java.vtl" );
 
         StringWriter writer = new StringWriter();
         //BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/resources/JavaClasses/InstrumentLoader.java"));
@@ -103,7 +154,7 @@ public class FrameworkGenerator
         writer.flush();
         writer.close();
 
-        System.out.println( writer.toString() );    */    
-	}
+        System.out.println( writer.toString() );        
+*/	}
 
 }
