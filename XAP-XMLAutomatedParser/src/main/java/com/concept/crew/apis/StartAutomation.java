@@ -67,7 +67,8 @@ public class StartAutomation
 			logger.warn("Start creating new Maven Project");
 			ah.createMavenProject();
 			
-			if(request.getInputType().equals(Constants.inputType.XML.toString())){
+			if(request.getInputType().equals(Constants.inputType.XML.toString()))
+			{
 				//2. Generate Jaxb object in new maven project from the input XSD
 				logger.warn("Generating JAXB Objects in new maven project");		
 				JaxbInfoGenerator gen = new JaxbInfoGenerator(projectSetting);
@@ -121,10 +122,13 @@ public class StartAutomation
 	{
 		TableGenerator generator =  null;
 		String rootNode = null;
-		if(request.getInputType().equals(Constants.inputType.XML.toString())){
+		if(request.getInputType().equals(Constants.inputType.XML.toString()))
+		{
 			generator =  new JaxbTableGenerator(xsdFile.getName(),projectSetting);
 			rootNode = AutomationHelper.fetchRootNode(xsdFile);
-		} else if(request.getInputType().equals(Constants.inputType.DELIMITED.toString())){
+		} 
+		else if(request.getInputType().equals(Constants.inputType.DELIMITED.toString()))
+		{
 			generator =  new CsvTableGenerator(xsdFile.getName(),request.getDelimiter(),projectSetting);
 			rootNode = xsdFile.getName().substring(0,xsdFile.getName().lastIndexOf(".")).toUpperCase();
 		}
@@ -150,15 +154,31 @@ public class StartAutomation
 	{
 		XSDParseRequest request = new XSDParseRequest();
 		request.setParsedXSDPath(args[0]);
-		request.setDatabaseType("ORACLE");
-		request.setTnsEntry("jdbc:oracle:thin:@ (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = lon2odcdvscan01.markit.partners)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = BRD02DV)))");
-		request.setUserName("CORE_REF_DATA");
-		request.setPassword("CORE_REF_DATA");
+		request.setDatabaseType("JavaDB_DERBY");
+		request.setTnsEntry("jdbc:derby:c:\\XAP\\database;create=true");
+		request.setUserName("");
+		request.setPassword("");
 		request.setCreateScript(true);
-		
+		request.setHaveHeaderData(Boolean.TRUE);
 		request.setInputType(Constants.inputType.XML.toString());
 		request.setCreateTable(false);
 		//new StartAutomation(request).createFrameWork();
 		new StartAutomation(request).doAll();
 	}
+	
+/*	public static void main(String[] args) throws Exception
+	{
+		XSDParseRequest request = new XSDParseRequest();
+		request.setParsedXSDPath(args[0]);
+		request.setDatabaseType("ORACLE");
+		request.setTnsEntry("jdbc:oracle:thin:@ (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = lon2odcdvscan01.markit.partners)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = BRD02DV)))");
+		request.setUserName("CORE_REF_DATA");
+		request.setPassword("CORE_REF_DATA");
+		request.setCreateScript(true);
+		request.setHaveHeaderData(Boolean.TRUE);
+		request.setInputType(Constants.inputType.XML.toString());
+		request.setCreateTable(false);
+		//new StartAutomation(request).createFrameWork();
+		new StartAutomation(request).doAll();
+	}*/
 }

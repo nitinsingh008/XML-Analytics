@@ -22,7 +22,8 @@ public class Constants
 	{
 		ORACLE,
 		MySQL,
-		SQL_Server;
+		SQL_Server,
+		JavaDB_DERBY;
 	}
 	
 	public enum inputType{

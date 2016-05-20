@@ -56,7 +56,7 @@ public class HelloController {
 
 		Iterator<String> itr = request.getFileNames();
 		MultipartFile file = request.getFile(itr.next());
-		model.put("databaseType", Arrays.asList(new String[] { "ORACLE", "SQL SERVER" , "MySQL" }));
+		model.put("databaseType", Arrays.asList(new String[] { "ORACLE", "SQL SERVER" , "MySQL", "JavaDB_DERBY" }));
 		String csvFile = null;
 		if (!file.isEmpty()) {
 			

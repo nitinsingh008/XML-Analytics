@@ -23,17 +23,20 @@ public class JaxbTableGenerator extends TableGenerator
 		String currTableName = "";
 		for (Class cls : classes) {
 			currTableName = cls.getName().substring(cls.getName().lastIndexOf('.') + 1);
-		    
+			System.out.println("Class Name => " + currTableName);
 		    Field[] fields = cls.getDeclaredFields();
  
 			for(Field field : fields)
 			{
-			    System.out.println("method = " + field.getName());
+			    //System.out.println("method = " + field.getName());
 				DBColumns column = new DBColumns();
 				column.setName(field.getName());
 				
 				String fieldTypeFullName = field.getType().getName();
 				String fieldType = fieldTypeFullName.substring(fieldTypeFullName.lastIndexOf('.') + 1);
+				if(fieldType != null && fieldType.equalsIgnoreCase("LIST"))
+					continue;
+				
 				column.setDataType(sqlDataType(fieldType, typed));
 				String methodName = column.getName().substring(0, 1).toUpperCase()+column.getName().substring(1);
 				column.setGetterName("get"+methodName+"()");
@@ -49,7 +52,7 @@ public class JaxbTableGenerator extends TableGenerator
 
 	public static void main(String[] args) throws Exception
 	{		
-		JaxbTableGenerator tb = new JaxbTableGenerator("Sample_bond.xsd",new FrameworkSettings("LoaderFramework"));
+		JaxbTableGenerator tb = new JaxbTableGenerator("Sample_bond.xsd",new FrameworkSettings("LF_SampleBondsXSD_215920160159"));
 		Multimap<String, DBColumns> tableMap = tb.parse(true);
 	}
 }

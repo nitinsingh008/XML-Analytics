@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.concept.crew.util.Constants;
 import com.concept.crew.util.Constants.DatabaseType;
 
 public class XapDBRoutine {
@@ -27,6 +28,18 @@ public class XapDBRoutine {
 		else if(DatabaseType.MySQL.toString().equals(dbType))
 		{
 			DB_DRIVER = "com.mysql.jdbc.Driver";
+		}
+		else if(DatabaseType.JavaDB_DERBY.toString().equals(dbType))
+		{
+		    // -------------------------------------------
+		    // URL format is
+		    // jdbc:derby:<local directory to save data> //DB_DRIVER = "jdbc:derby:" +  dbLocation + ";create=true";
+		    // -------------------------------------------
+		   String dbLocationName = Constants.mavenProjectPath + "/" + "database";			
+			DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+			user 	 = "";
+			password = "";
+			jdbcUrl = "jdbc:derby:" + dbLocationName + ";create=true";
 		}
 		else
 		{

@@ -58,7 +58,10 @@ public abstract class TableGenerator
 	
 	public abstract Multimap<String, DBColumns> parse(Boolean typed) throws Exception;
 	
-	public void tableScripts(Multimap<String, DBColumns> tableMap, String tableSuffix, String rootNode , String schema)
+	public void tableScripts(Multimap<String, DBColumns> 	tableMap, 
+							 String 						tableSuffix, 
+							 String 						rootNode , 
+							 String 						schemaNotUsed)
 							 					throws Exception
 	{
 		logger.warn("Start Generating scripts for " +tableSuffix);
@@ -68,7 +71,12 @@ public abstract class TableGenerator
 		if(tableSuffix != null && tableSuffix != "")
 		{
 			fileName = fileName + "_" + tableSuffix + ".sql";
-			parentTableName = schema+"."+rootNode.toUpperCase() + "_"+ tableSuffix;
+			parentTableName =  rootNode.toUpperCase() + "_"+ tableSuffix;
+		}
+		else
+		{
+			fileName = fileName + ".sql";
+			parentTableName =  rootNode.toUpperCase() ;
 		}
 		
 		File file = new File(fileName);
@@ -88,12 +96,12 @@ public abstract class TableGenerator
 		
 		StringBuffer sb = new StringBuffer();
 		
-		addDropScripts(bw, sb, tableMap.keySet(), tableSuffix, rootNode,  schema);
+		addDropScripts(bw, sb, tableMap.keySet(), tableSuffix, rootNode,  schemaNotUsed);
 		
 		if(rootNode != null){
 			sb = new StringBuffer();
 			sb.append("\n") ;
-			sb.append("CREATE SEQUENCE ").append(schema).append(".").append(rootNode.toUpperCase()).append("_SEQ ").append("MINVALUE 1 START WITH 1 INCREMENT BY 1 NOCACHE ;");
+			sb.append("CREATE SEQUENCE ").append(rootNode.toUpperCase()).append("_SEQ ").append("MINVALUE 1 START WITH 1 INCREMENT BY 1 ;");
 			bw.write(sb.toString());
 			bw.newLine();
 			sb = new StringBuffer();
@@ -108,7 +116,7 @@ public abstract class TableGenerator
 				//tableName = tableName.replace("$", "_");
 				continue;
 			}
-			sb.append("CREATE TABLE ").append(schema).append(".").append(tableName.toUpperCase());
+			sb.append("CREATE TABLE ").append(tableName.toUpperCase());
 			if(tableSuffix != null && tableSuffix != "")
 			{
 				sb.append("_").append(tableSuffix.toUpperCase());
@@ -158,10 +166,10 @@ public abstract class TableGenerator
 		//Multimap<String, DBColumns> tableMap = tb.parseJaxbInfo(true);
 	}
 	
-	protected String sqlDataType(String xsdType, boolean typed)
+	protected String sqlDataType(String xsdType, Boolean typed)
 	{
 		String sqlType = "VARCHAR2(100)";
-		if(typed)
+		if(typed != null && typed.TRUE)
 		{
 			sqlType = sqlDataType(xsdType);
 		}
@@ -177,13 +185,21 @@ public abstract class TableGenerator
 		{
 			sqlType = "VARCHAR2(100)";
 		}
-		else if("xs:decimal".equalsIgnoreCase(xsdType))
+		else if("xs:decimal".equalsIgnoreCase(xsdType)
+					|| "LONG".equalsIgnoreCase(xsdType)
+						|| "DOUBLE".equalsIgnoreCase(xsdType)
+							|| "BIGDECIMAL".equalsIgnoreCase(xsdType))
 		{
 			sqlType = "NUMBER";
 		}	
-		else if("xs:dateTime".equalsIgnoreCase(xsdType))
+		else if("xs:dateTime".equalsIgnoreCase(xsdType)
+				 || "XMLGregorianCalendar".equalsIgnoreCase(xsdType))
 		{
 			sqlType = "DATE";
+		}	
+		else if("BOOLEAN".equalsIgnoreCase(xsdType))
+		{
+			sqlType = "VARCHAR2(10)";
 		}			
 		else
 		{
@@ -192,15 +208,22 @@ public abstract class TableGenerator
 		return sqlType;
 	}
 	
-	private static void addDropScripts(BufferedWriter bw, StringBuffer sb, Set<String> tableName, String tableSuffix, String rootNode , String schema ) throws IOException{
-		
+	private static void addDropScripts(BufferedWriter 	bw, 
+									   StringBuffer 	sb, 
+									   Set<String> 		tableName, 
+									   String 			tableSuffix, 
+									   String 			rootNode , 
+									   String 			schemaNotUsed ) 
+											   			throws IOException
+	{	
 		Iterator<String> itr = tableName.iterator();
-		while(itr.hasNext()){
+		while(itr.hasNext())
+		{
 			String name = itr.next();
 			if(name.contains("$") || name.equals(rootNode)){
 				continue;
 			}
-			sb.append("DROP TABLE ").append(schema).append(".").append(name.toUpperCase());
+			sb.append("DROP TABLE ").append(name.toUpperCase());
 			
 			if(tableSuffix != null && tableSuffix != "")
 			{
@@ -210,7 +233,7 @@ public abstract class TableGenerator
 			sb.append("\n") ;
 		}
 	
-		sb.append("DROP TABLE ").append(schema).append(".").append(rootNode.toUpperCase());
+		sb.append("DROP TABLE ").append(rootNode.toUpperCase());
 		
 		if(tableSuffix != null && tableSuffix != "")
 		{
@@ -219,7 +242,7 @@ public abstract class TableGenerator
 		sb.append(";") ;
 
 		sb.append("\n") ;
-		sb.append("DROP SEQUENCE ").append(schema).append(".").append(rootNode.toUpperCase()).append("_").append("SEQ").append(";");
+		sb.append("DROP SEQUENCE ").append(rootNode.toUpperCase()).append("_").append("SEQ").append(";");
 		bw.write(sb.toString());
 		bw.newLine();
 	}
@@ -246,7 +269,11 @@ public abstract class TableGenerator
 			fileName =  tableName.toUpperCase();
 			
 			if(tableSuffix != null && tableSuffix != ""){
-				fileName =  tableName.toUpperCase() + "_" + tableSuffix.toUpperCase();
+				fileName =  tableName.toUpperCase() + "_" + tableSuffix.toUpperCase() + ".sql";
+			}
+			else
+			{
+				fileName =  tableName.toUpperCase() + ".sql";
 			}
 			
 			File file = new File(projectSetting.getResourcePath() + fileName);
