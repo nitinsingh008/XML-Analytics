@@ -37,7 +37,7 @@ public class JaxbInfoGenerator
 	 */
 	public void generateInfos(String schemaFilePathName) throws Exception
 	{
-		logger.warn("*** Preparing for generation of Classes ****");
+		logger.warn("Preparing for generation of Classes ****");
         File outFile = new File(projectSetting.getDirSrcJava());
 
         // Setup schema compiler
@@ -53,8 +53,9 @@ public class JaxbInfoGenerator
         schemaCompiler.parseSchema(is);
         S2JJAXBModel model = schemaCompiler.bind();
         JCodeModel jCodeModel = model.generateCode(null, null);
-        logger.warn("*** Start generating JAXB Classes ****");
-        jCodeModel.build(outFile);
+        
+        jCodeModel.build(outFile); 
+        logger.warn("JAXB generated successfully");
 	}
 
 }

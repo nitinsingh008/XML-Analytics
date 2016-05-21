@@ -35,6 +35,10 @@ public class CsvTableGenerator<E> extends TableGenerator{
 	public Multimap<String, DBColumns> parse(Boolean haveHeaderInFile,
 											 String dbType) throws Exception 
 	{
+		LOGGER.warn("-----------------------------");
+		LOGGER.warn("Convert Meta-data to Relational model ");
+		LOGGER.warn("-----------------------------");
+		
 		Multimap<String, DBColumns> csvTableInfo =  ArrayListMultimap.create();
 		File csvFile = new File(Constants.xsdLocalPath+File.separator+xsdName);
 		

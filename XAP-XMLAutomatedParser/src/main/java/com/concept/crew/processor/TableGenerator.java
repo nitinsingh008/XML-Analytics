@@ -65,7 +65,7 @@ public abstract class TableGenerator
 							 String 						dbType)
 							 					throws Exception
 	{
-		logger.warn("Start Generating scripts for " +tableSuffix);
+		logger.warn("Generate Database Table scripts");
 		String fileName = projectSetting.getResourcePath() + "createTable";
 		String parentTableName = null;
 
@@ -79,7 +79,7 @@ public abstract class TableGenerator
 			fileName = fileName + ".sql";
 			parentTableName =  rootNode.toUpperCase() ;
 		}
-		
+		logger.warn("Start Generating DB scripts "+ fileName);
 		File file = new File(fileName);
 
 		// if file doesn't exists, then create it
@@ -273,17 +273,21 @@ public abstract class TableGenerator
 	}
 
 	public void insertScripts(Multimap<String, DBColumns> tableMap,
-							  String tableSuffix, String rootNode, String dbType) throws Exception {
+							  String tableSuffix, String rootNode, String dbType) throws Exception 
+	{
 		
 		if(tableMap.isEmpty()){
 			return;
 		}
-		
-		logger.warn("Start Generating Insert's scripts for " +tableSuffix);
+		logger.warn("-----------------------------");
+		logger.warn("Generate Database Insert's scripts");
+		logger.warn("-----------------------------");
+
 		StringBuffer sb = new StringBuffer();
 		
 		Iterator<String> tableMapIt =  tableMap.keySet().iterator();
-		while(tableMapIt.hasNext()){
+		while(tableMapIt.hasNext())
+		{
 			String tableName = tableMapIt.next();
 			if(tableName == null ||  tableName.contains("$") || tableName.toUpperCase().contains("OBJECTFACTORY")){
 				continue;
@@ -300,6 +304,7 @@ public abstract class TableGenerator
 			{
 				fileName =  tableName.toUpperCase() + ".sql";
 			}
+			logger.warn(fileName);
 			
 			File file = new File(projectSetting.getResourcePath() + fileName);
 			if (!file.exists()){
@@ -338,7 +343,7 @@ public abstract class TableGenerator
 			}
 			sb.deleteCharAt(sb.length()-2);
 			sb.append(")");
-			logger.warn(sb);
+			//logger.warn(sb);
 			bw.write(sb.toString());
 			bw.close();
 			sb = new StringBuffer();

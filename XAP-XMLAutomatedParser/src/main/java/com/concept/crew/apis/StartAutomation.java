@@ -56,45 +56,35 @@ public class StartAutomation
 						Boolean 		  createFramework) throws Exception
 	{
 		File inputMetaDataFile = new File(request.getParsedXSDPath()); 
+		
+		AutomationHelper autoHelper = new AutomationHelper(projectSetting);
+		autoHelper.initialization();
+		
+		//1. Create Maven project with default settings
+		autoHelper.createMavenProject();
+		
 		Multimap<String, DBColumns> tableInfo = null;
-		if(createScripts)
+		
+		//2. Generate JAXB object in new maven project from the input XSD
+		if(request.getInputType().equals(Constants.inputType.XML.toString()))
 		{
-					
-			AutomationHelper ah = new AutomationHelper(projectSetting);
+			logger.warn("Generating JAXB Objects in new maven project");		
+			JaxbInfoGenerator jaxbGenerator = new JaxbInfoGenerator(projectSetting);
+			jaxbGenerator.generateInfos(inputMetaDataFile.getAbsolutePath());
 			
-			ah.installMaven();
-			
-			//1. Create maven project
-			logger.warn("Start creating new Maven Project");
-			ah.createMavenProject();
-			
-			if(request.getInputType().equals(Constants.inputType.XML.toString()))
-			{
-				//2. Generate Jaxb object in new maven project from the input XSD
-				logger.warn("Generating JAXB Objects in new maven project");		
-				JaxbInfoGenerator gen = new JaxbInfoGenerator(projectSetting);
-				gen.generateInfos(inputMetaDataFile.getAbsolutePath());
-				
-				//3. Build Maven project
-				logger.warn("Build Maven project");
-				ah.buildMavenProject();
-			}
-	
-			// 4. Generate tables from XSD
-			logger.warn("Generating Table Scripts");
-			tableInfo = tableGenerator(inputMetaDataFile);
-			
-			
-			// 6. Last Step = > Build Maven project again
-			logger.warn("Build Maven project");
-			ah.buildMavenProject();
+			//3. Build Maven project
+			autoHelper.buildMavenProject();
 		}
+		
+		// 4. Generate tables from input Meta-data File [XSD/CSV]
+		tableInfo = tableGenerator(inputMetaDataFile, createScripts);
 
 		// Generate loaders automatically - Main/Schedules
 		if(createFramework)
 		{
 			Boolean isDelimited = false;
-			if(request.getInputType().equals(Constants.inputType.DELIMITED.toString())){
+			if(request.getInputType().equals(Constants.inputType.DELIMITED.toString()))
+			{
 				isDelimited = Boolean.TRUE;
 			}
 			FrameworkGenerator.initialize(projectSetting, tableInfo, rootNode, request.getDatabaseTablePostFix(), isDelimited);
@@ -109,22 +99,28 @@ public class StartAutomation
 			if(XapDBRoutine.testAndValidateDBConnection())
 			{
 				new DBScriptRunner(projectSetting).executeScripts();
+				logger.warn("Table created....");
 			}
 			else
 			{
 				System.out.println("Db Connectivity Test failed");
 			}
-			
-			logger.warn("Table created....");
 		}
+		
+		// Last Step = > Build Maven project again
+		autoHelper.buildMavenProject();
+		
 	}
 
 	/*
 	 * Generate tables from XSD or Info       - Tables
 	 * Script will be created at /resource Folder
 	 */
-	public Multimap<String, DBColumns> tableGenerator(File xsdFile) throws Exception
+	public Multimap<String, DBColumns> tableGenerator(File 		xsdFile,
+													  Boolean 	createScripts) throws Exception
 	{
+
+		
 		TableGenerator generator =  null;
 		if(request.getInputType().equals(Constants.inputType.XML.toString()))
 		{
@@ -139,7 +135,10 @@ public class StartAutomation
 		
 		// RAW Table
 		Multimap<String, DBColumns> tableMap = generator.parse(request.getHaveHeaderData(), request.getDatabaseType());	
-		generator.tableScripts(tableMap, request.getDatabaseTablePostFix(), rootNode, request.getDatabaseType());
+		if(createScripts)
+		{
+			generator.tableScripts(tableMap, request.getDatabaseTablePostFix(), rootNode, request.getDatabaseType());
+		}
 		generator.insertScripts(tableMap, request.getDatabaseTablePostFix(), rootNode, request.getDatabaseType());
 		return tableMap;
 	}	

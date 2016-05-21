@@ -1,8 +1,12 @@
 package com.concept.crew.dao;
 
+import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import org.apache.derby.drda.NetworkServerControl;
 
 import com.concept.crew.util.Constants;
 import com.concept.crew.util.Constants.DatabaseType;
@@ -125,10 +129,28 @@ public class XapDBRoutine {
 		return conn;
 	}
 	
-	public static void main(String args[])
+/*	public static void main(String args[])
 	{
 		XapDBRoutine.initializeDBRoutine(DatabaseType.ORACLE.toString(), "TNSEntry", "username", "password");
 		boolean dbConnected = XapDBRoutine.testAndValidateDBConnection();
 		System.out.println(dbConnected);
+	}*/
+	
+/*	public static void main(String args[])
+	{
+		XapDBRoutine.initializeDBRoutine(DatabaseType.JavaDB_DERBY.toString(), "TNSEntry", "username", "password");
+		boolean dbConnected = XapDBRoutine.testAndValidateDBConnection();
+		System.out.println(dbConnected);
+	}*/
+	
+	public static void main(String args[]) throws Exception
+	{
+	   NetworkServerControl nsc = new NetworkServerControl(InetAddress.getByName("localhost"), 1527);
+	   nsc.start(new PrintWriter(System.out, true));
+
+	   Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+
+	   Connection c = DriverManager.getConnection("jdbc:derby:memory:testdb;create=true");
+	   System.out.println("working");
 	}
 }

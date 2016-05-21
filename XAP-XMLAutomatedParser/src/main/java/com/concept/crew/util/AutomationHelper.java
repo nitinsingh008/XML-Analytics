@@ -37,7 +37,8 @@ public class AutomationHelper
 
 	private FrameworkSettings projectSetting = null; 
 
-	  public AutomationHelper(FrameworkSettings projectSetting) {
+	  public AutomationHelper(FrameworkSettings projectSetting) 
+	  {
 		super();
 		this.projectSetting = projectSetting;
 	}
@@ -84,28 +85,51 @@ public class AutomationHelper
 			 }			 
 		 }			 
 	 }
-	 
+	/*
+	 * Initialization of Project
+	 * 1. Create "C:/XAP" if doesn't exists [Base Working Directory]
+	 * 2. Install Apache Maven 
+	 * 3. Create Local m2 repository
+	 */
+	public void initialization() throws IOException
+	{
+		logger.warn("Initializing => " + Constants.mavenProjectPath);
+		File workingBaseDirectory = new File(Constants.mavenProjectPath);
+		if (!workingBaseDirectory.exists()) 
+		{
+			boolean dirCreated = workingBaseDirectory.mkdirs();
+			if(!dirCreated)
+				throw new IOException(workingBaseDirectory.getAbsolutePath() + " can't be created");
+		}
+		
+		logger.warn("Installing apache-maven-3.2.2 .......");
+		installMaven();
+		logger.warn("Maven installed successfully");
+		logger.warn("----------------------------------");
+		logger.warn("Creating local m2 repository => " + Constants.m2_repository);
+		File m2Repo =  new File(Constants.m2_repository);
+		if(!m2Repo.exists())
+		{
+			m2Repo.mkdirs();
+		}
+	} 
+	/*
+	 * Initialization method should be called before calling this method 
+	 */
 	public void createMavenProject() 
 										throws IOException,MavenInvocationException 
 	{
-		logger.warn("Initializing at " + Constants.mavenProjectPath);
+		logger.warn("----------------------------------------");
+		logger.warn("Generating Maven project in Batch mode");
+		logger.warn("----------------------------------------");
+		File workingBaseDirectory = new File(Constants.mavenProjectPath);
 
-	
-		
-		File srcDir = new File(Constants.mavenProjectPath);
-		if (!srcDir.exists()) 
-		{
-			boolean dirCreated = srcDir.mkdirs();
-			if(!dirCreated)
-				throw new IOException(srcDir.getAbsolutePath() + " can't be created");
-		}
-		// no need to delete any existing rpoject now
+		// no need to delete any existing project now
 		//deleteExistingProject(new File(Constants.mavenProjectPath+ "/" +Constants.mavenProjectName));
 		
 		InvocationRequest request = new DefaultInvocationRequest();
 		request.setGoals(Collections.singletonList("archetype:generate"));
 		request.setInteractive(false);
-		//request.setGlobalSettingsFile(new File(Constants.settingsFilePath));
 		Properties properties = new Properties();
 		properties.setProperty("groupId", "com.concept.crew.app");
 		properties.setProperty("artifactId", projectSetting.getProjectName());
@@ -114,25 +138,19 @@ public class AutomationHelper
 		request.setProperties(properties);
 	
 		Invoker invoker = new DefaultInvoker();
-		invoker.setWorkingDirectory(srcDir);
-		// Setting repo directory location 
-		File m2Repo =  new File(Constants.m2_repository);
-		if(!m2Repo.exists()){
-			m2Repo.mkdirs();
-		}
+		invoker.setWorkingDirectory(workingBaseDirectory);
+	
+		File m2Repo =  new File(Constants.m2_repository); 	// Setting repo directory location 
 		invoker.setLocalRepositoryDirectory(m2Repo);
 		
 		setMavenHome(invoker); // Setting Maven Home(if wrongly set)
 		
-		logger.warn("----------------------------------");
-		logger.warn("Generating project in Batch mode");
-		logger.warn("----------------------------------");
 		InvocationResult result = invoker.execute(request);
 		
 		if (result.getExitCode() != 0) {
 			throw new IllegalStateException("archetype:generate failed.");
 		}
-		logger.warn("Project created successfully : " + projectSetting.getProjectName());
+		logger.warn("Project generated successfully : " + projectSetting.getProjectName());
 		
 		File resourcesDir = new File(projectSetting.getResourcePath());
 		if(!resourcesDir.exists()){
@@ -153,7 +171,7 @@ public class AutomationHelper
 		
 		InvocationResult result = invoker.execute( request );
 		logger.warn("-----------------------------");
-		logger.warn("Building project");
+		logger.warn("Building Maven project");
 		logger.warn("-----------------------------");
 		if (result.getExitCode() != 0) {
 			throw new IllegalStateException("maven build failed.");
@@ -344,7 +362,9 @@ public class AutomationHelper
 	    }
 	}
 	
-	public void installMaven() throws IOException
+
+	
+	private void installMaven() throws IOException
 	{
 		String zipFilePath = Constants.mavenZip;
 		String destDirectory = Constants.mavenProjectPath;

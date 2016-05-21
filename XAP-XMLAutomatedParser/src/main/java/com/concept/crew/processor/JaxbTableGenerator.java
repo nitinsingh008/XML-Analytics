@@ -3,6 +3,8 @@ package com.concept.crew.processor;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.concept.crew.info.DBColumns;
 import com.concept.crew.util.FrameworkSettings;
 import com.google.common.collect.ArrayListMultimap;
@@ -10,6 +12,7 @@ import com.google.common.collect.Multimap;
 
 public class JaxbTableGenerator extends TableGenerator
 {		
+	private static final Logger log = Logger.getLogger(JaxbTableGenerator.class);
 	public JaxbTableGenerator(String xsdName,FrameworkSettings projectSetting)
 	{
 		super(xsdName,projectSetting);
@@ -19,12 +22,17 @@ public class JaxbTableGenerator extends TableGenerator
 	public Multimap<String, DBColumns> parse(Boolean typed,
 										     String dbType) throws Exception
 	{
+		log.warn("-----------------------------");
+		log.warn("Convert Meta-data to Relational model ");
+		log.warn("-----------------------------");
+		
 		Multimap<String, DBColumns> tableMap = ArrayListMultimap.create();
 		List<Class> classes = loadClassesFromJar();
 		String currTableName = "";
-		for (Class cls : classes) {
+		for (Class cls : classes) 
+		{
 			currTableName = cls.getName().substring(cls.getName().lastIndexOf('.') + 1);
-			System.out.println("Class Name => " + currTableName);
+			log.warn("Class Name => " + currTableName);
 		    Field[] fields = cls.getDeclaredFields();
  
 			for(Field field : fields)
