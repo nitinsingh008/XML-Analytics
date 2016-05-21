@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import org.apache.log4j.Logger;
 import com.concept.crew.dao.loaderUtil.DataWriter;
-import $ImportRootTag;
+import $Import;
 import com.concept.crew.info.raw.ParentInfoWrapper;
 import com.concept.crew.util.QueryReaderUtil;
 
@@ -27,7 +27,7 @@ public class LoadSaveProcessor
 			ParentInfoWrapper wrapper = new ParentInfoWrapper();
 			wrapper.set$Root(record);
 			// Generate unique Key using sequence and assign to Bond
-			wrapper.setPkeyId(fetchPrimarykey(rawDataList.size()).longValue());
+			wrapper.setPkeyId(fetchPrimarykey(wrapperList.size()).longValue());
 
 			wrapperList.add(wrapper);
 		}

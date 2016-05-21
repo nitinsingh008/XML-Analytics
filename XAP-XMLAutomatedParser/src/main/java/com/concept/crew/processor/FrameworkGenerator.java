@@ -1,7 +1,9 @@
 package com.concept.crew.processor;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,6 +15,7 @@ import org.apache.velocity.app.VelocityEngine;
 
 import com.concept.crew.info.DBColumns;
 import com.concept.crew.util.Constants;
+import com.concept.crew.util.FrameworkSettings;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
@@ -20,78 +23,150 @@ public class FrameworkGenerator
 {
 	private static VelocityEngine velocityEngine;
 	private static VelocityContext context;
-
-	public static void initialize()
-	{
+	private static FrameworkSettings projectSetting;
+	private static Multimap<String, DBColumns> tableMap;
+	private static String root;
+	private static String postFix;
+	private static Boolean isDelimited;
+	
+	public static void initialize(FrameworkSettings setting, Multimap<String, DBColumns> map, String rootNode, String tablePostFix, Boolean isDelimitedReq)	{
 		velocityEngine = new VelocityEngine();
-		velocityEngine.init();
-        context = new VelocityContext();
+		velocityEngine.init();       
+		projectSetting = setting;
+		tableMap = map;
+		root = rootNode;
+		postFix = tablePostFix;
+		isDelimited = isDelimitedReq;
 	}
 	
-	public static void generate(Multimap<String, DBColumns> tableMap)
-	{
-		Iterator<String> tableMapIt =  tableMap.keySet().iterator();
-		while(tableMapIt.hasNext())
-		{
+	public static void generateAll(){
+		generateSchedule();
+		generateParentWrapper();
+		generateLoaderType();
+		generateLoadSaveProcessor();
+	}
+	
+	public static void generateSchedule() {
+		Template template = null;
+		BufferedWriter writer = null;
+		context = null;
+		context = new VelocityContext();
+		
+		File scheduleDir = new File(projectSetting.getPathToGenerateSchedules());
+		if (!scheduleDir.exists()) {
+			scheduleDir.mkdirs();
+		}
+		
+		Iterator<String> tableMapIt = tableMap.keySet().iterator();
+		while (tableMapIt.hasNext()) {
 
 			String tableName = tableMapIt.next();
-			if(tableName == null ||  tableName.contains("$") || tableName.toUpperCase().contains("OBJECTFACTORY"))
-			{
+			if (tableName == null || tableName.contains("$") || tableName.toUpperCase().contains("OBJECTFACTORY")) {
 				continue;
 			}
-			
+
 			Collection<DBColumns> columnList = tableMap.get(tableName);
-			
-			for(DBColumns columns :columnList)
-			{
+
+			for (DBColumns columns : columnList) {
 				String columnName = columns.getName();
-				if(columnName.length() > 30)
-				{
+				if (columnName.length() > 30) {
 					columns.setName(columnName.substring(0, 30));
 				}
 				columns.setName(columnName.substring(0, 1).toUpperCase() + columnName.substring(1));
-				//sb.append(columns.getName().toUpperCase()).append("\t\t").
-				  // append(columns.getDataType().toUpperCase()).append(",\n");
+				// sb.append(columns.getName().toUpperCase()).append("\t\t").
+				// append(columns.getDataType().toUpperCase()).append(",\n");
 			}
-	        String infoName = tableName;
-	        context.put("Info", infoName);
-	        context.put("ClassName", infoName + "Loader");
-	        context.put("columnList", columnList);
 			
-	        Template template = velocityEngine.getTemplate("./src/main/resources/templates/ScheduleLoader.java.vtl" );
-	        StringWriter writer = new StringWriter();
-	        template.merge( context, writer );
-	        System.out.println( writer.toString() );  
-		}
-		
-		
-
-		
-	}
-	
-	public static void generateParentWrapper(String root){
-		context = null;
-		context = new VelocityContext(); 
-		// check to be added for XSD and Delimited file for setting Import
-	     context.put("Import", Constants.packageName + "."+root);
-		 context.put("Root", root);
-		 Template template = velocityEngine.getTemplate("./src/main/resources/ParentInfoWrapper.java.vtl" );
-		 StringWriter writer = new StringWriter();
-		//BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/resources/JavaClasses/ParentInfoWrapper.java"));
-	     template.merge( context, writer );
-	     System.out.println( writer.toString() );  
-	     try {
-	    	 writer.flush();
-	         writer.close();
-		} catch (IOException e) {
-			
+			if(isDelimited){
+				context.put("Import", Constants.pojoPackageName + ".*" );
+			}else{
+				context.put("Import", Constants.packageName + ".*");
+			}
+			String infoName = tableName;
+			String className = infoName +  "Loader";
+			context.put("Root", root);
+			context.put("Info", infoName);
+			context.put("ClassName", className);
+			context.put("columnList", columnList);
+			try{
+				if(tableName.equals(root)){
+					template = velocityEngine.getTemplate("./src/main/resources/templates/RootLoader.java.vtl");
+					writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToGenerateSchedules() + File.separator + className + ".java")));
+					template.merge(context, writer);
+				}else{
+					template = velocityEngine.getTemplate("./src/main/resources/templates/ScheduleLoader.java.vtl");
+					writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToGenerateSchedules() + File.separator + className + ".java")));
+					template.merge(context, writer);
+				}
+				writer.flush();
+				writer.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 	}
 	
-	public static void generateLoaderType(Multimap<String, DBColumns> tableMap,
-			String postFix) {
+	public static void generateParentWrapper() {
 		context = null;
 		context = new VelocityContext();
+
+		File scheduleDir = new File(projectSetting.getPathToParentInfoWrapper());
+		if (!scheduleDir.exists()) {
+			scheduleDir.mkdirs();
+		}
+
+		if (isDelimited) {
+			context.put("Import", Constants.pojoPackageName + "." + root);
+		} else {
+			context.put("Import", Constants.packageName + "." + root);
+		}
+		context.put("Root", root);
+		try {
+			Template template = velocityEngine.getTemplate("./src/main/resources/templates/ParentInfoWrapper.java.vtl");
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToParentInfoWrapper() + File.separator +"ParentInfoWrapper.java")));
+			template.merge(context, writer);
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+
+		}
+	}
+	
+	public static void generateLoadSaveProcessor() {
+		context = null;
+		context = new VelocityContext();
+
+		File scheduleDir = new File(projectSetting.getPathToLoadSaveProcessor());
+		if (!scheduleDir.exists()) {
+			scheduleDir.mkdirs();
+		}
+
+		if (isDelimited) {
+			context.put("Import", Constants.pojoPackageName + "." + root);
+		} else {
+			context.put("Import", Constants.packageName + "." + root);
+		}
+		context.put("Root", root);
+		try {
+			Template template = velocityEngine.getTemplate("./src/main/resources/templates/LoadSaveProcessor.java.vtl");
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToLoadSaveProcessor() + File.separator +"LoadSaveProcessor.java")));
+			template.merge(context, writer);
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+
+		}
+	}
+	
+	public static void generateLoaderType() {
+		context = null;
+		context = new VelocityContext();
+		
+		File scheduleDir = new File(projectSetting.getPathToLoaderType());
+		if (!scheduleDir.exists()) {
+			scheduleDir.mkdirs();
+		}
 
 		Map<String, StringBuffer> nameMap = new HashMap<String, StringBuffer>();
 		Iterator<String> tableMapIt = tableMap.keySet().iterator();
@@ -112,13 +187,11 @@ public class FrameworkGenerator
 
 			nameMap.put(tableNameWithPostFix,  sb.append("Loader").append(".class"));
 		}
-		context.put("mapp", nameMap);
-		Template template = velocityEngine.getTemplate("./src/main/resources/LoadersType.java.vtl");
-		StringWriter writer = new StringWriter();
-		//BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/resources/JavaClasses/LoadersType.java"));
-		template.merge(context, writer);
-		System.out.println(writer.toString());
+		context.put("mapp", nameMap);		
 		try {
+			Template template = velocityEngine.getTemplate("./src/main/resources/templates/LoadersType.java.vtl");
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToLoaderType() + File.separator + "LoadersType.java")));
+			template.merge(context, writer);
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
@@ -128,12 +201,9 @@ public class FrameworkGenerator
 	
 	public static void main(String[] args) throws Exception
 	{
-		initialize();
-		//generateParentWrapper("Instrument");
-       /* String infoName = "Instrument";
-        context.put("Info", infoName);
-        context.put("ClassName", infoName + "Loader");*/
 		
+		//generateParentWrapper("Instrument");
+		FrameworkSettings fg = new FrameworkSettings("LoadersFramework");
 		Multimap<String, DBColumns> tableMap =  ArrayListMultimap.create();
 		DBColumns column = new DBColumns();
 		tableMap.put("Instrument", column);
@@ -142,10 +212,14 @@ public class FrameworkGenerator
 		tableMap.put("Ratings", column);
 		tableMap.put("Redemption", column);
 		tableMap.put("ObjectFactory", column);
+		initialize(fg, tableMap, "Instrument", "raw", false);
 		
-		generateLoaderType(tableMap,"raw");
+		//generateParentWrapper();
 		
-        /*Template template = velocityEngine.getTemplate("./src/main/resources/LoadersType.java.vtl" );
+		//generateLoaderType();
+		generateLoadSaveProcessor();
+		
+      /*  Template template = velocityEngine.getTemplate("./src/main/resources/templates/RootLoader.java.vtl" );
 
         StringWriter writer = new StringWriter();
         //BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/resources/JavaClasses/InstrumentLoader.java"));
@@ -154,7 +228,7 @@ public class FrameworkGenerator
         writer.flush();
         writer.close();
 
-        System.out.println( writer.toString() );        
-*/	}
+        System.out.println( writer.toString() );    */    
+	}
 
 }

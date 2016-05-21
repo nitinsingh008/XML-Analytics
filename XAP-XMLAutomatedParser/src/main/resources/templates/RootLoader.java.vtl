@@ -30,30 +30,19 @@ public final class $ClassName extends AbstractDataLoader
 	{
 		$Root parentInfo = parentInfo.get$Root();
 
-		int total = 0;
-
-		List<$Info> scheduleList = parentInfo.get$Info();
+		int index = 1;
+		#foreach( $column in $columnList )
+		#if( $column.getDataType() == "NUMBER" )
+	    StatementHelper.setLong(statement, index++, schedule.$column.getGetterName() );
+		#elseif( $column.getDataType() == "DATE" )
+		StatementHelper.setDate(statement, index++, schedule.$column.getGetterName() );
+		#else
+		StatementHelper.setString(statement, index++, schedule.$column.getGetterName() );
+		#end
+		#end
 		
-		for (int i = 0; CollectionsUtil.isNotEmpty(scheduleList) && i < scheduleList.size(); i++){
-			$Info schedule = scheduleList.get(i);
-
-			if (GeneralUtil.isNotNull(schedule)){
-				total++;
-				int index = 1;
-				#foreach( $column in $columnList )
-					#if( $column.getDataType() == "NUMBER" )
-			    StatementHelper.setLong(statement, index++, schedule.$column.getGetterName() );
-					#elseif( $column.getDataType() == "DATE" )
-			    StatementHelper.setDate(statement, index++, schedule.$column.getGetterName() );
-					#else
-				StatementHelper.setString(statement, index++, schedule.$column.getGetterName() );
-					#end
-				#end
-				
-				statement.addBatch();
-			}
-		}
-
-		return total;	
+		statement.addBatch();
+		
+		return 1;	
 	}	
 }

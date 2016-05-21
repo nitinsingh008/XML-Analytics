@@ -25,6 +25,7 @@ public class StartAutomation
 	private static Logger 		logger 			= Logger.getLogger(StartAutomation.class);
 	private FrameworkSettings projectSetting;
 	private XSDParseRequest request;
+	private String rootNode = null;
 	private static SimpleDateFormat ddmmyyyhhmm = new SimpleDateFormat("ddmmyyyyHHmm");
 	
 	public StartAutomation(XSDParseRequest request) {
@@ -92,8 +93,12 @@ public class StartAutomation
 		// Generate loaders automatically - Main/Schedules
 		if(createFramework)
 		{
-			FrameworkGenerator.initialize();
-			FrameworkGenerator.generate(tableInfo);
+			Boolean isDelimited = false;
+			if(request.getInputType().equals(Constants.inputType.DELIMITED.toString())){
+				isDelimited = Boolean.TRUE;
+			}
+			FrameworkGenerator.initialize(projectSetting, tableInfo, rootNode, request.getDatabaseTablePostFix(), isDelimited);
+			FrameworkGenerator.generateAll();
 		}
 		
 		if(createTable)
@@ -121,7 +126,6 @@ public class StartAutomation
 	public Multimap<String, DBColumns> tableGenerator(File xsdFile) throws Exception
 	{
 		TableGenerator generator =  null;
-		String rootNode = null;
 		if(request.getInputType().equals(Constants.inputType.XML.toString()))
 		{
 			generator =  new JaxbTableGenerator(xsdFile.getName(),projectSetting);
