@@ -41,6 +41,7 @@ public class HelloController {
 	XSDParseRequest reuest;
 
 	String tempXSDName;
+	String databaseType[] = new String[] { "ORACLE", "SQL SERVER" , "MySQL", "JavaDB_DERBY" };
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
@@ -56,7 +57,8 @@ public class HelloController {
 
 		Iterator<String> itr = request.getFileNames();
 		MultipartFile file = request.getFile(itr.next());
-		model.put("databaseType", Arrays.asList(new String[] { "ORACLE", "SQL SERVER" , "MySQL", "JavaDB_DERBY" }));
+		//model.put("databaseType", Arrays.asList(new String[] { "ORACLE", "SQL SERVER" , "MySQL", "JavaDB_DERBY" }));
+		model.put("databaseType", Arrays.asList(databaseType));
 		String csvFile = null;
 		if (!file.isEmpty()) {
 			
@@ -106,7 +108,7 @@ public class HelloController {
 
 		Iterator<String> itr = request.getFileNames();
 		MultipartFile file = request.getFile(itr.next());
-		model.put("databaseType", Arrays.asList(new String[] { "ORACLE", "SQL SERVER" , "MySQL" }));
+		model.put("databaseType", Arrays.asList(databaseType));
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
