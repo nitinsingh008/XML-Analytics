@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -18,17 +17,8 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import com.concept.crew.apis.StartAutomation;
 import com.concept.crew.info.DBColumns;
 import com.concept.crew.util.Constants;
 import com.concept.crew.util.FrameworkSettings;
@@ -38,11 +28,11 @@ public abstract class TableGenerator
 {	
 	private static Logger 		logger 			= Logger.getLogger(TableGenerator.class);
 	
-	protected FrameworkSettings projectSetting;
-
-	protected static Set<String> xsdDataTypes = new HashSet<String>();
-	protected String xsdName ;
-	
+	protected FrameworkSettings 	projectSetting;
+	protected static Set<String> 	xsdDataTypes = new HashSet<String>();
+	protected String 				xsdName;
+	private   static int 			width 		=45;
+    private   static char 			fill 		= ' ';
 	static
 	{
 		xsdDataTypes.add("xs:string");
@@ -134,17 +124,19 @@ public abstract class TableGenerator
 				{
 					sb.append("PKEY\t\tNUMBER PRIMARY KEY, \n");	
 				}
-				
 			}
 			else
 			{
 				if(Constants.DatabaseType.JavaDB_DERBY.toString().equalsIgnoreCase(dbType))
-				{
-					sb.append("PARENT_KEY\t\tDECIMAL, \n");
+				{					
+					sb.append("PARENT_KEY");
+					sb.append(format("PARENT_KEY","DECIMAL,")).append("\n");
 				}
 				else
-				{
-					sb.append("PARENT_KEY\t\tNUMBER, \n");	
+				{					
+					sb.append("PARENT_KEY");
+					sb.append(format("PARENT_KEY", "NUMBER,")).append("\n");
+					//sb.append("PARENT_KEY\t\tNUMBER, \n");	
 				}
 			}
 			
@@ -155,8 +147,8 @@ public abstract class TableGenerator
 				if(columns.getName().length() > 30){
 					columns.setName(columns.getName().substring(0, 30));
 				}
-				sb.append(columns.getName().toUpperCase()).append("\t\t").
-				   append(columns.getDataType().toUpperCase()).append(",\n");
+				sb.append(columns.getName().toUpperCase()).
+				   append(format(columns.getName(), columns.getDataType()).toUpperCase()).append(",\n");
 			}
 			
 			if(!tableName.equals(rootNode)){
@@ -176,11 +168,7 @@ public abstract class TableGenerator
 	}
 	
 
-	public static void main(String[] args) throws Exception
-	{
-		//TableGenerator tb = new TableGenerator(null);
-		//Multimap<String, DBColumns> tableMap = tb.parseJaxbInfo(true);
-	}
+
 	
 	protected String sqlDataType(String xsdType, Boolean typed, String dbType)
 	{
@@ -386,5 +374,30 @@ public abstract class TableGenerator
 	    }
 		jarFile.close();
 		return classes;
+	}
+	private static String format(String columnName, String dataType)
+	{
+		String temp = new String(
+						new char[width - (columnName.length() + dataType.length())])
+								.replace('\0', fill)  + dataType;
+								
+		
+		return temp;
+	}
+	public static void main(String[] args) throws Exception
+	{
+		//TableGenerator tb = new TableGenerator(null);
+		//Multimap<String, DBColumns> tableMap = tb.parseJaxbInfo(true);
+		
+		String colName  = "PUTENDDATE";
+		String dataType = "DATE";
+		System.out.println(colName + format(colName, dataType));
+		
+		colName  = "PUTENDDATEsdsd";
+		dataType = "NUMBER";
+		System.out.println(colName + format(colName, dataType));
+		
+		//String formattedSQL = new BasicFormatterImpl().format(sql);
+		
 	}
 }
