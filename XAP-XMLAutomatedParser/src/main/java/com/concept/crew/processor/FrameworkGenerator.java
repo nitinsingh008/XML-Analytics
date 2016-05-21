@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -21,6 +22,8 @@ import com.google.common.collect.Multimap;
 
 public class FrameworkGenerator 
 {
+	private static Logger 		logger 			= Logger.getLogger(FrameworkGenerator.class);
+
 	private static VelocityEngine velocityEngine;
 	private static VelocityContext context;
 	private static FrameworkSettings projectSetting;
@@ -29,7 +32,8 @@ public class FrameworkGenerator
 	private static String postFix;
 	private static Boolean isDelimited;
 	
-	public static void initialize(FrameworkSettings setting, Multimap<String, DBColumns> map, String rootNode, String tablePostFix, Boolean isDelimitedReq)	{
+	public static void initialize(FrameworkSettings setting, Multimap<String, DBColumns> map, String rootNode, String tablePostFix, Boolean isDelimitedReq)	
+	{
 		velocityEngine = new VelocityEngine();
 		velocityEngine.init();       
 		projectSetting = setting;
@@ -39,11 +43,16 @@ public class FrameworkGenerator
 		isDelimited = isDelimitedReq;
 	}
 	
-	public static void generateAll(){
+	public static void generateAll()
+	{
+		logger.warn("----------------------------------------");
+		logger.warn("Generating Loader Framework Code");
+		logger.warn("----------------------------------------");
 		generateSchedule();
 		generateParentWrapper();
 		generateLoaderType();
 		generateLoadSaveProcessor();
+		logger.warn("Loader Framework Code ready");
 	}
 	
 	public static void generateSchedule() {
@@ -88,18 +97,24 @@ public class FrameworkGenerator
 			context.put("Info", infoName);
 			context.put("ClassName", className);
 			context.put("columnList", columnList);
-			try{
-				if(tableName.equals(root)){
+			
+			try
+			{
+				if(tableName.equals(root))
+				{
 					template = velocityEngine.getTemplate("./src/main/resources/templates/RootLoader.java.vtl");
 					writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToGenerateSchedules() + File.separator + className + ".java")));
 					template.merge(context, writer);
-				}else{
+				}
+				else
+				{
 					template = velocityEngine.getTemplate("./src/main/resources/templates/ScheduleLoader.java.vtl");
 					writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToGenerateSchedules() + File.separator + className + ".java")));
 					template.merge(context, writer);
 				}
 				writer.flush();
 				writer.close();
+				logger.warn("Generated Child Loder " + className);
 			}
 			catch(Exception e){
 				e.printStackTrace();
@@ -122,14 +137,17 @@ public class FrameworkGenerator
 			context.put("Import", Constants.packageName + "." + root);
 		}
 		context.put("Root", root);
-		try {
+		String className = "ParentInfoWrapper.java";
+		try 
+		{
 			Template template = velocityEngine.getTemplate("./src/main/resources/templates/ParentInfoWrapper.java.vtl");
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToParentInfoWrapper() + File.separator +"ParentInfoWrapper.java")));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToParentInfoWrapper() + File.separator + className)));
 			template.merge(context, writer);
 			writer.flush();
 			writer.close();
-		} catch (IOException e) {
-
+			logger.warn("Generated Parent Loder " + className);
+		} 
+		catch (IOException e) {
 		}
 	}
 	

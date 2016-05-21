@@ -147,8 +147,11 @@ public class AutomationHelper
 		
 		InvocationResult result = invoker.execute(request);
 		
-		if (result.getExitCode() != 0) {
-			throw new IllegalStateException("archetype:generate failed.");
+		if (result.getExitCode() != 0) 
+		{
+			logger.warn("Maven Project Creation failure" + result.getExitCode());
+			//throw new IllegalStateException("archetype:generate failed.");
+			return;
 		}
 		logger.warn("Project generated successfully : " + projectSetting.getProjectName());
 		
@@ -166,15 +169,17 @@ public class AutomationHelper
 		//request.setGoals( Collections.singletonList( "install" ) );
 		request.setGoals( Arrays.asList( "install", "-DskipTests=true" ) );
 		Invoker invoker = new DefaultInvoker();
-		
+
 		setMavenHome(invoker); // Setting Maven Home(if wrongly set)
-		
-		InvocationResult result = invoker.execute( request );
 		logger.warn("-----------------------------");
 		logger.warn("Building Maven project");
-		logger.warn("-----------------------------");
-		if (result.getExitCode() != 0) {
-			throw new IllegalStateException("maven build failed.");
+		logger.warn("-----------------------------");		
+		InvocationResult result = invoker.execute( request );
+
+		if (result.getExitCode() != 0) 
+		{
+			logger.warn("Maven Build failure" + result.getExitCode());
+			//throw new IllegalStateException("maven build failed.");
 		}
 	}
 	

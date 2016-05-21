@@ -93,7 +93,7 @@ public class StartAutomation
 		
 		if(createTable)
 		{
-			logger.warn("Creating Tables in schema");
+			logger.warn("Creating Tables in database");
 			XapDBRoutine.initializeDBRoutine(request.getDatabaseType(), request.getTnsEntry(), request.getUserName(), request.getPassword());
 			
 			if(XapDBRoutine.testAndValidateDBConnection())
@@ -107,8 +107,10 @@ public class StartAutomation
 			}
 		}
 		
-		// Last Step = > Build Maven project again
+		// Build Maven project again
 		autoHelper.buildMavenProject();
+		
+		// Parse Input file using above created Framework & Insert
 		
 	}
 

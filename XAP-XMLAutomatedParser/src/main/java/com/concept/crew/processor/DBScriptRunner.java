@@ -10,10 +10,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.log4j.Logger;
+
 import com.concept.crew.dao.XapDBRoutine;
 import com.concept.crew.util.FrameworkSettings;
 
-public class DBScriptRunner {
+public class DBScriptRunner 
+{
+	private static Logger 		logger 			= Logger.getLogger(DBScriptRunner.class);
 
 	private FrameworkSettings projectSetting;
 
@@ -22,22 +26,26 @@ public class DBScriptRunner {
 		this.projectSetting = projectSetting;
 	}
 
-	public void executeScripts(){
+	public void executeScripts()
+	{
 		Connection conn = XapDBRoutine.getConnection();
 		Statement stat  = null;
 		File sqlFile = getSqlFile(new File(projectSetting.getResourcePath()));
 		
-		if(sqlFile == null){
-			System.out.println("SQL file not generated yet");
+		if(sqlFile == null)
+		{
+			logger.warn("SQL file not generated, hence Skipping");
 			return;
 		}
 		
-		try {
+		try 
+		{
 			BufferedReader br   = new BufferedReader(new FileReader(projectSetting.getResourcePath()+"/"+sqlFile));
 			StringBuffer sb 	= new StringBuffer();
 			String s            = new String();
 			
-			while ((s = br.readLine()) != null) {
+			while ((s = br.readLine()) != null) 
+			{
 				sb.append(s);
 			}
 			br.close();
@@ -53,10 +61,15 @@ public class DBScriptRunner {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (SQLException e) 
+		{
+			logger.warn("Database Exception while executing script`");
 			e.printStackTrace();
-		} finally{
-			if(stat != null){
+		} 
+		finally
+		{
+			if(stat != null)
+			{
 				try {
 					stat.close();
 					
@@ -83,7 +96,7 @@ public class DBScriptRunner {
 			String[] list  = resourcePath.list(filter);
 			
 			if(list == null || list.length == 0){
-				System.out.println("no .sql file found");
+				logger.warn("no .sql file found");
 				return null;
 			}
 			
@@ -95,11 +108,11 @@ public class DBScriptRunner {
 	private void executeDropStatments(Statement stat, String[] queries){
 		for (String query : queries) {
 			if (!query.trim().equals("") && query.contains("DROP")) {
-				System.out.println("DDL to be execute --> " + query);
+				logger.warn("DDL to be execute --> " + query);
 				try {
 					stat.executeUpdate(query);
 				} catch (SQLException e) {
-					System.out.println("DDL not found in DB...");
+					logger.warn("DDL not found in DB...");
 				}
 			}
 		}
@@ -108,7 +121,7 @@ public class DBScriptRunner {
 	private void createparentTables(Statement stat, String[] queries) throws SQLException{
 		for (String query : queries) {
 			if (!query.trim().equals("") && !query.contains("FOREIGN") && !query.contains("DROP")) {
-				System.out.println("DDL to be execute --> " + query);
+				logger.warn("DDL to be execute --> " + query);
 				stat.executeUpdate(query);
 			}
 		}
@@ -117,7 +130,7 @@ public class DBScriptRunner {
 	private void creatChildTables(Statement stat, String[] queries) throws SQLException{
 		for (String query : queries) {
 			if (!query.trim().equals("") && query.contains("FOREIGN")) {
-				System.out.println("DDL to be execute --> " + query);
+				logger.warn("DDL to be execute --> " + query);
 				stat.executeUpdate(query);
 			}
 		}

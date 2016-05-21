@@ -7,12 +7,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import org.apache.derby.drda.NetworkServerControl;
+import org.apache.log4j.Logger;
 
 import com.concept.crew.util.Constants;
 import com.concept.crew.util.Constants.DatabaseType;
 
-public class XapDBRoutine {
-	
+public class XapDBRoutine 
+{
+	private static Logger 		logger 			= Logger.getLogger(XapDBRoutine.class);	
 	private static String DB_DRIVER ;
 	private static String DB_CONNECTION;
 	private static String DB_USER;
@@ -61,22 +63,22 @@ public class XapDBRoutine {
 		boolean connected = false;
 		if(DB_DRIVER == null)
 		{
-			System.out.println("Select Database Type [Oracle | SQL Server]");
+			logger.warn("Select Database Type [Oracle | SQL Server]");
 			return false;
 		}
 		if(DB_CONNECTION == null)
 		{
-			System.out.println("Enter correct TNS Entry for database");
+			logger.warn("Enter correct TNS Entry for database");
 			return false;
 		}
 		if(DB_USER == null)
 		{
-			System.out.println("Dabtase user can't be empty");
+			logger.warn("Dabtase user can't be empty");
 			return false;
 		}
 		if(DB_PASSWORD == null)
 		{
-			System.out.println("Dabtase password can't be empty");
+			logger.warn("Dabtase password can't be empty");
 			return false;
 		}
 		
@@ -99,7 +101,7 @@ public class XapDBRoutine {
 			
 			if(conn != null)
 			{
-				System.out.println("Connection to DB successful");
+				logger.warn("Connection to DB successful");
 				connected = true;
 			}
 		} catch (ClassNotFoundException e) 
