@@ -1,13 +1,12 @@
-package com.concept.crew.dao.loader.raw;
+package com.concept.crew.dao.loader;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 import com.concept.crew.dao.loaderUtil.AbstractDataLoader;
-import com.concept.crew.info.jaxb.$Info;
-import com.concept.crew.info.jaxb.Instrument;
-import com.concept.crew.info.raw.InstrumentRaw;
+import $Import;
+import com.concept.crew.info.raw.ParentInfoWrapper;
 import com.concept.crew.util.CollectionsUtil;
 import com.concept.crew.util.GeneralUtil;
 import com.concept.crew.util.StatementHelper;
@@ -27,22 +26,18 @@ public final class $ClassName extends AbstractDataLoader
 	/*
 	 * For inserting into Database
 	 */
-	public int prepare(InstrumentRaw rawBond, 
-					   PreparedStatement statement) 
-							   					throws SQLException 
+	public int prepare(ParentInfoWrapper parentInfo, PreparedStatement statement) throws SQLException 
 	{
-		Instrument parentInfo = rawBond.getInstrument();
+		$Root parentInfo = parentInfo.get$Root();
 
 		int total = 0;
 
 		List<$Info> scheduleList = parentInfo.get$Info();
 		
-		for (int i = 0; CollectionsUtil.isNotEmpty(scheduleList) && i < scheduleList.size(); i++) 
-		{
+		for (int i = 0; CollectionsUtil.isNotEmpty(scheduleList) && i < scheduleList.size(); i++){
 			$Info schedule = scheduleList.get(i);
 
-			if (GeneralUtil.isNotNull(schedule)) 
-			{
+			if (GeneralUtil.isNotNull(schedule)){
 				total++;
 				int index = 1;
 				#foreach( $column in $columnList )
