@@ -43,21 +43,6 @@ public class AutomationHelper
 		this.projectSetting = projectSetting;
 	}
 
-	private void runProcess(String command) throws Exception {
-	    Process pro = Runtime.getRuntime().exec(command, null, new File(projectSetting.getCompilationPath()));	    
-	    pro.waitFor();
-	    System.out.println("compilation completed " + pro.exitValue());
-	  }
-
-	 public void  compileJaxbInfos(){
-	    try {
-	      runProcess("javac *.java");
-	    } catch (Exception e) {
-	      e.printStackTrace();
-	    }
-	  }
-	 
-	 
 	 public static void copyFiles(){
 		 File srcDir = new File("D:\\XAP Workspace\\XAP-XMLAutomatedParser\\src\\main\\java\\com\\concept\\crew\\info\\jaxb");
 		 
@@ -166,7 +151,6 @@ public class AutomationHelper
 	{
 		InvocationRequest request = new DefaultInvocationRequest();
 		request.setPomFile(new File(projectSetting.getPomPath()));
-		//request.setGoals( Collections.singletonList( "install" ) );
 		request.setGoals( Arrays.asList( "install", "-DskipTests=true" ) );
 		Invoker invoker = new DefaultInvoker();
 
@@ -375,8 +359,7 @@ public class AutomationHelper
 		String destDirectory = Constants.mavenProjectPath;
 		
 		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource(zipFilePath).getFile());
-		
+		File file = new File(classLoader.getResource(zipFilePath).getFile());		
 		
         File destDir = new File(destDirectory);
         if (!destDir.exists()) {

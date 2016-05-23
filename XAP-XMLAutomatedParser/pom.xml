@@ -45,6 +45,13 @@
          <version>1.0</version>
          <systemPath>${basedir}\src\lib\ojdbc6.jar</systemPath>
     </dependency>
+    <dependency>
+         <groupId>ConceptCrewUtil</groupId>
+         <artifactId>ConceptCrewUtil</artifactId>
+         <scope>system</scope>
+         <version>1.0</version>
+         <systemPath>${basedir}\src\lib\ConceptCrewUtil-1.0.jar</systemPath>
+    </dependency>
      <dependency>
 		<groupId>log4j</groupId>
 		<artifactId>log4j</artifactId>
