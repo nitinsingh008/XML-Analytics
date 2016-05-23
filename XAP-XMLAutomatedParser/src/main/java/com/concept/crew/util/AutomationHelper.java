@@ -31,11 +31,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.google.common.io.Files;
+
 public class AutomationHelper 
 {
 	private static Logger 		logger 			= Logger.getLogger(AutomationHelper.class);
 
 	private FrameworkSettings projectSetting = null; 
+	private static Boolean isDependancyAdded = Boolean.FALSE;
 
 	  public AutomationHelper(FrameworkSettings projectSetting) 
 	  {
@@ -150,10 +153,15 @@ public class AutomationHelper
 	public void buildMavenProject() throws MavenInvocationException
 	{
 		InvocationRequest request = new DefaultInvocationRequest();
+		
+		if(!isDependancyAdded){
+			PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(),"ConceptCrewUtil", "ConceptCrewUtil", "1.0","ConceptCrewUtil-1.0.jar");
+			PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(),"ojdbc6", "ojdbc6", "1.0","ojdbc6.jar");
+			isDependancyAdded = Boolean.TRUE;
+		}
 		request.setPomFile(new File(projectSetting.getPomPath()));
 		request.setGoals( Arrays.asList( "install", "-DskipTests=true" ) );
 		Invoker invoker = new DefaultInvoker();
-
 		setMavenHome(invoker); // Setting Maven Home(if wrongly set)
 		logger.warn("-----------------------------");
 		logger.warn("Building Maven project");
@@ -359,8 +367,8 @@ public class AutomationHelper
 		String destDirectory = Constants.mavenProjectPath;
 		
 		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource(zipFilePath).getFile());		
-		
+		//File file = new File(classLoader.getResource(zipFilePath).getFile());		
+		File file = new File("D:\\XAP Workspace\\concept-XML-analysis\\target\\classes\\apache-maven-3.2.2.zip");
         File destDir = new File(destDirectory);
         if (!destDir.exists()) {
             destDir.mkdir();
@@ -404,5 +412,49 @@ public class AutomationHelper
         }
         bos.close();
     }	
-	
+    
+    public void copyUtilityJars(){
+    	File targetDir = new File(projectSetting.getPathToUtilityJar());
+    	if(!targetDir.exists()){
+    		targetDir.mkdirs();
+    	}
+    	
+    	File sourceDir = new File("./src/lib");
+    	 if(sourceDir.isDirectory()){
+			 File[] content = sourceDir.listFiles();
+			 for(int i = 0; i < content.length; i++) {
+				 if(content[i].getName().contains(".jar")){
+					targetDir = new File(projectSetting.getPathToUtilityJar()+ File.separator+ content[i].getName());
+					try {
+						Files.copy(content[i].getAbsoluteFile(), targetDir.getAbsoluteFile());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				 }				  
+			 }			 
+		 }	
+    }
+    
+    public void doChoreOperations(){
+    	File sourceDir = new File("./src/main/java/com/conceptCrew/loaderUtil");
+    	File targetDir = new File(projectSetting.getPathToLoaderType());
+    	
+    	if(!targetDir.exists()){
+    		targetDir.mkdirs();
+    	}
+    	
+    	 if(sourceDir.isDirectory()){
+			 File[] content = sourceDir.listFiles();
+			 for(int i = 0; i < content.length; i++) {
+				 if(content[i].getName().contains(".java")){
+					targetDir = new File(projectSetting.getPathToLoaderType()+ File.separator+ content[i].getName());
+					try {
+						Files.copy(content[i].getAbsoluteFile(), targetDir.getAbsoluteFile());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				 }				  
+			 }			 
+		 }	
+    }
 }

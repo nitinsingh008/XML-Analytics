@@ -47,8 +47,13 @@ public class JaxbTableGenerator extends TableGenerator
 					continue;
 				
 				column.setDataType(sqlDataType(fieldType, typed, dbType));
+				column.setOriginalDataType(fieldType);
 				String methodName = column.getName().substring(0, 1).toUpperCase()+column.getName().substring(1);
-				column.setGetterName("get"+methodName+"()");
+				if("Boolean".equals(fieldType)){
+					column.setGetterName("is"+methodName+"()");
+				}else{
+					column.setGetterName("get"+methodName+"()");
+				}				
 				column.setSetterName("set"+methodName+"()");
 				tableMap.put(currTableName, column);
 			}

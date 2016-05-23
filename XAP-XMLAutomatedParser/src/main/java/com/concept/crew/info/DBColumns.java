@@ -8,6 +8,7 @@ public class DBColumns
 	private int position;
 	private String getterName;
 	private String setterName;
+	private String originalDataType;
 	
 	public String getName() {
 		return name;
@@ -46,6 +47,13 @@ public class DBColumns
 	}
 	public void setSetterName(String setterName) {
 		this.setterName = setterName;
+	}	
+	
+	public String getOriginalDataType() {
+		return originalDataType;
+	}
+	public void setOriginalDataType(String originalDataType) {
+		this.originalDataType = originalDataType;
 	}
 	@Override
 	public String toString() {

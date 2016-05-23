@@ -10,11 +10,13 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
 import com.concept.crew.info.DBColumns;
+import com.concept.crew.util.AutomationHelper;
 import com.concept.crew.util.Constants;
 import com.concept.crew.util.FrameworkSettings;
 import com.google.common.collect.ArrayListMultimap;
@@ -31,8 +33,9 @@ public class FrameworkGenerator
 	private static String root;
 	private static String postFix;
 	private static Boolean isDelimited;
+	private static AutomationHelper helper;
 	
-	public static void initialize(FrameworkSettings setting, Multimap<String, DBColumns> map, String rootNode, String tablePostFix, Boolean isDelimitedReq)	
+	public static void initialize(FrameworkSettings setting, Multimap<String, DBColumns> map, String rootNode, String tablePostFix, Boolean isDelimitedReq, AutomationHelper autoHelper)	
 	{
 		velocityEngine = new VelocityEngine();
 		velocityEngine.init();       
@@ -41,18 +44,46 @@ public class FrameworkGenerator
 		root = rootNode;
 		postFix = tablePostFix;
 		isDelimited = isDelimitedReq;
+		helper = autoHelper;
 	}
 	
-	public static void generateAll()
+	public static void generateAll() throws MavenInvocationException
 	{
 		logger.warn("----------------------------------------");
 		logger.warn("Generating Loader Framework Code");
 		logger.warn("----------------------------------------");
-		generateSchedule();
 		generateParentWrapper();
+		generateEssentials();
+		helper.buildMavenProject();
+		generateSchedule();	
+		
 		generateLoaderType();
 		generateLoadSaveProcessor();
 		logger.warn("Loader Framework Code ready");
+	}
+	
+	public static void generateEssentials(){
+		Template template = null;
+		BufferedWriter writer = null;
+		context = null;
+		context = new VelocityContext();
+		File scheduleDir = new File(projectSetting.getPathToLoaderType());
+		if (!scheduleDir.exists()) {
+			scheduleDir.mkdirs();
+		}
+		context.put("Class", "ParentInfoWrapper");
+		
+		try {
+			template = velocityEngine.getTemplate("./src/main/resources/templates/AbstractDataLoader.java.vtl");
+			writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToGenerateSchedules()+ File.separator +  "AbstractDataLoader.java")));
+			template.merge(context, writer);
+			
+			template = velocityEngine.getTemplate("./src/main/resources/templates/IDataDomainLoader.java.vtl");
+			writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToGenerateSchedules() + File.separator + "IDataDomainLoader.java")));
+			template.merge(context, writer);			
+		} catch (IOException e) {
+		}
+				
 	}
 	
 	public static void generateSchedule() {
@@ -230,7 +261,7 @@ public class FrameworkGenerator
 		tableMap.put("Ratings", column);
 		tableMap.put("Redemption", column);
 		tableMap.put("ObjectFactory", column);
-		initialize(fg, tableMap, "Instrument", "raw", false);
+		//initialize(fg, tableMap, "Instrument", "raw", false);
 		
 		//generateParentWrapper();
 		

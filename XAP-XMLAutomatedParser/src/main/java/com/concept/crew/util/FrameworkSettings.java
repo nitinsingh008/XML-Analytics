@@ -19,6 +19,7 @@ public class FrameworkSettings {
 	private String pathToParentInfoWrapper;
 	private String pathToLoaderType;
 	private String defaultConceptCrewPath;
+	private String pathToUtilityJar;
 	
 	public FrameworkSettings(String projectName) {
 		super();
@@ -35,7 +36,8 @@ public class FrameworkSettings {
 		this.pathToGenerateSchedules 	= this.defaultConceptCrewPath + File.separator + "dao" + File.separator + "loader";
 		this.pathToLoadSaveProcessor	= this.defaultConceptCrewPath + File.separator + "processor";
 		this.pathToParentInfoWrapper	= this.defaultConceptCrewPath + File.separator + "info" + File.separator + "raw" ; 
-		this.pathToLoaderType			= this.defaultConceptCrewPath + File.separator + "dao" + File.separator + "loaderUtil" ;	
+		this.pathToLoaderType			= this.defaultConceptCrewPath + File.separator + "dao" + File.separator + "loaderUtil" ;
+		this.pathToUtilityJar			= mavenProjectPath + "/"+ projectName + "/src/lib";
 	}
 
 	public String getProjectName() {
@@ -93,9 +95,9 @@ public class FrameworkSettings {
 	public String getDefaultConceptCrewPath() {
 		return defaultConceptCrewPath;
 	}
-	
-	
-	
-	
+
+	public String getPathToUtilityJar() {
+		return pathToUtilityJar;
+	}
 	
 }

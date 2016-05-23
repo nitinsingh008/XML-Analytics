@@ -71,7 +71,7 @@ public class StartAutomation
 			logger.warn("Generating JAXB Objects in new maven project");		
 			JaxbInfoGenerator jaxbGenerator = new JaxbInfoGenerator(projectSetting);
 			jaxbGenerator.generateInfos(inputMetaDataFile.getAbsolutePath());
-			
+			autoHelper.copyUtilityJars();
 			//3. Build Maven project
 			autoHelper.buildMavenProject();
 		}
@@ -87,7 +87,8 @@ public class StartAutomation
 			{
 				isDelimited = Boolean.TRUE;
 			}
-			FrameworkGenerator.initialize(projectSetting, tableInfo, rootNode, request.getDatabaseTablePostFix(), isDelimited);
+			autoHelper.doChoreOperations();
+			FrameworkGenerator.initialize(projectSetting, tableInfo, rootNode, request.getDatabaseTablePostFix(), isDelimited, autoHelper);
 			FrameworkGenerator.generateAll();
 		}
 		
