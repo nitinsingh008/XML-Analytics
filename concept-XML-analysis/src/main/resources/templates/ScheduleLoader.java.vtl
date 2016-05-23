@@ -14,7 +14,7 @@ import com.concept.crew.util.StatementHelper;
 public final class $ClassName extends AbstractDataLoader 
 {
 
-	private static final String INSERT = QueryReaderUtil.getTextFileContents(" $Info ");
+	private static final String INSERT = QueryReaderUtil.getTextFileContents("$Info");
 
 	@Override
 	public String getWriteQuery() 
@@ -43,8 +43,10 @@ public final class $ClassName extends AbstractDataLoader
 				#foreach( $column in $columnList )
 					#if( $column.getDataType() == "NUMBER" )
 			    StatementHelper.setLong(statement, index++, schedule.$column.getGetterName() );
+			    	#elseif($column.getDataType() == "DOUBLE" )
+			    StatementHelper.setLong(statement, index++, schedule.$column.getGetterName().longValue() );
 					#elseif( $column.getDataType() == "DATE" )
-			    StatementHelper.setDate(statement, index++, schedule.$column.getGetterName() );
+			    StatementHelper.setDate(statement, index++, getSqlDateFromXMLGregorianCalendar(schedule.$column.getGetterName() ));
 					#else
 				StatementHelper.setString(statement, index++, schedule.$column.getGetterName() );
 					#end
