@@ -18,6 +18,10 @@ public class Constants
 	
 	public static final String logFilePath       = mavenProjectPath + "/" + "Logs" + "/" + "xap.log";
 	
+	
+	// Database Specific
+	public static final String databaseLoc     = mavenProjectPath + "/" + "xapDB";
+	
 	public enum DatabaseType
 	{
 		ORACLE,

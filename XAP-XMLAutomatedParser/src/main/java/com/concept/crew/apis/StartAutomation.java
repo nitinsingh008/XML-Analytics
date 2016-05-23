@@ -94,7 +94,7 @@ public class StartAutomation
 		if(createTable)
 		{
 			logger.warn("Creating Tables in database");
-			XapDBRoutine.initializeDBRoutine(request.getDatabaseType(), request.getTnsEntry(), request.getUserName(), request.getPassword());
+			XapDBRoutine.initializeDBRoutine(request.getDatabaseType(), request.getTnsEntry(), request.getUserName(), request.getPassword(),projectSetting);
 			
 			if(XapDBRoutine.testAndValidateDBConnection())
 			{

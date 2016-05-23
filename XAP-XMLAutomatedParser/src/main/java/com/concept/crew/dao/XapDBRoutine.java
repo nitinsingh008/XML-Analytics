@@ -1,5 +1,6 @@
 package com.concept.crew.dao;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.sql.Connection;
@@ -10,21 +11,24 @@ import org.apache.derby.drda.NetworkServerControl;
 import org.apache.log4j.Logger;
 
 import com.concept.crew.util.Constants;
+import com.concept.crew.util.FrameworkSettings;
 import com.concept.crew.util.Constants.DatabaseType;
 
 public class XapDBRoutine 
 {
 	private static Logger 		logger 			= Logger.getLogger(XapDBRoutine.class);	
-	private static String DB_DRIVER ;
-	private static String DB_CONNECTION;
-	private static String DB_USER;
-	private static String DB_PASSWORD ;
-	private static Connection conn ;
+	private static String 		DB_DRIVER ;
+	private static String 		DB_CONNECTION;
+	private static String 		DB_USER;
+	private static String 		DB_PASSWORD ;
+	private static Connection 	conn ;
+	private FrameworkSettings projectSetting;
 	
 	public static void initializeDBRoutine(String dbType, 
 										   String jdbcUrl, 
 										   String user, 
-										   String password) 
+										   String password,
+										   FrameworkSettings projectSetting) 
 	{
 		
 		if(DatabaseType.ORACLE.toString().equals(dbType))
@@ -37,15 +41,29 @@ public class XapDBRoutine
 		}
 		else if(DatabaseType.JavaDB_DERBY.toString().equals(dbType))
 		{
-		    // -------------------------------------------
-		    // URL format is
-		    // jdbc:derby:<local directory to save data> //DB_DRIVER = "jdbc:derby:" +  dbLocation + ";create=true";
-		    // -------------------------------------------
-		   String dbLocationName = Constants.mavenProjectPath + "/" + "database";			
 			DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
-			user 	 = "";
-			password = "";
-			jdbcUrl = "jdbc:derby:" + dbLocationName + ";create=true";
+
+			File xapDatabaseLocation =  new File(Constants.databaseLoc);
+			if(!xapDatabaseLocation.exists())
+			{
+				xapDatabaseLocation.mkdirs();
+			}
+		    // -------------------------------------------
+		    // URL format is		
+			// 'jdbc:derby:C:\XAP\xapDatabase; create=true; user=username; password=password';
+		    // -------------------------------------------
+			String dbName  = projectSetting.getProjectName();
+			
+			if(user != null && user != "" && password != null )
+			{
+				jdbcUrl = "jdbc:derby:" + xapDatabaseLocation + "/" + dbName  + ";create=true; user= " + user + "; password=" + password;
+			}
+			else
+			{
+				user 	 = "";
+				password = "";
+				jdbcUrl = "jdbc:derby:" + xapDatabaseLocation + "/" + dbName + ";create=true";
+			}
 		}
 		else
 		{
@@ -138,21 +156,14 @@ public class XapDBRoutine
 		System.out.println(dbConnected);
 	}*/
 	
-/*	public static void main(String args[])
+	public static void main(String args[])
 	{
-		XapDBRoutine.initializeDBRoutine(DatabaseType.JavaDB_DERBY.toString(), "TNSEntry", "username", "password");
+		FrameworkSettings projectSetting = new FrameworkSettings("firstOne");
+		XapDBRoutine.initializeDBRoutine(DatabaseType.JavaDB_DERBY.toString(), "AnyURL", "username", "password",projectSetting);
 		boolean dbConnected = XapDBRoutine.testAndValidateDBConnection();
+		
 		System.out.println(dbConnected);
-	}*/
-	
-	public static void main(String args[]) throws Exception
-	{
-	   NetworkServerControl nsc = new NetworkServerControl(InetAddress.getByName("localhost"), 1527);
-	   nsc.start(new PrintWriter(System.out, true));
-
-	   Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-
-	   Connection c = DriverManager.getConnection("jdbc:derby:memory:testdb;create=true");
-	   System.out.println("working");
 	}
+	
+
 }
