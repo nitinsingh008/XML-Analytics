@@ -32,14 +32,12 @@ public final class $ClassName extends AbstractDataLoader
 
 		int index = 1;
 		#foreach( $column in $columnList )
-		#if( $column.getDataType() == "NUMBER" )
-	    StatementHelper.setLong(statement, index++, parentInfo.$column.getGetterName() );
-	    #elseif( $column.getDataType() == "DOUBLE" )
-	    StatementHelper.setLong(statement, index++, schedule.$column.getGetterName().longValue() );
-		#elseif( $column.getDataType() == "DATE" )
-		StatementHelper.setDate(statement, index++, getSqlDateFromXMLGregorianCalendar(parentInfo.$column.getGetterName() ));
+		#if( $column.getOriginalDataType() == "String" || $column.getOriginalDataType() == "Boolean")
+		 StatementHelper.setString(statement, index++, schedule.$column.getGetterName() );
+		#elseif( $column.getOriginalDataType() == "XMLGregorianCalendar" )
+		 StatementHelper.setDate(statement, index++, getSqlDateFromXMLGregorianCalendar(schedule.$column.getGetterName() ));
 		#else
-		StatementHelper.setString(statement, index++, parentInfo.$column.getGetterName() );
+		 StatementHelper.setLong(statement, index++, schedule.$column.getGetterName().longValue() );
 		#end
 		#end
 		
