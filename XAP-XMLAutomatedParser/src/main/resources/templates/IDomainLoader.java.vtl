@@ -1,0 +1,14 @@
+package com.concept.crew.dao.loaderUtil;
+
+import java.util.List;
+
+import com.concept.crew.dao.loaderUtil.IDataDomainLoader;
+
+public interface $InterfaceName 
+{
+	public List<Class<? extends IDataDomainLoader>> getDomainReaders();
+
+	public List<Class<? extends IDataDomainLoader>> getDomainWriters();
+
+	public String getOrderBy();
+}

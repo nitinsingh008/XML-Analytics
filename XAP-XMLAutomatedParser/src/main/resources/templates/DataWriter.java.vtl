@@ -1,0 +1,18 @@
+package com.concept.crew.common;
+import java.util.Collection;
+
+import com.concept.crew.common.DataLoader;
+import com.concept.crew.common.DataLoader.DbWriter;
+import com.concept.crew.info.raw.ParentInfoWrapper;
+
+public class $ClassName {
+
+	public DataWriter(){
+		
+	}
+	public Collection<ParentInfoWrapper> write(Collection<ParentInfoWrapper> raw) {
+		DbWriter writer = DataLoader.createWriter();
+		writer.writeData(raw);
+		return raw;
+	}
+}

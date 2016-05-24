@@ -3,23 +3,20 @@ package com.concept.crew.processor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import org.apache.log4j.Logger;
-import com.concept.crew.dao.loaderUtil.DataWriter;
+import com.concept.crew.common.DataWriter;
 import $Import;
 import com.concept.crew.info.raw.ParentInfoWrapper;
-import com.concept.crew.util.QueryReaderUtil;
+import com.concept.crew.dao.loaderUtil.QueryReaderUtil;
 
 
 public class LoadSaveProcessor 
 {
-	private static final Logger log = Logger.getLogger(LoadSaveProcessor.class);
 	private static List<Integer> uniqueKeys = new ArrayList<Integer>();
 	/**
 	 * Iterate over ROOT bonds, transform them and persist all Bonds in RAW
 	 * tables
 	 */
 	public static void saveData(List<$Root> records) throws Exception {
-		log.info("Start Processing");
 
 		Collection<ParentInfoWrapper> wrapperList = new ArrayList<ParentInfoWrapper>();
 
