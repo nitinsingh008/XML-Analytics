@@ -54,9 +54,7 @@ public class FrameworkGenerator
 		logger.warn("----------------------------------------");
 		generateParentWrapper();
 		generateEssentials();
-		helper.buildMavenProject();
 		generateSchedule();	
-		
 		generateLoaderType();
 		generateLoadSaveProcessor();
 		logger.warn("Loader Framework Code ready");
@@ -71,19 +69,62 @@ public class FrameworkGenerator
 		if (!scheduleDir.exists()) {
 			scheduleDir.mkdirs();
 		}
-		context.put("Class", "ParentInfoWrapper");
+		context.put("ClassName", "AbstractDataLoader");
 		
 		try {
 			template = velocityEngine.getTemplate("./src/main/resources/templates/AbstractDataLoader.java.vtl");
-			writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToGenerateSchedules()+ File.separator +  "AbstractDataLoader.java")));
+			writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToLoaderType()+ File.separator +  "AbstractDataLoader.java")));
 			template.merge(context, writer);
+			writer.flush();
+			writer.close();
 			
+			context.put("InterfaceName", "IDataDomainLoader");
 			template = velocityEngine.getTemplate("./src/main/resources/templates/IDataDomainLoader.java.vtl");
-			writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToGenerateSchedules() + File.separator + "IDataDomainLoader.java")));
-			template.merge(context, writer);			
+			writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToLoaderType() + File.separator + "IDataDomainLoader.java")));
+			template.merge(context, writer);
+			writer.flush();
+			writer.close();
+			
+			context.put("InterfaceName", "IDomainLoader");
+			template = velocityEngine.getTemplate("./src/main/resources/templates/IDomainLoader.java.vtl");
+			writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToLoaderType() + File.separator + "IDomainLoader.java")));
+			template.merge(context, writer);
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 		}
-				
+			
+		File commonDir = new File(projectSetting.getPathToCommon());
+		if (!commonDir.exists()) {
+			commonDir.mkdirs();
+		}
+		context = null;
+		context = new VelocityContext();
+		context.put("ClassName", "DataWriter");		
+		try {
+			template = velocityEngine.getTemplate("./src/main/resources/templates/DataWriter.java.vtl");
+			writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToCommon()+ File.separator +  "DataWriter.java")));
+			template.merge(context, writer);
+			writer.flush();
+			writer.close();
+			
+			context.put("ClassName", "DataLoader");		
+			template = velocityEngine.getTemplate("./src/main/resources/templates/DataLoader.java.vtl");
+			writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToCommon()+ File.separator +  "DataLoader.java")));
+			template.merge(context, writer);
+			writer.flush();
+			writer.close();
+			
+			context.put("ClassName", "DataWriterImpl");		
+			template = velocityEngine.getTemplate("./src/main/resources/templates/DataWriterImpl.java.vtl");
+			writer = new BufferedWriter(new FileWriter(new File(projectSetting.getPathToCommon()+ File.separator +  "DataWriterImpl.java")));
+			template.merge(context, writer);
+			writer.flush();
+			writer.close();
+			
+		} catch (IOException e) {
+		}
+		
 	}
 	
 	public static void generateSchedule() {
@@ -113,8 +154,6 @@ public class FrameworkGenerator
 					columns.setName(columnName.substring(0, 30));
 				}
 				columns.setName(columnName.substring(0, 1).toUpperCase() + columnName.substring(1));
-				// sb.append(columns.getName().toUpperCase()).append("\t\t").
-				// append(columns.getDataType().toUpperCase()).append(",\n");
 			}
 			
 			if(isDelimited){

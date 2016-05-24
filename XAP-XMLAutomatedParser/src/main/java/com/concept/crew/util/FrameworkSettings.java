@@ -20,6 +20,7 @@ public class FrameworkSettings {
 	private String pathToLoaderType;
 	private String defaultConceptCrewPath;
 	private String pathToUtilityJar;
+	private String pathToCommon;
 	
 	public FrameworkSettings(String projectName) {
 		super();
@@ -38,6 +39,7 @@ public class FrameworkSettings {
 		this.pathToParentInfoWrapper	= this.defaultConceptCrewPath + File.separator + "info" + File.separator + "raw" ; 
 		this.pathToLoaderType			= this.defaultConceptCrewPath + File.separator + "dao" + File.separator + "loaderUtil" ;
 		this.pathToUtilityJar			= mavenProjectPath + "/"+ projectName + "/src/lib";
+		this.pathToCommon				= this.defaultConceptCrewPath + File.separator + "common";
 	}
 
 	public String getProjectName() {
@@ -98,6 +100,10 @@ public class FrameworkSettings {
 
 	public String getPathToUtilityJar() {
 		return pathToUtilityJar;
+	}
+
+	public String getPathToCommon() {
+		return pathToCommon;
 	}
 	
 }

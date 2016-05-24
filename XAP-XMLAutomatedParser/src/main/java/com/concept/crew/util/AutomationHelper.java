@@ -436,7 +436,7 @@ public class AutomationHelper
     }
     
     public void doChoreOperations(){
-    	File sourceDir = new File("./src/main/java/com/conceptCrew/loaderUtil");
+    	File sourceDir = new File("./src/main/java/com/concept/crew/dao/loaderUtil");
     	File targetDir = new File(projectSetting.getPathToLoaderType());
     	
     	if(!targetDir.exists()){
