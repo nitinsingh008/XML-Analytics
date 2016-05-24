@@ -283,14 +283,10 @@ public abstract class TableGenerator
 			String fileName = null;
 			int columnCount = 0;
 			
-			fileName =  tableName.toUpperCase();
-			
 			if(tableSuffix != null && tableSuffix != ""){
-				fileName =  tableName.toUpperCase() + "_" + tableSuffix.toUpperCase() + ".sql";
-			}
-			else
-			{
-				fileName =  tableName.toUpperCase() + ".sql";
+				fileName =  tableName + "_" + tableSuffix + ".sql";
+			}else{
+				fileName =  tableName + ".sql";
 			}
 			logger.warn(fileName);
 			
