@@ -138,8 +138,8 @@ public class MavenHelper {
 		String destDirectory = Constants.mavenProjectPath;
 		
 		ClassLoader classLoader = getClass().getClassLoader();
-		//File file = new File(classLoader.getResource(zipFilePath).getFile());		
-		File file = new File("D:\\XAP Workspace\\concept-XML-analysis\\target\\classes\\apache-maven-3.2.2.zip");
+		File file = new File(classLoader.getResource(zipFilePath).getFile());		
+		//File file = new File("D:\\XAP Workspace\\concept-XML-analysis\\target\\classes\\apache-maven-3.2.2.zip");
         File destDir = new File(destDirectory);
         if (!destDir.exists()) {
             destDir.mkdir();
