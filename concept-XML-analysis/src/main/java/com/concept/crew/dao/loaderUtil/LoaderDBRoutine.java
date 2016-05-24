@@ -99,7 +99,6 @@ public class LoaderDBRoutine
 	
 		coreDBRoutine.executeQuery(queryToExecute, new ResultSetRowMapper<String>() 
 			{
-				@Override
 				public String mapRow(ResultSet result,int rowNum, String[] headers)
 						throws SQLException 
 				{

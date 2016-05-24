@@ -2,42 +2,48 @@ package com.concept.crew.dao.loader;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 
 import com.concept.crew.dao.loaderUtil.AbstractDataLoader;
 import $Import;
 import com.concept.crew.info.raw.ParentInfoWrapper;
 import com.concept.crew.util.CollectionsUtil;
-import com.concept.crew.util.GeneralUtil;
+import com.concept.crew.util.NumberUtil;
 import com.concept.crew.util.StatementHelper;
+import com.concept.crew.dao.loaderUtil.QueryReaderUtil;
 
 public final class $ClassName extends AbstractDataLoader 
 {
 
 	private static final String INSERT = QueryReaderUtil.getTextFileContents(" $Info ");
 
-	@Override
+	//@Override
 	public String getWriteQuery() 
 	{
 		return INSERT;
 	}
 
-	@Override
+	//@Override
 	/*
 	 * For inserting into Database
 	 */
 	public int prepare(ParentInfoWrapper parentInfo, PreparedStatement statement) throws SQLException 
 	{
-		$Root parentInfo = parentInfo.get$Root();
+		$Root record = parentInfo.get$Root();
 
 		int index = 1;
 		#foreach( $column in $columnList )
-		#if( $column.getOriginalDataType() == "String" || $column.getOriginalDataType() == "Boolean")
-		 StatementHelper.setString(statement, index++, schedule.$column.getGetterName() );
+		#if( $column.getOriginalDataType() == "String")
+		StatementHelper.setString(statement, index++, record.$column.getGetterName() );
+		#elseif( $column.getOriginalDataType() == "Boolean")
+		StatementHelper.setBoolean(statement, index++, record.$column.getGetterName() );
 		#elseif( $column.getOriginalDataType() == "XMLGregorianCalendar" )
-		 StatementHelper.setDate(statement, index++, getSqlDateFromXMLGregorianCalendar(schedule.$column.getGetterName() ));
-		#else
-		 StatementHelper.setLong(statement, index++, schedule.$column.getGetterName().longValue() );
+		StatementHelper.setDate(statement, index++, getSqlDateFromXMLGregorianCalendar(record.$column.getGetterName() ));
+		#elseif($column.getOriginalDataType() == "Long" )
+		StatementHelper.setLong(statement, index++, record.$column.getGetterName());
+		#elseif($column.getOriginalDataType() == "Double")
+		StatementHelper.setDouble(statement, index++, record.$column.getGetterName());
+		#elseif($column.getOriginalDataType() == "BigDecimal")
+		StatementHelper.setDouble(statement, index++, NumberUtil.convertToDouble( record.$column.getGetterName()));
 		#end
 		#end
 		

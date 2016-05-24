@@ -9,30 +9,32 @@ import $Import;
 import com.concept.crew.info.raw.ParentInfoWrapper;
 import com.concept.crew.util.CollectionsUtil;
 import com.concept.crew.util.GeneralUtil;
+import com.concept.crew.util.NumberUtil;
 import com.concept.crew.util.StatementHelper;
+import com.concept.crew.dao.loaderUtil.QueryReaderUtil;
 
 public final class $ClassName extends AbstractDataLoader 
 {
 
 	private static final String INSERT = QueryReaderUtil.getTextFileContents("$Info");
 
-	@Override
+	//@Override
 	public String getWriteQuery() 
 	{
 		return INSERT;
 	}
 
-	@Override
+	//@Override
 	/*
 	 * For inserting into Database
 	 */
 	public int prepare(ParentInfoWrapper parentInfo, PreparedStatement statement) throws SQLException 
 	{
-		$Root parentInfo = parentInfo.get$Root();
+		$Root record = parentInfo.get$Root();
 
 		int total = 0;
 
-		List<$Info> scheduleList = parentInfo.get$Info();
+		List<$Info> scheduleList = record.get$Info();
 		
 		for (int i = 0; CollectionsUtil.isNotEmpty(scheduleList) && i < scheduleList.size(); i++){
 			$Info schedule = scheduleList.get(i);
@@ -41,15 +43,19 @@ public final class $ClassName extends AbstractDataLoader
 				total++;
 				int index = 1;
 				#foreach( $column in $columnList )
-					#if( $column.getOriginalDataType() == "String" || $column.getOriginalDataType() == "Boolean")
+				#if( $column.getOriginalDataType() == "String")
 			    StatementHelper.setString(statement, index++, schedule.$column.getGetterName() );
 			    #elseif( $column.getOriginalDataType() == "Boolean")
 			     StatementHelper.setBoolean(statement, index++, schedule.$column.getGetterName() );
 			    #elseif( $column.getOriginalDataType() == "XMLGregorianCalendar" )
 			    StatementHelper.setDate(statement, index++, getSqlDateFromXMLGregorianCalendar(schedule.$column.getGetterName() ));
-					#else
-				StatementHelper.setLong(statement, index++, schedule.$column.getGetterName().longValue() );
-					#end
+				#elseif($column.getOriginalDataType() == "Long" )
+				StatementHelper.setLong(statement, index++, schedule.$column.getGetterName());
+				#elseif($column.getOriginalDataType() == "Double")
+				StatementHelper.setDouble(statement, index++, schedule.$column.getGetterName());
+				#elseif($column.getOriginalDataType() == "BigDecimal")
+				StatementHelper.setDouble(statement, index++, NumberUtil.convertToDouble( schedule.$column.getGetterName()));
+				#end
 				#end
 				
 				statement.addBatch();

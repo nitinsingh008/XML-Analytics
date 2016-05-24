@@ -182,7 +182,7 @@ public class HelloController {
 	@RequestMapping(value="/checkConnectivity",method = RequestMethod.POST)
 	public @ResponseBody String checkConnectivity(@RequestParam("DatabaseType") String databaseType, @RequestParam("tns") String tns,
 			@RequestParam("username") String userNamee,@RequestParam("password") String password){
-		XapDBRoutine.initializeDBRoutine(databaseType, tns, userNamee, password);
+		XapDBRoutine.initializeDBRoutine(databaseType, tns, userNamee, password, null);
 		if(XapDBRoutine.testAndValidateDBConnection()){
 			return "Connected";
 		}

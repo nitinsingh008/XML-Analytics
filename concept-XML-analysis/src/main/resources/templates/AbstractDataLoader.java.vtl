@@ -11,14 +11,14 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import com.concept.crew.dao.loaderUtil.raw.IDataDomainLoader;
+import com.concept.crew.dao.loaderUtil.IDataDomainLoader;
 import com.concept.crew.info.raw.ParentInfoWrapper;
 import com.concept.crew.util.GeneralUtil;
 import com.concept.crew.util.StringUtil;
 import com.concept.crew.util.ThreadManager;
 
 
-public abstract class AbstractDataLoader implements IDataDomainLoader 
+public abstract class $ClassName implements IDataDomainLoader 
 {
 
 	private static 	SimpleDateFormat yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd"); // e.g. <issueDate>2012-09-30</issueDate>
@@ -31,45 +31,33 @@ public abstract class AbstractDataLoader implements IDataDomainLoader
 	private int writerRecordCount = 0;
 
 	private ConcurrentMap<Long, ParentInfoWrapper> cache;
-
-
 	
-	@Override
 	public void setOrderBy(String orderBy) {
 		this.orderBy = orderBy;
 	}
 
-	@Override
 	public void setCache(ConcurrentMap<Long, ParentInfoWrapper> cache) {
 		this.cache = cache;
 	}
 
-
-	@Override
 	public String getWriteQuery() {
 		writeQuery = GeneralUtil.nvl(writeQuery, buildWriteQuery());
 		return writeQuery;
 	}
 
-	@Override
 	public List<List<String>> getWriterQueryParameters() {
 		writerQueryParameters = GeneralUtil.nvl(writerQueryParameters, new ArrayList<List<String>>());
 		return writerQueryParameters;
 	}
 
-
-
-	@Override
 	public int getWriterRecordCount() {
 		return writerRecordCount;
 	}
 
-	@Override
 	public int getReaderRecordCount() {
 		return readerRecordCount;
 	}
 
-	@Override
 	public void setParam(PreparedStatement statement, int rowNum, ParentInfoWrapper bond) throws SQLException {
 		ThreadManager.checkInterruption();
 		int prepared = prepare(bond, statement);
