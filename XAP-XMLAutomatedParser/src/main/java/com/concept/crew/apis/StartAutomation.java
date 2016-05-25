@@ -7,10 +7,11 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import com.concept.crew.dao.XapDBRoutine;
+import com.concept.crew.generator.GeneratorEngine;
 import com.concept.crew.info.DBColumns;
+import com.concept.crew.info.GenerateRequest;
 import com.concept.crew.processor.CsvTableGenerator;
 import com.concept.crew.processor.DBScriptRunner;
-import com.concept.crew.processor.FrameworkGenerator;
 import com.concept.crew.processor.JaxbTableGenerator;
 import com.concept.crew.processor.TableGenerator;
 import com.concept.crew.util.AutomationHelper;
@@ -88,8 +89,7 @@ public class StartAutomation
 				isDelimited = Boolean.TRUE;
 			}
 			autoHelper.doChoreOperations();
-			FrameworkGenerator.initialize(projectSetting, tableInfo, rootNode, request.getDatabaseTablePostFix(), isDelimited, autoHelper);
-			FrameworkGenerator.generateAll();
+			GeneratorEngine.generateAll(new GenerateRequest(projectSetting, tableInfo, rootNode, request.getDatabaseTablePostFix(), isDelimited));
 		}
 		
 		if(createTable)
