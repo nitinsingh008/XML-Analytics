@@ -42,9 +42,10 @@ public class AutomationHelper extends MavenHelper
 	}
 	
 	
-	public static String fetchRootNode(File xsdFile) throws ParserConfigurationException, SAXException, IOException
+	public static Pair<String, String> fetchRootNode(File xsdFile) throws ParserConfigurationException, SAXException, IOException
 	{
 		String mainElement = "";
+		String startingElement = "";
 		final Thread currentThread = Thread.currentThread();
 		final ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 		final InputStream inputStream = contextClassLoader.getResourceAsStream(xsdFile.getName());
@@ -53,7 +54,7 @@ public class AutomationHelper extends MavenHelper
 		DocumentBuilderFactory  docBuilderFactory 	= DocumentBuilderFactory.newInstance();
 		DocumentBuilder 		docBuilder 			= docBuilderFactory.newDocumentBuilder();
 		Document 				doc 				= docBuilder.parse(inputStream);
-
+		doc.getDocumentElement().normalize();
 		Element rootElement = doc.getDocumentElement();  // Will contain either xsd:schema or xsd:element
 		
 		NodeList children = rootElement.getChildNodes(); // List all Child
@@ -68,6 +69,7 @@ public class AutomationHelper extends MavenHelper
 	    		if (element.getTagName().contains("complexType")) 
 	    		{
 	    			System.out.println("Tag Name is : " + element.getTagName());
+	    			startingElement = element.getAttribute("name");
 	    			// Find 1st Child of COMPLEX element
 	    			NodeList complexChilds = element.getChildNodes(); // List all Child
 	    			for (int j = 0; j < complexChilds.getLength(); j++) 
@@ -90,7 +92,7 @@ public class AutomationHelper extends MavenHelper
 	    								 
 	    								 System.out.println("Tag Name is : " + targetElement.getAttribute("name"));
 	    								 mainElement = targetElement.getAttribute("name");
-	    								 return mainElement;
+	    								 return new Pair<String,String>(startingElement,mainElement);
 	    							 }
 	    						 }
 	    					 }
@@ -100,18 +102,7 @@ public class AutomationHelper extends MavenHelper
 	    	}
 	    }
 		
-		return mainElement;
-	}
-	
-	public <T> Class<T> getRootClass(File xsdFile) throws ParserConfigurationException, SAXException, IOException, ClassNotFoundException{
-		String rootElement = fetchRootNode(xsdFile);
-		String qualifiedName = Constants.packageName  +"."+rootElement;		
-		File file = new File(projectSetting.getPathToRootClass());
-		URL urlList[] = {file.toURI().toURL()};
-		URLClassLoader loader = new URLClassLoader(urlList);
-		Class<T> rootClass = (Class<T>) loader.loadClass(qualifiedName);
-		
-		return rootClass;		
+		return new Pair<String,String>(startingElement,mainElement);
 	}
 	
 	 public void copyUtilityJars(){
@@ -161,6 +152,7 @@ public class AutomationHelper extends MavenHelper
 	
 	public static void main(String args[]) throws Exception
 	{
+		String startingTag = null;
 		String mainElement = "";
 		final Thread currentThread = Thread.currentThread();
 		final ClassLoader contextClassLoader = currentThread.getContextClassLoader();
@@ -170,7 +162,7 @@ public class AutomationHelper extends MavenHelper
 		DocumentBuilderFactory  docBuilderFactory 	= DocumentBuilderFactory.newInstance();
 		DocumentBuilder 		docBuilder 			= docBuilderFactory.newDocumentBuilder();
 		Document 				doc 				= docBuilder.parse(inputStream);
-
+		doc.getDocumentElement().normalize();
 		Element rootElement = doc.getDocumentElement();  // Will contain either xsd:schema or xsd:element
 		
 		NodeList children = rootElement.getChildNodes(); // List all Child
@@ -185,7 +177,10 @@ public class AutomationHelper extends MavenHelper
 	    		if (element.getTagName().contains("complexType")) 
 	    		{
 	    			System.out.println("Tag Name is : " + element.getTagName());
-	    			// Find 1st Child of COMPLEX element
+	    			
+	    			startingTag = element.getAttribute("name");
+	    			System.out.println("Starting Element :  " + startingTag);
+	    			// Find 1st Child of COMPLEX element	    			
 	    			NodeList complexChilds = element.getChildNodes(); // List all Child
 	    			for (int j = 0; j < complexChilds.getLength(); j++) 
 	    			{
@@ -207,7 +202,7 @@ public class AutomationHelper extends MavenHelper
 	    								 
 	    								 System.out.println("Tag Name is : " + targetElement.getAttribute("name"));
 	    								 mainElement = targetElement.getAttribute("name");
-	    								 break;
+	    								return;
 	    							 }
 	    						 }
 	    					 }
@@ -216,6 +211,10 @@ public class AutomationHelper extends MavenHelper
 	    		}
 	    	}
 	    }
+	    
+	    Pair<String,String> pair = new Pair<String, String>(startingTag, mainElement);
+	    System.out.println("Starting Element : " + pair.getLeft());
+	    System.out.println("Root Element : " + pair.getRight());
 	}
 	
    

@@ -7,17 +7,18 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import com.concept.crew.dao.XapDBRoutine;
-import com.concept.crew.generator.GeneratorEngine;
 import com.concept.crew.info.DBColumns;
 import com.concept.crew.info.GenerateRequest;
 import com.concept.crew.processor.CsvTableGenerator;
 import com.concept.crew.processor.DBScriptRunner;
+import com.concept.crew.processor.GeneratorEngine;
 import com.concept.crew.processor.JaxbTableGenerator;
 import com.concept.crew.processor.TableGenerator;
 import com.concept.crew.util.AutomationHelper;
 import com.concept.crew.util.Constants;
 import com.concept.crew.util.FrameworkSettings;
 import com.concept.crew.util.JaxbInfoGenerator;
+import com.concept.crew.util.Pair;
 import com.concept.crew.util.XSDParseRequest;
 import com.google.common.collect.Multimap;
 
@@ -27,6 +28,7 @@ public class StartAutomation
 	private FrameworkSettings projectSetting;
 	private XSDParseRequest request;
 	private String rootNode = null;
+	private Pair<String, String> xsdNodes = null;
 	private static SimpleDateFormat ddmmyyyhhmm = new SimpleDateFormat("ddmmyyyyHHmm");
 	
 	public StartAutomation(XSDParseRequest request) {
@@ -89,7 +91,8 @@ public class StartAutomation
 				isDelimited = Boolean.TRUE;
 			}
 			autoHelper.doChoreOperations();
-			GeneratorEngine.generateAll(new GenerateRequest(projectSetting, tableInfo, rootNode, request.getDatabaseTablePostFix(), isDelimited));
+			GeneratorEngine.generateAll(new GenerateRequest(projectSetting, tableInfo, xsdNodes, 
+					request.getDatabaseTablePostFix(), isDelimited, inputMetaDataFile, request.getInputType()));
 		}
 		
 		if(createTable)
@@ -128,7 +131,8 @@ public class StartAutomation
 		if(request.getInputType().equals(Constants.inputType.XML.toString()))
 		{
 			generator =  new JaxbTableGenerator(xsdFile.getName(),projectSetting);
-			rootNode = AutomationHelper.fetchRootNode(xsdFile);
+			xsdNodes = AutomationHelper.fetchRootNode(xsdFile);
+			rootNode = xsdNodes.getRight();
 		} 
 		else if(request.getInputType().equals(Constants.inputType.DELIMITED.toString()))
 		{

@@ -1,8 +1,11 @@
 package com.concept.crew.info;
 
+import java.io.File;
+
 import org.apache.velocity.app.VelocityEngine;
 
 import com.concept.crew.util.FrameworkSettings;
+import com.concept.crew.util.Pair;
 import com.google.common.collect.Multimap;
 
 public class GenerateRequest {
@@ -10,19 +13,23 @@ public class GenerateRequest {
 	private  VelocityEngine velocityEngine;
 	private  FrameworkSettings projectSetting;
 	private  Multimap<String, DBColumns> tableMap;
-	private  String root;
+	private  Pair<String, String> xsdNodes;
 	private  String postFix;
 	private  Boolean isDelimited;
+	private  File xsdFile;
+	private  String inputType;	
 	
 	public GenerateRequest(FrameworkSettings projectSetting,
-			Multimap<String, DBColumns> tableMap, String root, String postFix,
-			Boolean isDelimited) {
+			Multimap<String, DBColumns> tableMap, Pair<String, String> xsdNodes, String postFix,
+			Boolean isDelimited, File xsdFile,String inputType) {
 		super();
 		this.projectSetting = projectSetting;
 		this.tableMap = tableMap;
-		this.root = root;
+		this.xsdNodes = xsdNodes;
 		this.postFix = postFix;
 		this.isDelimited = isDelimited;
+		this.xsdFile = xsdFile;
+		this.inputType = inputType;	
 		this.velocityEngine = new VelocityEngine();
 		this.velocityEngine.init();  
 	}
@@ -40,7 +47,7 @@ public class GenerateRequest {
 	}
 
 	public String getRoot() {
-		return root;
+		return xsdNodes.getRight();
 	}
 
 	public String getPostFix() {
@@ -49,6 +56,18 @@ public class GenerateRequest {
 
 	public Boolean isDelimited() {
 		return isDelimited;
+	}
+
+	public File getXsdFile() {
+		return xsdFile;
+	}
+
+	public String getInputType() {
+		return inputType;
+	}
+	
+	public String getStartingElement(){
+		return xsdNodes.getLeft();
 	}
 	
 }

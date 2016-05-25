@@ -6,6 +6,7 @@ import com.concept.crew.generator.LoadSaveProcessorGenerator;
 import com.concept.crew.generator.LoaderTypeGenerator;
 import com.concept.crew.generator.ParentWrapperGenerator;
 import com.concept.crew.generator.ScheduleGenerator;
+import com.concept.crew.generator.XMLParserGenerator;
 import com.concept.crew.info.GenerateRequest;
 
 public enum GeneratorEngine {
@@ -14,7 +15,8 @@ public enum GeneratorEngine {
 	ESSENTIALS(new EssentialsGenerator()),
 	SCHEDULES(new ScheduleGenerator()),
 	LOADER_TYPE(new LoaderTypeGenerator()),
-	PROCESSOR(new LoadSaveProcessorGenerator());
+	PROCESSOR(new LoadSaveProcessorGenerator()),
+	XML_PARSER(new XMLParserGenerator());
 	
 	private final IGenerate generator;
 	

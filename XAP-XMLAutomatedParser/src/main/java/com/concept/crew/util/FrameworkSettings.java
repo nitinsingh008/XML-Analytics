@@ -9,9 +9,9 @@ public class FrameworkSettings {
 	private String pojoPackagePath;
 	private String dirSrcJava;
 	private String resourcePath;
-	private String  pomPath;
-	private String  targetPath;
-	private String  jarFileName;
+	private String pomPath;
+	private String targetPath;
+	private String jarFileName;
 	private String compilationPath;
 	private String pathToRootClass;
 	private String pathToGenerateSchedules;
@@ -21,6 +21,7 @@ public class FrameworkSettings {
 	private String defaultConceptCrewPath;
 	private String pathToUtilityJar;
 	private String pathToCommon;
+	private String pathToParser;
 	
 	public FrameworkSettings(String projectName) {
 		super();
@@ -40,6 +41,7 @@ public class FrameworkSettings {
 		this.pathToLoaderType			= this.defaultConceptCrewPath + File.separator + "dao" + File.separator + "loaderUtil" ;
 		this.pathToUtilityJar			= mavenProjectPath + "/"+ projectName + "/src/lib";
 		this.pathToCommon				= this.defaultConceptCrewPath + File.separator + "common";
+		this.pathToParser				= this.defaultConceptCrewPath + File.separator + "parser";
 	}
 
 	public String getProjectName() {
@@ -105,5 +107,8 @@ public class FrameworkSettings {
 	public String getPathToCommon() {
 		return pathToCommon;
 	}
-	
+
+	public String getPathToParser() {
+		return pathToParser;
+	}
 }
