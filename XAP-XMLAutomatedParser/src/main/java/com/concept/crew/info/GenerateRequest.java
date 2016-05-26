@@ -17,7 +17,8 @@ public class GenerateRequest {
 	private  String postFix;
 	private  Boolean isDelimited;
 	private  File xsdFile;
-	private  String inputType;	
+	private  String inputType;
+	private  File inputFile; //XML or CSV
 	
 	public GenerateRequest(FrameworkSettings projectSetting,
 			Multimap<String, DBColumns> tableMap, Pair<String, String> xsdNodes, String postFix,
@@ -69,5 +70,10 @@ public class GenerateRequest {
 	public String getStartingElement(){
 		return xsdNodes.getLeft();
 	}
+
+	public File getInputFile() {
+		return inputFile;
+	}
+
 	
 }

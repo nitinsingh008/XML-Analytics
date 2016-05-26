@@ -56,7 +56,7 @@ public class $ClassName {
 		}
 	}
 	
-	public $StartingTag parseXml(String filePath, String encoding) throws ParserConfigurationException, SAXException, IOException, JAXBException{
+	public static $StartingTag parseXml(String filePath, String encoding) throws ParserConfigurationException, SAXException, IOException, JAXBException{
 		File fXmlFile = new File(filePath);
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		dbf.setNamespaceAware(true);

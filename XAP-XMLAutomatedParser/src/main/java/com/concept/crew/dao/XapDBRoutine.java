@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import org.apache.derby.drda.NetworkServerControl;
 import org.apache.log4j.Logger;
 
+import com.concept.crew.info.DBDetails;
 import com.concept.crew.util.Constants;
 import com.concept.crew.util.FrameworkSettings;
 import com.concept.crew.util.Constants.DatabaseType;
@@ -74,6 +75,7 @@ public class XapDBRoutine
 		DB_CONNECTION = jdbcUrl;
 		DB_USER = user;
 		DB_PASSWORD = password;
+		projectSetting.setDbDetails(new DBDetails(jdbcUrl, user, password, dbType, DB_DRIVER));
 	}
 
 	public static boolean testAndValidateDBConnection()

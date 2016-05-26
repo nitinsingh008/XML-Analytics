@@ -23,8 +23,7 @@ public class EssentialsGenerator implements IGenerate {
 	public void generate(GenerateRequest request) {
 		Template template = null;
 		BufferedWriter writer = null;
-		context = null;
-		context = new VelocityContext();
+		
 		VelocityEngine velocityEngine = request.getVelocityEngine();
 		
 		File scheduleDir = new File(request.getProjectSetting().getPathToLoaderType());

@@ -28,7 +28,7 @@ public class StartAutomation
 	private FrameworkSettings projectSetting;
 	private XSDParseRequest request;
 	private String rootNode = null;
-	private Pair<String, String> xsdNodes = null;
+	private Pair<String, String> nodes = null;
 	private static SimpleDateFormat ddmmyyyhhmm = new SimpleDateFormat("ddmmyyyyHHmm");
 	
 	public StartAutomation(XSDParseRequest request) {
@@ -91,7 +91,7 @@ public class StartAutomation
 				isDelimited = Boolean.TRUE;
 			}
 			autoHelper.doChoreOperations();
-			GeneratorEngine.generateAll(new GenerateRequest(projectSetting, tableInfo, xsdNodes, 
+			GeneratorEngine.generateAll(new GenerateRequest(projectSetting, tableInfo, nodes, 
 					request.getDatabaseTablePostFix(), isDelimited, inputMetaDataFile, request.getInputType()));
 		}
 		
@@ -131,13 +131,14 @@ public class StartAutomation
 		if(request.getInputType().equals(Constants.inputType.XML.toString()))
 		{
 			generator =  new JaxbTableGenerator(xsdFile.getName(),projectSetting);
-			xsdNodes = AutomationHelper.fetchRootNode(xsdFile);
-			rootNode = xsdNodes.getRight();
+			nodes = AutomationHelper.fetchRootNode(xsdFile);
+			rootNode = nodes.getRight();
 		} 
 		else if(request.getInputType().equals(Constants.inputType.DELIMITED.toString()))
 		{
 			generator =  new CsvTableGenerator(xsdFile.getName(),request.getDelimiter(),projectSetting);
 			rootNode = xsdFile.getName().substring(0,xsdFile.getName().lastIndexOf(".")).toUpperCase();
+			nodes = new Pair<String, String>("", rootNode);
 		}
 		
 		// RAW Table

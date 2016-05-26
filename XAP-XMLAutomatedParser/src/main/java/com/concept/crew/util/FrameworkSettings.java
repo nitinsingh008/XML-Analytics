@@ -1,6 +1,9 @@
 package com.concept.crew.util;
 
 import java.io.File;
+
+import com.concept.crew.info.DBDetails;
+
 import static com.concept.crew.util.Constants.*;
 
 public class FrameworkSettings {
@@ -22,6 +25,7 @@ public class FrameworkSettings {
 	private String pathToUtilityJar;
 	private String pathToCommon;
 	private String pathToParser;
+	private DBDetails dbDetails;
 	
 	public FrameworkSettings(String projectName) {
 		super();
@@ -111,4 +115,14 @@ public class FrameworkSettings {
 	public String getPathToParser() {
 		return pathToParser;
 	}
+
+	public DBDetails getDbDetails() {
+		return dbDetails;
+	}
+
+	public void setDbDetails(DBDetails dbDetails) {
+		this.dbDetails = dbDetails;
+	}
+	
+	
 }

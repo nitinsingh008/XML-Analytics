@@ -16,7 +16,8 @@ public enum GeneratorEngine {
 	SCHEDULES(new ScheduleGenerator()),
 	LOADER_TYPE(new LoaderTypeGenerator()),
 	PROCESSOR(new LoadSaveProcessorGenerator()),
-	XML_PARSER(new XMLParserGenerator());
+	XML_PARSER(new XMLParserGenerator()),
+	FILE_RUNNER(new FileProcessorGenerator());
 	
 	private final IGenerate generator;
 	
