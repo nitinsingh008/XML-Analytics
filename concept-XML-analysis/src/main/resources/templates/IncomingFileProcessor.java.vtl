@@ -1,0 +1,40 @@
+package com.concept.crew.processor;
+
+import com.concept.crew.dao.loaderUtil.LoaderDBRoutine;
+import java.io.File;
+import $Import;
+import com.concept.crew.parser.XapParsingUtil;
+
+public class $ClassName 
+{
+	private static final 	String 					ISO_8859_2 				= "ISO-8859-2"; 
+
+	public static void execute(File fileToBeProcessed)	throws Exception
+	{
+		try 
+		{		
+		     $StartingTag startingTag = null;
+		     try 
+		     {
+		         LoaderDBRoutine.initializeDBRoutine("$DbType", "$JdbcUrl", "$Username", "$Password");
+				 if (fileToBeProcessed != null) 
+		         {	
+					 // Parsing - Unmarshalling
+					 startingTag = XapParsingUtil.parseXml(fileToBeProcessed.getCanonicalPath(), ISO_8859_2);		            		            
+		            
+		             // Save all Incoming Data into Tables
+					 LoadSaveProcessor.saveData(startingTag.get$List());						 					 
+				 }
+				 startingTag = null;
+			 } 
+		     catch (Exception e){
+		     	throw new RuntimeException(e);
+			 }			  
+		}
+		catch(Exception e) 
+		{
+			throw new RuntimeException("Error processing the TEST file /var/tmp/*_bonds.zip. " + e.getMessage());	
+		}					
+
+	}
+}
