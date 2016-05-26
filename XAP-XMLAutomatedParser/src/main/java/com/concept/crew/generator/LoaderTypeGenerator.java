@@ -33,13 +33,25 @@ public class LoaderTypeGenerator implements IGenerate {
 			scheduleDir.mkdirs();
 		}
 
-		Map<String, StringBuffer> nameMap = new HashMap<String, StringBuffer>();
+		Map<String, String> nameMap = new HashMap<String, String>();
 		Iterator<String> tableMapIt = request.getTableMap().keySet().iterator();
 		String tableNameWithPostFix = null;
+		String rootWithPostFix = null;
+		
+		
+		if (request.getPostFix() != null && !"".equals(request.getPostFix())) {
+			rootWithPostFix = (request.getRoot() + "_" + request.getPostFix()).toUpperCase();
+		} else {
+			rootWithPostFix = request.getRoot().toUpperCase();
+		}
+		String sbRoot = request.getRoot() + "Loader" + ".class";
+		context.put("Root", rootWithPostFix);		
+		context.put("RootLoader", sbRoot );		
+		
+		
 		while (tableMapIt.hasNext()) {
 			String tableName = tableMapIt.next();
-			StringBuffer sb = new StringBuffer(tableName);
-			if (tableName == null || tableName.contains("$")
+			if (request.getRoot().equals(tableName) || tableName == null || tableName.contains("$")
 					|| tableName.toUpperCase().contains("OBJECTFACTORY")) {
 				continue;
 			}
@@ -49,8 +61,8 @@ public class LoaderTypeGenerator implements IGenerate {
 			} else {
 				tableNameWithPostFix = tableName.toUpperCase();
 			}
-
-			nameMap.put(tableNameWithPostFix,  sb.append("Loader").append(".class"));
+			String loader = tableName + "Loader" + ".class";
+			nameMap.put(tableNameWithPostFix,  loader);
 		}
 		context.put("mapp", nameMap);		
 		try {
