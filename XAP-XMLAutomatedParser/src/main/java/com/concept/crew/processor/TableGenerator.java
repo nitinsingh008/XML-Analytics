@@ -58,7 +58,7 @@ public abstract class TableGenerator
 		logger.warn("Generate Database Table scripts");
 		String fileName = projectSetting.getResourcePath() + "createTable";
 		String parentTableName = null;
-
+		String constraintName = null;
 		if(tableSuffix != null && tableSuffix != "")
 		{
 			fileName = fileName + "_" + tableSuffix + ".sql";
@@ -108,9 +108,11 @@ public abstract class TableGenerator
 				continue;
 			}
 			sb.append("CREATE TABLE ").append(tableName.toUpperCase());
+			constraintName = tableName.toUpperCase();
 			if(tableSuffix != null && tableSuffix != "")
 			{
 				sb.append("_").append(tableSuffix.toUpperCase());
+				constraintName = tableName.toUpperCase() + "_" + tableSuffix.toUpperCase();
 			}
 			sb.append(" ( \n") ;
 			
@@ -152,7 +154,7 @@ public abstract class TableGenerator
 			}
 			
 			if(!tableName.equals(rootNode)){
-				sb.append("CONSTRAINT ").append(tableName.toUpperCase()).append("_FK ").
+				sb.append("CONSTRAINT ").append(constraintName).append("_FK ").
 				   append("FOREIGN KEY (PARENT_KEY) REFERENCES ").append(parentTableName).append("( PKEY)");
 			}else{
 				sb.deleteCharAt(sb.length()-2);
@@ -277,16 +279,17 @@ public abstract class TableGenerator
 		while(tableMapIt.hasNext())
 		{
 			String tableName = tableMapIt.next();
+			String tableNameWithSuffix = "";
 			if(tableName == null ||  tableName.contains("$") || tableName.toUpperCase().contains("OBJECTFACTORY")){
 				continue;
 			}
 			String fileName = null;
 			int columnCount = 0;
-			
+			fileName =  tableName + ".sql";
 			if(tableSuffix != null && tableSuffix != ""){
-				fileName =  tableName + "_" + tableSuffix + ".sql";
+				tableNameWithSuffix = tableName + "_" + tableSuffix;
 			}else{
-				fileName =  tableName + ".sql";
+				tableNameWithSuffix =  tableName + ".sql";
 			}
 			logger.warn(fileName);
 			
@@ -303,7 +306,7 @@ public abstract class TableGenerator
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
 			
-			sb.append("INSERT INTO ").append(fileName).append("(");
+			sb.append("INSERT INTO ").append(tableNameWithSuffix.toUpperCase()).append("(");
 			
 			if(tableName.equals(rootNode)){
 				sb.append("PKEY, ");	
