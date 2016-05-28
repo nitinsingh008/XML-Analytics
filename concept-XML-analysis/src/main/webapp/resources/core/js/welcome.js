@@ -106,6 +106,7 @@
 					return;
 				}
 			}
+			$("#consoleOutPut").click();
 			var add = setInterval("readLog()",10);
 				$.ajax({
 					    url: 'Generate',

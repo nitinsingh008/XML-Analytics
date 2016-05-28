@@ -29,7 +29,7 @@
 #xaplogo{
 	height:70px;
 	width:200px;
-	position:fixed;
+/* 	position:fixed; */
 	top:50px;
 	left:25px;
 }
@@ -217,50 +217,51 @@
 .footer {
 	/* position:fixed; */
 	/*opacity: 0.5;*/
-	height: 55px;
+	height: 10%;
 	/*background-color:#ffffff;*/
 	text-color: black;
 	/* bottom:0px;
     left:0px;*/
-	right: 0px;
+/* 	right: 0px; */
 	background: rgba(255, 255, 255, 0.4);
-	position: absolute;
+	/* position: absolute;
 	bottom: 0;
-	left: 0;}
+	left: 0; */}
 
 div.footer h6 {
    color: #000000;
-   margin-top: 10px;
-    font-weight: bold;
+ /*   margin-top: 10px; */
+   font-weight: bold;
 }
 
 .header {
-	height: 45px;
+	height: 20%;
+	width : 100%;
 	/*background-color:#ffffff;*/
 	text-color: black;
-	right: 0px;
+/* 	right: 0px; */
 	background: rgba(255, 255, 255, 0.4);
-	position: fixed;
-	top: 50px;
-	left: 0;}
+	/* position: fixed; */
+	/* top: 50px;
+	left: 0; */}
 
 div.header h6 {
    color: #000000;
    /* margin-top: 15px; */
     font-weight: bold;
     position: relative;
-	top: -5px;
+/* 	top: -5px; */
 	
 }
 
 .footer_jsp2{
-	    height:100px; 
+	height:100px; 
     text-color: black;
     
     background: rgba(255,255,255,0.4);    
     position:absolute;
-	bottom:0;
-	left:0;	
+/* 	bottom:0;
+	left:0;	 */
 	width:100%;	
 	
 }
@@ -272,9 +273,9 @@ div.footer_jsp2 h6 {
 
  #concpt_crew_logo
  {
-	position: absolute;
-	bottom: 0px;
-	left: 280px;;	
+	/* position: absolute;
+	bottom: 0px; */
+	/* left: 280px;;	 */
 	width: 100px;
 	height: 100px;
 	
@@ -290,10 +291,10 @@ div.footer_jsp2 h6 {
 .upload_form{
 	position:relative;
 	display:block;
-    height:50px;
+  /*   height:50px;
     top:180px;    
     margin-bottom:0px;	
-    
+   */  
     transition: width 1s, height 1s;
 }
 .upload_form:HOVER{
@@ -356,8 +357,8 @@ div.footer_jsp2 h6 {
 
 .xsd_container{
 	position: relative;
-	top: 130px;	
-	height:400px;
+	/* top: 130px;	
+	height:400px; */
 	padding:10px;
 	
 }

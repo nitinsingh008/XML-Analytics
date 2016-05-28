@@ -100,7 +100,7 @@ function checkConnectivity()
 				  <div class="panel panel-default">
 				    <div class="panel-heading" role="tab" id="headingTwo">
 				      <h4 class="panel-title">
-				        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+				        <a role="button" id="consoleOutPut" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 				          What's Happening??
 				        </a>
 				      </h4>
@@ -185,9 +185,5 @@ function checkConnectivity()
 
 
 </div>
-<%-- <div class="footer_jsp2">			
-			<h6 align="center">The Concept Crew &copy; markit.com 2016</h6>
-			<h6 align="center">Gaurav Agarwal | Nitin Singh | Parag Garg</h6>
-			 <img src="<c:url value='/resources/images/logo-1.png'/>" id="concpt_crew_logo" />  --%>
 
 

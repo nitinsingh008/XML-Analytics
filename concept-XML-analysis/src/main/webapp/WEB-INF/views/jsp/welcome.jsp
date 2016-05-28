@@ -47,7 +47,7 @@ marqueeInit({
 <body class="main_body">
 	<img src="<c:url value='/resources/images/logo.jpg'/>"
 		id="full-screen-background-image" />
-	<div id="parent" class="snap12">
+	<!-- <div id="parent" class="snap12"> -->
 
 		<!-- http://www.dynamicdrive.com/dynamicindex2/crawler/ use this link for reference for crawler marquee -->
 		<%-- 		<div class="marquee" id="mycrawler">
@@ -78,6 +78,9 @@ marqueeInit({
 			, Parag Garg
 		</div> --%>
 	<div class="container"> 
+		<div class="row">
+		<br><br>
+		</div>
 		<div class="header row">
 			<img src="<c:url value='/resources/images/xap_logo.png'/>"
 				id="xaplogo" title="XAP" />
@@ -128,10 +131,11 @@ marqueeInit({
 			</div>
 
 		</div>
-		
-		<div id="step1jsp" class="row">
-			<div align="center">
-				<div class="upload_form">
+		<div class="row">
+		<br><br>
+		</div>
+		<div id="step1jsp" class="row upload_form" align="center">
+				
 					<!-- <form action="/uploadXSD" method="post"
 						enctype="multipart/form-data" id="uploadXSD"> -->
 						<div class="container" id="divborder">
@@ -173,10 +177,10 @@ marqueeInit({
 									<div class="row">
 										<div class="col-xs-2"></div>
 										<div class="col-xs-2">
-											File Demilimter By : 
+										<b>	File Demilimter By : </b>
 										</div>
 										<div class="col-xs-2">
-											<select class="dropdown" id="csvDelimiter">
+											<select class="dropdown btn-default dropdown-toggle" id="csvDelimiter">
 												<option></option>
 												<option value="\t">TAB</option>
 												<option value=",">,(comma)</option>
@@ -184,10 +188,10 @@ marqueeInit({
 											</select> 
 										</div>
 										<div class="col-xs-2">
-											File Have Header data : 
+											<b>File Have Header data : </b>
 										</div>
 										<div class="col-xs-2">
-											<select class="dropdown" id="haveHeader">
+											<select class="dropdown btn-default dropdown-toggle" id="haveHeader">
 												<option value="Y">Yes</option>
 												<option value="N">No</option>
 											</select> 
@@ -206,22 +210,28 @@ marqueeInit({
 							</div>
 						</div>
 				<!-- 	</form> -->
-				</div>
-			</div>
 		</div>
 		
 		<div class="row" id="step2jsp"></div>
 
+		<div class="row">
+		<br><br>
+		</div>
 	<!-- 	<div class = "row" id="consoleJsp">
 			<h3>Output Console</h3>
 			
 		</div> -->
 
-		<div class="footer row">
-			<h6 align="center">The Concept Crew &copy; markit.com 2016</h6>
-			<h6 align="center">Gaurav Agarwal | Nitin Singh | Parag Garg</h6>
-			<img src="<c:url value='/resources/images/concept_crew.png'/>"
+		<div class="row footer">
+			<div class="col-xs-2"></div>
+			<div class="col-xs-1" align="right">
+				<img src="<c:url value='/resources/images/concept_crew.png'/>"
 				id="concpt_crew_logo" />
+			</div>
+			<div class="col-xs-7" align="left">
+				<h6 align="center">The Concept Crew &copy; markit.com 2016</h6>
+				<h6 align="center">Gaurav Agarwal | Nitin Singh | Parag Garg</h6>
+			</div>
 		</div>
 	</div>
 
