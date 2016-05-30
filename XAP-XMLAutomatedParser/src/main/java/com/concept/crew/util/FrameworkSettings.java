@@ -26,10 +26,14 @@ public class FrameworkSettings {
 	private String pathToCommon;
 	private String pathToParser;
 	private DBDetails dbDetails;
+	private String requestType;
+	private String inputFileName;
 	
-	public FrameworkSettings(String projectName) {
+	public FrameworkSettings(String projectName , String requestType, String inputFileName) {
 		super();
 		this.projectName 				= projectName;
+		this.requestType				= requestType;
+		this.inputFileName				= inputFileName;
 		this.dirSrcJava 				= mavenProjectPath + "/"+ projectName + "/src/main/java";
 		this.defaultConceptCrewPath 	= this.dirSrcJava + File.separator + "com" + File.separator + "concept" + File.separator + "crew" ;
 		this.pojoPackagePath 			= this.defaultConceptCrewPath + File.separator + "info" + File.separator  + "pojo";
@@ -123,6 +127,13 @@ public class FrameworkSettings {
 	public void setDbDetails(DBDetails dbDetails) {
 		this.dbDetails = dbDetails;
 	}
-	
+
+	public String getRequestType() {
+		return requestType;
+	}
+
+	public String getInputFileName() {
+		return inputFileName;
+	}
 	
 }

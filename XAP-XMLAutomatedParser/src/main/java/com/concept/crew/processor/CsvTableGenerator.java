@@ -156,7 +156,7 @@ public class CsvTableGenerator<E> extends TableGenerator{
 	}	
 	 
 	public static void main(String[] args) {
-		FrameworkSettings projectSetting = new FrameworkSettings("LoaderFramework");
+		/*FrameworkSettings projectSetting = new FrameworkSettings("LoaderFramework");
 		CsvTableGenerator generator = new CsvTableGenerator("Delimiter_Sample.TXT", "\t",projectSetting);
 		try {
 			Multimap<String, DBColumns> tableInfo = generator.parse(true, "Oracle");
@@ -164,7 +164,7 @@ public class CsvTableGenerator<E> extends TableGenerator{
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 }
 

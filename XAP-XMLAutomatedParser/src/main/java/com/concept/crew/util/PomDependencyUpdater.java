@@ -75,7 +75,9 @@ public class PomDependencyUpdater {
 					pomContainer.append("<artifactId>"+artifactId+"</artifactId>\n");
 					pomContainer.append("<scope>system</scope>\n");
 					pomContainer.append("<version>"+version+"</version>\n");
-					pomContainer.append("<systemPath>${basedir}\\src\\lib\\"+jarName+"</systemPath>\n");
+					if(jarName != null){
+						pomContainer.append("<systemPath>${basedir}\\src\\lib\\"+jarName+"</systemPath>\n");
+					}					
 					pomContainer.append("</dependency>\n");
 				}
 				line = pomreader.readLine();

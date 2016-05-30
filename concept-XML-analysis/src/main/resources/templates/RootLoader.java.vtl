@@ -29,8 +29,9 @@ public final class $ClassName extends AbstractDataLoader
 	public int prepare(ParentInfoWrapper parentInfo, PreparedStatement statement) throws SQLException 
 	{
 		$Root record = parentInfo.get$Root();
-
+		
 		int index = 1;
+		StatementHelper.setLong(statement, index++, parentInfo.getPkeyId());		
 		#foreach( $column in $columnList )
 		#if( $column.getOriginalDataType() == "String")
 		StatementHelper.setString(statement, index++, record.$column.getGetterName() );

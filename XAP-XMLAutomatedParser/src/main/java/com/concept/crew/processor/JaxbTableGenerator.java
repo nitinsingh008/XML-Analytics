@@ -66,7 +66,7 @@ public class JaxbTableGenerator extends TableGenerator
 
 	public static void main(String[] args) throws Exception
 	{		
-		JaxbTableGenerator tb = new JaxbTableGenerator("Sample_bond.xsd",new FrameworkSettings("LF_SampleBondsXSD_215920160159"));
-		Multimap<String, DBColumns> tableMap = tb.parse(true,"Oracle");
+		/*JaxbTableGenerator tb = new JaxbTableGenerator("Sample_bond.xsd",new FrameworkSettings("LF_SampleBondsXSD_215920160159"));
+		Multimap<String, DBColumns> tableMap = tb.parse(true,"Oracle");*/
 	}
 }

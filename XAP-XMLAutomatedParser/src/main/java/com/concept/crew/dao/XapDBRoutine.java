@@ -160,11 +160,11 @@ public class XapDBRoutine
 	
 	public static void main(String args[])
 	{
-		FrameworkSettings projectSetting = new FrameworkSettings("firstOne");
+		/*FrameworkSettings projectSetting = new FrameworkSettings("firstOne");
 		XapDBRoutine.initializeDBRoutine(DatabaseType.JavaDB_DERBY.toString(), "AnyURL", "username", "password",projectSetting);
 		boolean dbConnected = XapDBRoutine.testAndValidateDBConnection();
 		
-		System.out.println(dbConnected);
+		System.out.println(dbConnected);*/
 	}
 	
 

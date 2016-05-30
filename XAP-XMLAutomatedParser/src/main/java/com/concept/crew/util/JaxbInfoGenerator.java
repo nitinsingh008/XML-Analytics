@@ -24,13 +24,13 @@ public class JaxbInfoGenerator
 	}
 	public static void main(String[] args) throws Exception
 	{
-		final Thread currentThread = Thread.currentThread();
+		/*final Thread currentThread = Thread.currentThread();
 		final ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		File file = new File(contextClassLoader.getResource("CustomersOrders.xsd").getFile()); //resource folder
 		
 		JaxbInfoGenerator gen = new JaxbInfoGenerator(new FrameworkSettings("test"));
-		gen.generateInfos(file.getAbsolutePath());
+		gen.generateInfos(file.getAbsolutePath());*/
 	}
 	/*
 	 * schemaFilePathName => Absolute Path Name

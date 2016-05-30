@@ -112,8 +112,7 @@ public class MavenHelper {
 		InvocationRequest request = new DefaultInvocationRequest();
 		
 		if(!isDependancyAdded){
-			PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(),"ConceptCrewUtil", "ConceptCrewUtil", "1.0","ConceptCrewUtil-1.0.jar");
-			PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(),"ojdbc6", "ojdbc6", "1.0","ojdbc6.jar");
+			addMavenDependancies();
 			isDependancyAdded = Boolean.TRUE;
 		}
 		request.setPomFile(new File(projectSetting.getPomPath()));
@@ -136,6 +135,14 @@ public class MavenHelper {
 			logger.warn("BUILD SUCCESS");
 			logger.warn("-----------------------------");	
 		}
+	}
+	
+	private void addMavenDependancies(){
+		PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(),"ConceptCrewUtil", "ConceptCrewUtil", "1.0","ConceptCrewUtil-1.0.jar");
+		PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(),"ojdbc6", "ojdbc6", "1.0","ojdbc6.jar");
+		PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(), "log4j", "log4j", "1.2.15");
+		PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(), "commons-io", "commons-io", "2.4");
+		PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(), "commons-dbcp", "commons-dbcp", "1.3");
 	}
 	
 	private void installMaven() throws IOException

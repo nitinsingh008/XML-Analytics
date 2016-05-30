@@ -35,7 +35,7 @@ public class StartAutomation
 		super();
 		this.request = request;
 		String inputFileName = request.getParsedXSDPath().substring(request.getParsedXSDPath().lastIndexOf(File.separator)+1, request.getParsedXSDPath().lastIndexOf("."));
-		projectSetting = new FrameworkSettings("LF"+"_"+inputFileName+"_"+ddmmyyyhhmm.format(new Date(System.currentTimeMillis())));
+		projectSetting = new FrameworkSettings("LF"+"_"+inputFileName+"_"+ddmmyyyhhmm.format(new Date(System.currentTimeMillis())), request.getInputType(), inputFileName);
 	}
 
 	public void doAll() throws Exception{

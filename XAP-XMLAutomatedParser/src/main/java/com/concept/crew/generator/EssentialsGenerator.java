@@ -91,6 +91,26 @@ public class EssentialsGenerator implements IGenerate {
 			
 		} catch (IOException e) {
 		}
+		
+		File queryUtil = new File(request.getProjectSetting().getPathToLoaderType());
+		if (!queryUtil.exists()) {
+			queryUtil.mkdirs();
+		}
+		
+		context.put("ResourcePath", request.getProjectSetting().getResourcePath());		
+		
+		try {
+			template = velocityEngine.getTemplate("./src/main/resources/templates/QueryReaderUtil.java.vtl");
+			writer = new BufferedWriter(new FileWriter(
+					new File(request.getProjectSetting().getPathToLoaderType()+ File.separator +  "QueryReaderUtil.java")));
+			template.merge(context, writer);
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }
