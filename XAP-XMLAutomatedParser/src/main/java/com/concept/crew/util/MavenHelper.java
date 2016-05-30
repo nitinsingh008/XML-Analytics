@@ -130,6 +130,12 @@ public class MavenHelper {
 			logger.warn("Maven Build failure" + result.getExitCode());
 			//throw new IllegalStateException("maven build failed.");
 		}
+		else
+		{
+			logger.warn("-----------------------------");
+			logger.warn("BUILD SUCCESS");
+			logger.warn("-----------------------------");	
+		}
 	}
 	
 	private void installMaven() throws IOException
