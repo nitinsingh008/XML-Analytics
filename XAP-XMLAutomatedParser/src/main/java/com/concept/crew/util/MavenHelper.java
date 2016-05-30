@@ -5,15 +5,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import org.apache.derby.drda.NetworkServerControl;
 import org.apache.log4j.Logger;
 import org.apache.maven.shared.invoker.DefaultInvocationRequest;
 import org.apache.maven.shared.invoker.DefaultInvoker;
@@ -21,6 +18,7 @@ import org.apache.maven.shared.invoker.InvocationRequest;
 import org.apache.maven.shared.invoker.InvocationResult;
 import org.apache.maven.shared.invoker.Invoker;
 import org.apache.maven.shared.invoker.MavenInvocationException;
+import org.codehaus.plexus.util.FileUtils;
 
 public class MavenHelper {
 	
@@ -38,6 +36,7 @@ public class MavenHelper {
 	 * 1. Create "C:/XAP" if doesn't exists [Base Working Directory]
 	 * 2. Install Apache Maven 
 	 * 3. Create Local m2 repository
+	 * 4. Install xapDB [JAVADB - DERBY Database ]
 	 */
 	public void initialization() throws IOException
 	{
@@ -65,6 +64,16 @@ public class MavenHelper {
 		
 		// Unzipping Derby utilities 
 		installZippedDirectory(Constants.debryDb, Constants.databaseLoc);
+		
+		ClassLoader classLoader = getClass().getClassLoader();
+		File sourceFile = new File(classLoader.getResource(Constants.dbBatchFile).getFile());	
+		try 
+		{
+			File destDir = new File(Constants.databaseLoc);
+			FileUtils.copyFileToDirectory(sourceFile, destDir);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	} 
 	/*
 	 * Initialization method should be called before calling this method 
