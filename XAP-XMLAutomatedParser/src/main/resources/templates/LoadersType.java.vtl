@@ -16,6 +16,10 @@ public class LoadersType
 	@SuppressWarnings("unchecked")
 	public static enum Domain implements IDomainLoader
 	{
+		$Root
+		(CollectionsUtil.<Class<? extends IDataDomainLoader>> toList($RootLoader), // SELECT - Reader
+		  CollectionsUtil.<Class<? extends IDataDomainLoader>> toList($RootLoader)  // INSERT - Writer
+		 ),
 		
 		#set($count = 0)
 		#foreach($key in $mapp.keySet() )
