@@ -3,6 +3,7 @@ package com.concept.crew.dao;
 import java.io.File;
 import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -123,6 +124,7 @@ public class XapDBRoutine
 			{
 				logger.warn("Connection to DB successful");
 				connected = true;
+				startDerbyEmbeddedServer();
 			}
 		} catch (ClassNotFoundException e) 
 		{
@@ -151,6 +153,32 @@ public class XapDBRoutine
 		return conn;
 	}
 	
+	public static void startDerbyEmbeddedServer()
+	{
+		NetworkServerControl server = null;
+
+	    try 
+	    {
+	        server = new NetworkServerControl(InetAddress.getByName("localhost"), 1527);
+		    try 
+		    {
+				server.ping();
+			} 
+		    catch (Exception e) 
+		    {
+				server.start(null);
+			}
+	        
+	    } 
+	    catch (UnknownHostException e1) 
+	    {
+	        e1.printStackTrace();
+	    } catch (Exception e1) 
+	    {
+	        e1.printStackTrace();
+	    }
+	}	
+	
 /*	public static void main(String args[])
 	{
 		XapDBRoutine.initializeDBRoutine(DatabaseType.ORACLE.toString(), "TNSEntry", "username", "password");
@@ -158,14 +186,24 @@ public class XapDBRoutine
 		System.out.println(dbConnected);
 	}*/
 	
-	public static void main(String args[])
+/*	public static void main(String args[])
 	{
-		/*FrameworkSettings projectSetting = new FrameworkSettings("firstOne");
+		FrameworkSettings projectSetting = new FrameworkSettings("firstOne");
 		XapDBRoutine.initializeDBRoutine(DatabaseType.JavaDB_DERBY.toString(), "AnyURL", "username", "password",projectSetting);
 		boolean dbConnected = XapDBRoutine.testAndValidateDBConnection();
 		
-		System.out.println(dbConnected);*/
+		System.out.println(dbConnected);
+	}*/
+	
+	public static void main(String args[])
+	{
+		startDerbyEmbeddedServer();
+ 
+		
+		startDerbyEmbeddedServer();
+		
 	}
 	
-
+	
+	
 }

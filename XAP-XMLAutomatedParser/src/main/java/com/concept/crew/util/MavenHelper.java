@@ -5,12 +5,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.apache.derby.drda.NetworkServerControl;
 import org.apache.log4j.Logger;
 import org.apache.maven.shared.invoker.DefaultInvocationRequest;
 import org.apache.maven.shared.invoker.DefaultInvoker;
@@ -48,7 +51,9 @@ public class MavenHelper {
 		}
 		
 		logger.warn("Installing apache-maven-3.2.2 .......");
-		installMaven();
+		//installMaven();
+		// Unzipping Maven 
+		installZippedDirectory(Constants.mavenZip, Constants.mavenProjectPath);
 		logger.warn("Maven installed successfully");
 		logger.warn("----------------------------------");
 		logger.warn("Creating local m2 repository => " + Constants.m2_repository);
@@ -57,6 +62,9 @@ public class MavenHelper {
 		{
 			m2Repo.mkdirs();
 		}
+		
+		// Unzipping Derby utilities 
+		installZippedDirectory(Constants.debryDb, Constants.databaseLoc);
 	} 
 	/*
 	 * Initialization method should be called before calling this method 
@@ -145,14 +153,15 @@ public class MavenHelper {
 		PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(), "commons-dbcp", "commons-dbcp", "1.3");
 	}
 	
-	private void installMaven() throws IOException
+	/*
+	 * 
+	 */
+	private void installZippedDirectory(String zipFilePath, 
+									    String destDirectory) throws IOException
 	{
-		String zipFilePath = Constants.mavenZip;
-		String destDirectory = Constants.mavenProjectPath;
-		
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource(zipFilePath).getFile());		
-		//File file = new File("D:\\XAP Workspace\\concept-XML-analysis\\target\\classes\\apache-maven-3.2.2.zip");
+
         File destDir = new File(destDirectory);
         if (!destDir.exists()) {
             destDir.mkdir();

@@ -21,6 +21,7 @@ public class Constants
 	
 	// Database Specific
 	public static final String databaseLoc     = mavenProjectPath + "/" + "xapDB";
+	public static final String debryDb     	   = "db-derby-10.12.1.1.zip";
 	
 	public enum DatabaseType
 	{
