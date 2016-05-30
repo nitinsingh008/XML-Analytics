@@ -146,6 +146,16 @@
 		    <groupId>org.apache.derby</groupId>
 		    <artifactId>derby</artifactId>
 		    <version>10.12.1.1</version>
+		</dependency>	
+		<dependency>
+		    <groupId>org.apache.derby</groupId>
+		    <artifactId>derbynet</artifactId>
+		    <version>10.12.1.1</version>
+		</dependency>	
+		<dependency>
+		    <groupId>org.apache.derby</groupId>
+		    <artifactId>derbyclient</artifactId>
+		    <version>10.12.1.1</version>
 		</dependency>			
 	</dependencies>
 
