@@ -7,11 +7,13 @@ import com.concept.crew.common.DataWriter;
 import $Import;
 import com.concept.crew.info.raw.ParentInfoWrapper;
 import com.concept.crew.dao.loaderUtil.QueryReaderUtil;
-
+import org.apache.log4j.Logger;
 
 public class LoadSaveProcessor 
 {
+	private static final Logger log = Logger.getLogger(LoadSaveProcessor.class);
 	private static List<Integer> uniqueKeys = new ArrayList<Integer>();
+	
 	/**
 	 * Iterate over ROOT bonds, transform them and persist all Bonds in RAW
 	 * tables
@@ -19,7 +21,7 @@ public class LoadSaveProcessor
 	public static void saveData(List<$Root> records) throws Exception {
 
 		Collection<ParentInfoWrapper> wrapperList = new ArrayList<ParentInfoWrapper>();
-
+		
 		for ($Root record : records) {
 			ParentInfoWrapper wrapper = new ParentInfoWrapper();
 			wrapper.set$Root(record);
@@ -32,13 +34,15 @@ public class LoadSaveProcessor
 		writer.write(wrapperList);
 	}
 
-	private static Integer fetchPrimarykey(int size) {		
+	private static Integer fetchPrimarykey(int size) {	
+		log.warn("fetching new primary keys from db");
 		try {
 			if (uniqueKeys.size() <= 1) {
 				uniqueKeys.addAll(QueryReaderUtil.loadNewPKeys(size));
 			}
 
 		} catch (Exception e) {
+			log.error("Failed while fetching keys from Sequence");
 			throw new RuntimeException(	"Failed while fetching keys from Sequence" ,  e);
 		}
 		return uniqueKeys.remove(0);

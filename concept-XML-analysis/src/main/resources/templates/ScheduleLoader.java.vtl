@@ -50,7 +50,7 @@ public final class $ClassName extends AbstractDataLoader
 			     StatementHelper.setBoolean(statement, index++, schedule.$column.getGetterName() );
 			    #elseif( $column.getOriginalDataType() == "XMLGregorianCalendar" )
 			    StatementHelper.setDate(statement, index++, getSqlDateFromXMLGregorianCalendar(schedule.$column.getGetterName() ));
-				#elseif($column.getOriginalDataType() == "Long" )
+				#elseif($column.getOriginalDataType() == "Long" || $column.getOriginalDataType() == "long")
 				StatementHelper.setLong(statement, index++, schedule.$column.getGetterName());
 				#elseif($column.getOriginalDataType() == "Double")
 				StatementHelper.setDouble(statement, index++, schedule.$column.getGetterName());
