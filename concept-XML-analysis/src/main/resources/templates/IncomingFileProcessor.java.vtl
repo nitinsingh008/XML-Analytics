@@ -7,12 +7,13 @@ import com.concept.crew.parser.XapParsingUtil;
 #end
 import org.apache.log4j.Logger;
 import java.util.*;
+import com.concept.crew.dao.loaderUtil.LoaderDBRoutine;
 
 public class $ClassName 
 {
 	private static final 	String 					ISO_8859_2 				= "ISO-8859-2"; 
 	private static final Logger log = Logger.getLogger("$ClassNameClass");
-	public static void execute(File fileToBeProcessed)	throws Exception
+	public static void execute(File fileToBeProcessed , String dbType, String jdbcUrl, String userName , String password)	throws Exception
 	{
 		try 
 		{		
@@ -21,8 +22,8 @@ public class $ClassName
 		     {
 		         if (fileToBeProcessed != null) 
 		         {	
-		         	
-					 // Parsing - Unmarshalling
+		         		
+					 LoaderDBRoutine.initializeDBRoutine(dbType, jdbcUrl, userName, password);
 					 #if($type == "XML")
 					 log.warn("Parsing incoming XML file...");
 					 

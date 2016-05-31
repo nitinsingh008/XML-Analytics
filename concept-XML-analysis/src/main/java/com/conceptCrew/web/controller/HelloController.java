@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.concept.crew.apis.ParseIncomingRequest;
 import com.concept.crew.apis.StartAutomation;
 import com.concept.crew.dao.XapDBRoutine;
 import com.concept.crew.util.Constants;
@@ -42,6 +43,8 @@ public class HelloController {
 
 	String tempXSDName;
 	String databaseType[] = new String[] { "ORACLE", "SQL SERVER" , "MySQL", "JavaDB_DERBY" };
+	
+	private StartAutomation sa = null;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
@@ -154,7 +157,7 @@ public class HelloController {
 			return "Validation Failed";
 		}
 		
-		StartAutomation sa = new StartAutomation(request);
+		sa = new StartAutomation(request);
 		if(request.getDoAll()){
 		// have to remove just testing	
 			sa.doAll();
@@ -219,9 +222,40 @@ public class HelloController {
 	@RequestMapping(value = "/uploadXMLs", method = RequestMethod.POST)
 	public @ResponseBody String uploadXMLFile(MultipartHttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		Iterator<String> itr = request.getFileNames();
-		while(itr.hasNext()){
-			MultipartFile file = request.getFile(itr.next());
-			
+		MultipartFile file = request.getFile(itr.next());
+		String xmlFile = null;
+		File serverFile = null;
+		if (!file.isEmpty()) {
+
+			try {
+				byte[] bytes = file.getBytes();
+
+				// Creating the directory to store file
+				String rootPath = Constants.xsdLocalPath;
+				File dir = new File(rootPath);
+				if (!dir.exists())
+					dir.mkdirs();
+				
+				xmlFile = (file.getName().contains(File.separator)) ? file.getName().substring(
+								file.getName().lastIndexOf(File.separator) + 1,
+								file.getName().length()) : file.getName();
+				// Create the file on server
+				serverFile = new File(dir.getAbsolutePath() + File.separator
+						+ xmlFile);
+				BufferedOutputStream stream = new BufferedOutputStream(
+						new FileOutputStream(serverFile));
+				stream.write(bytes);
+				stream.close();
+			} catch (Exception e) {
+				model.put("uploadxml", "You failed to upload " + file.getName()
+						+ " => " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			ParseIncomingRequest parseReq = new ParseIncomingRequest(
+					serverFile, sa.getProjectSetting());
+		} else {
+			model.put("parsedInString", "You have Uplaoded Blank file");
 		}
 		return "All files uploaded Successfully";
 	}
