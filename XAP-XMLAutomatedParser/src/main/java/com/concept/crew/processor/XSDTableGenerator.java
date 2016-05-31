@@ -11,15 +11,16 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.concept.crew.info.DBColumns;
+import com.concept.crew.util.AutomationHelper;
 import com.concept.crew.util.FrameworkSettings;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 public class XSDTableGenerator extends TableGenerator
 {	
-	public XSDTableGenerator(String xsdName,FrameworkSettings projectSetting) 
+	public XSDTableGenerator(String xsdName,FrameworkSettings projectSetting,AutomationHelper helper) 
 	{
-		super(xsdName,projectSetting);
+		super(xsdName,projectSetting,helper);
 	}
 
 	public Multimap<String, DBColumns> parse(Boolean typed,

@@ -20,6 +20,7 @@ import java.util.jar.JarFile;
 import org.apache.log4j.Logger;
 
 import com.concept.crew.info.DBColumns;
+import com.concept.crew.util.AutomationHelper;
 import com.concept.crew.util.Constants;
 import com.concept.crew.util.FrameworkSettings;
 import com.google.common.collect.Multimap;
@@ -27,7 +28,7 @@ import com.google.common.collect.Multimap;
 public abstract class TableGenerator 
 {	
 	private static Logger 		logger 			= Logger.getLogger(TableGenerator.class);
-	
+	protected AutomationHelper autoHelper;
 	protected FrameworkSettings 	projectSetting;
 	protected static Set<String> 	xsdDataTypes = new HashSet<String>();
 	protected String 				xsdName;
@@ -40,10 +41,11 @@ public abstract class TableGenerator
 		xsdDataTypes.add("xs:dateTime");
 	}
 	
-	public TableGenerator(String xsdName,FrameworkSettings projectSetting)
+	public TableGenerator(String xsdName,FrameworkSettings projectSetting,AutomationHelper helper)
 	{
 		this.xsdName = xsdName;
 		this.projectSetting = projectSetting;
+		this.autoHelper = helper;
 	}
 	
 	public abstract Multimap<String, DBColumns> parse(Boolean typed,
@@ -175,7 +177,7 @@ public abstract class TableGenerator
 	protected String sqlDataType(String xsdType, Boolean typed, String dbType)
 	{
 		String sqlType = "VARCHAR(100)";
-		if(typed != null && typed.TRUE)
+		if(typed == Boolean.TRUE)
 		{
 			sqlType = sqlDataType(xsdType, dbType);
 		}

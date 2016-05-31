@@ -37,6 +37,7 @@ public class FileProcessorGenerator implements IGenerate {
 			javaFileName = "DelimitedFileProcessor.java";
 			context.put("Import", Constants.pojoPackageName + "." + request.getRoot());
 			context.put("ClassName", "DelimitedFileProcessor");
+			context.put("type", "DELIMITED");
 			context.put("ClassNameClass", "DelimitedFileProcessor.class");
 			context.put("StartingTag", request.getRoot());
 			context.put("FileToBeParsed", request.getInputFile());
@@ -44,6 +45,7 @@ public class FileProcessorGenerator implements IGenerate {
 			javaFileName = "XMLFileProcessor.java";
 			context.put("Import", Constants.packageName + "." + request.getStartingElement());
 			context.put("ClassName", "XMLFileProcessor");
+			context.put("type", "XML");
 			context.put("ClassNameClass", "XMLFileProcessor.class");
 			context.put("StartingTag", request.getStartingElement());
 			context.put("FileToBeParsed", request.getInputFile());

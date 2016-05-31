@@ -2,8 +2,11 @@ package com.concept.crew.processor;
 
 import java.io.File;
 import $Import;
+ #if($type == "XML")
 import com.concept.crew.parser.XapParsingUtil;
+#end
 import org.apache.log4j.Logger;
+import java.util.*;
 
 public class $ClassName 
 {
@@ -18,13 +21,26 @@ public class $ClassName
 		     {
 		         if (fileToBeProcessed != null) 
 		         {	
+		         	
 					 // Parsing - Unmarshalling
+					 #if($type == "XML")
 					 log.warn("Parsing incoming XML file...");
+					 
 					 startingTag = XapParsingUtil.parseXml(fileToBeProcessed.getCanonicalPath(), ISO_8859_2);		            		            
-		            
+		            	
 		             // Save all Incoming Data into Tables
 		             log.warn("Processing incoming XML file...");
-					 LoadSaveProcessor.saveData(startingTag.get$List());						 					 
+					 LoadSaveProcessor.saveData(startingTag.get$List());
+					 #elseif($type == "DELIMITED")
+					 log.warn("Parsing incoming Delimited file...");
+					 
+					 List<$StartingTag> records = DelimiterDataExtractor.parseFileData(fileToBeProcessed.getCanonicalPath());		            		            
+		            	
+		             // Save all Incoming Data into Tables
+		             log.warn("Processing incoming Delimited file...");
+					 LoadSaveProcessor.saveData(records);
+					 #end
+					 						 					 
 				 }
 				 startingTag = null;
 			 } 

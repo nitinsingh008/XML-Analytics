@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.concept.crew.info.DBColumns;
+import com.concept.crew.util.AutomationHelper;
 import com.concept.crew.util.FrameworkSettings;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -13,9 +14,9 @@ import com.google.common.collect.Multimap;
 public class JaxbTableGenerator extends TableGenerator
 {		
 	private static final Logger log = Logger.getLogger(JaxbTableGenerator.class);
-	public JaxbTableGenerator(String xsdName,FrameworkSettings projectSetting)
+	public JaxbTableGenerator(String xsdName,FrameworkSettings projectSetting,AutomationHelper helper)
 	{
-		super(xsdName,projectSetting);
+		super(xsdName,projectSetting,helper);
 	}
 	
 

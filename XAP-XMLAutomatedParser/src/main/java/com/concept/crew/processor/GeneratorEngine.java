@@ -1,5 +1,6 @@
 package com.concept.crew.processor;
 
+import com.concept.crew.generator.DelimiterDataExtractorGenerator;
 import com.concept.crew.generator.EssentialsGenerator;
 import com.concept.crew.generator.FileProcessorGenerator;
 import com.concept.crew.generator.IGenerate;
@@ -18,7 +19,8 @@ public enum GeneratorEngine {
 	LOADER_TYPE(new LoaderTypeGenerator()),
 	PROCESSOR(new LoadSaveProcessorGenerator()),
 	XML_PARSER(new XMLParserGenerator()),
-	FILE_RUNNER(new FileProcessorGenerator());
+	FILE_RUNNER(new FileProcessorGenerator()),
+	DELIMITER_RUNNER(new DelimiterDataExtractorGenerator());
 	
 	private final IGenerate generator;
 	

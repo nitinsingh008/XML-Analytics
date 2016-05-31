@@ -28,7 +28,7 @@ public class PojoGenerator {
 		Set<String> tableNames = tableInfo.keySet();
 		for (String table : tableNames) {
 			StringBuilder pojoContaint = new StringBuilder();
-			String tableName = table.substring(0,1).toUpperCase()+table.substring(1).toLowerCase();
+			String tableName = table.toUpperCase();
 			pojoContaint.append("package "+Constants.pojoPackageName+";").append("\n\n");
 			pojoContaint.append("import com.univocity.parsers.annotations.Parsed;").append("\n\n\n");
 			pojoContaint.append("public class "+tableName+" {").append("\n");

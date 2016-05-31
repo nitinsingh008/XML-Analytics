@@ -26,8 +26,8 @@ public class CsvTableGenerator<E> extends TableGenerator{
 	
 	private static final Logger LOGGER = Logger.getLogger(CsvTableGenerator.class);
 	
-	public CsvTableGenerator(String xsdName,String delimiter,FrameworkSettings projectSetting) {
-		super(xsdName,projectSetting);
+	public CsvTableGenerator(String xsdName,String delimiter,FrameworkSettings projectSetting,AutomationHelper helper) {
+		super(xsdName,projectSetting,helper);
 		this.delimiter = delimiter;
 	}
 
@@ -66,8 +66,8 @@ public class CsvTableGenerator<E> extends TableGenerator{
 				}
 				LOGGER.warn("Creating POJO for Mapping");
 				new PojoGenerator(projectSetting).generatePOJO(csvTableInfo);
-				// adding new dependency for apache unilocity
-				PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(),"univocity-parsers", "com.univocity", "2.0.2");
+				// move ojdbc jars
+				autoHelper.copyUtilityJars();
 				// compile generated project
 				new AutomationHelper(projectSetting).buildMavenProject();
 				// load class file

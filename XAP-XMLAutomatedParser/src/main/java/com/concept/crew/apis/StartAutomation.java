@@ -30,12 +30,14 @@ public class StartAutomation
 	private String rootNode = null;
 	private Pair<String, String> nodes = null;
 	private static SimpleDateFormat ddmmyyyhhmm = new SimpleDateFormat("ddmmyyyyHHmm");
+	private AutomationHelper autoHelper;
 	
 	public StartAutomation(XSDParseRequest request) {
 		super();
 		this.request = request;
 		String inputFileName = request.getParsedXSDPath().substring(request.getParsedXSDPath().lastIndexOf(File.separator)+1, request.getParsedXSDPath().lastIndexOf("."));
 		projectSetting = new FrameworkSettings("LF"+"_"+inputFileName+"_"+ddmmyyyhhmm.format(new Date(System.currentTimeMillis())), request.getInputType(), inputFileName);
+		this.autoHelper = new AutomationHelper(projectSetting);
 	}
 
 	public void doAll() throws Exception{
@@ -60,7 +62,7 @@ public class StartAutomation
 	{
 		File inputMetaDataFile = new File(request.getParsedXSDPath()); 
 		
-		AutomationHelper autoHelper = new AutomationHelper(projectSetting);
+	//	AutomationHelper autoHelper = new AutomationHelper(projectSetting);
 		autoHelper.initialization();
 		
 		//1. Create Maven project with default settings
@@ -130,13 +132,13 @@ public class StartAutomation
 		TableGenerator generator =  null;
 		if(request.getInputType().equals(Constants.inputType.XML.toString()))
 		{
-			generator =  new JaxbTableGenerator(xsdFile.getName(),projectSetting);
+			generator =  new JaxbTableGenerator(xsdFile.getName(),projectSetting,autoHelper);
 			nodes = AutomationHelper.fetchRootNode(xsdFile);
 			rootNode = nodes.getRight();
 		} 
 		else if(request.getInputType().equals(Constants.inputType.DELIMITED.toString()))
 		{
-			generator =  new CsvTableGenerator(xsdFile.getName(),request.getDelimiter(),projectSetting);
+			generator =  new CsvTableGenerator(xsdFile.getName(),request.getDelimiter(),projectSetting,autoHelper);
 			rootNode = xsdFile.getName().substring(0,xsdFile.getName().lastIndexOf(".")).toUpperCase();
 			nodes = new Pair<String, String>("", rootNode);
 		}

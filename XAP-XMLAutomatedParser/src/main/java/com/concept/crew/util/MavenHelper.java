@@ -24,7 +24,6 @@ public class MavenHelper {
 	
 	private static Logger 		logger 			= Logger.getLogger(MavenHelper.class);
 	private FrameworkSettings projectSetting = null;
-	private static Boolean isDependancyAdded = Boolean.FALSE;
 	
 	public MavenHelper(FrameworkSettings projectSetting) {
 		super();
@@ -121,17 +120,15 @@ public class MavenHelper {
 		if(!resourcesDir.exists()){
 			resourcesDir.mkdirs();
 		}
+		// updating dependency in pom file
+		addMavenDependancies(); // for XML
+		
 		//Files.copy(srcDir.toPath(), resourcesDir.toPath(), StandardCopyOption.ATOMIC_MOVE);
 	}
 	
 	public void buildMavenProject() throws MavenInvocationException
 	{
 		InvocationRequest request = new DefaultInvocationRequest();
-		
-		if(!isDependancyAdded){
-			addMavenDependancies();
-			isDependancyAdded = Boolean.TRUE;
-		}
 		request.setPomFile(new File(projectSetting.getPomPath()));
 		request.setGoals( Arrays.asList( "install", "-DskipTests=true" ) );
 		Invoker invoker = new DefaultInvoker();
@@ -160,6 +157,8 @@ public class MavenHelper {
 		PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(), "log4j", "log4j", "1.2.15");
 		PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(), "commons-io", "commons-io", "2.4");
 		PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(), "commons-dbcp", "commons-dbcp", "1.3");
+		// adding new dependency for apache unilocity
+		PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(),"univocity-parsers", "com.univocity", "2.0.2");
 	}
 	
 	/*
