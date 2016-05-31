@@ -18,7 +18,7 @@ public class FrameworkSettings {
 	private String compilationPath;
 	private String pathToRootClass;
 	private String pathToGenerateSchedules;
-	private String pathToLoadSaveProcessor;
+	private String pathToProcessor;
 	private String pathToParentInfoWrapper;
 	private String pathToLoaderType;
 	private String defaultConceptCrewPath;
@@ -44,7 +44,7 @@ public class FrameworkSettings {
 		this.compilationPath  			= this.dirSrcJava + "/com/concept/crew/info/jaxb";
 		this.pathToRootClass 			= this.targetPath + "/" + "classes";
 		this.pathToGenerateSchedules 	= this.defaultConceptCrewPath + File.separator + "dao" + File.separator + "loader";
-		this.pathToLoadSaveProcessor	= this.defaultConceptCrewPath + File.separator + "processor";
+		this.pathToProcessor			= this.defaultConceptCrewPath + File.separator + "processor";
 		this.pathToParentInfoWrapper	= this.defaultConceptCrewPath + File.separator + "info" + File.separator + "raw" ; 
 		this.pathToLoaderType			= this.defaultConceptCrewPath + File.separator + "dao" + File.separator + "loaderUtil" ;
 		this.pathToUtilityJar			= mavenProjectPath + "/"+ projectName + "/src/lib";
@@ -92,8 +92,8 @@ public class FrameworkSettings {
 		return pathToGenerateSchedules;
 	}
 
-	public String getPathToLoadSaveProcessor() {
-		return pathToLoadSaveProcessor;
+	public String getPathToProcessor() {
+		return pathToProcessor;
 	}
 
 	public String getPathToParentInfoWrapper() {

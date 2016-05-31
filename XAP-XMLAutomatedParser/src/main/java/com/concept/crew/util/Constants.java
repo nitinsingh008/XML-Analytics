@@ -4,6 +4,7 @@ public class Constants
 {
 	public static final String mavenProjectPath = "C:/XAP";
 	public static final String packageToCompile 		= "com.concept.crew.info";
+	public static final String packageToProcess 		= "com.concept.crew.processor";
 	public static final String packageName 		= "com.concept.crew.info.jaxb";
 	public static final String pojoPackageName 		= "com.concept.crew.info.pojo";
 	public static final String dirSrcResource   = "src/main/resources/";

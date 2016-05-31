@@ -27,7 +27,7 @@ public class FileProcessorGenerator implements IGenerate {
 		BufferedWriter writer = null;
 		
 		VelocityEngine velocityEngine = request.getVelocityEngine();
-		File dir = new File(request.getProjectSetting().getPathToLoadSaveProcessor());
+		File dir = new File(request.getProjectSetting().getPathToProcessor());
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
@@ -62,7 +62,7 @@ public class FileProcessorGenerator implements IGenerate {
 		try {
 			template = velocityEngine.getTemplate("./src/main/resources/templates/IncomingFileProcessor.java.vtl");
 			writer = new BufferedWriter(new FileWriter(
-					new File(request.getProjectSetting().getPathToLoadSaveProcessor() + File.separator + javaFileName)));
+					new File(request.getProjectSetting().getPathToProcessor() + File.separator + javaFileName)));
 			template.merge(context, writer);
 			writer.flush();
 			writer.close();

@@ -24,7 +24,7 @@ public class LoadSaveProcessorGenerator implements IGenerate {
 	@Override
 	public void generate(GenerateRequest request) {
 		VelocityEngine velocityEngine = request.getVelocityEngine();
-		File scheduleDir = new File(request.getProjectSetting().getPathToLoadSaveProcessor());
+		File scheduleDir = new File(request.getProjectSetting().getPathToProcessor());
 		if (!scheduleDir.exists()) {
 			scheduleDir.mkdirs();
 		}
@@ -38,7 +38,7 @@ public class LoadSaveProcessorGenerator implements IGenerate {
 		try {
 			Template template = velocityEngine.getTemplate("./src/main/resources/templates/LoadSaveProcessor.java.vtl");
 			BufferedWriter writer = new BufferedWriter(new FileWriter(
-					new File(request.getProjectSetting().getPathToLoadSaveProcessor() + File.separator +"LoadSaveProcessor.java")));
+					new File(request.getProjectSetting().getPathToProcessor() + File.separator +"LoadSaveProcessor.java")));
 			template.merge(context, writer);
 			writer.flush();
 			writer.close();

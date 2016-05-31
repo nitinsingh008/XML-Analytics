@@ -163,6 +163,10 @@ public class StartAutomation
 		return true;
 	}
 	
+	public FrameworkSettings getProjectSetting() {
+		return projectSetting;
+	}
+
 	public static void main(String[] args) throws Exception
 	{
 		XSDParseRequest request = new XSDParseRequest();

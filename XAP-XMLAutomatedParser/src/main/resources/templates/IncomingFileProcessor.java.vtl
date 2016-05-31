@@ -2,14 +2,18 @@ package com.concept.crew.processor;
 
 import java.io.File;
 import $Import;
+ #if($type == "XML")
 import com.concept.crew.parser.XapParsingUtil;
+#end
 import org.apache.log4j.Logger;
+import java.util.*;
+import com.concept.crew.dao.loaderUtil.LoaderDBRoutine;
 
 public class $ClassName 
 {
 	private static final 	String 					ISO_8859_2 				= "ISO-8859-2"; 
 	private static final Logger log = Logger.getLogger("$ClassNameClass");
-	public static void execute(File fileToBeProcessed)	throws Exception
+	public static void execute(File fileToBeProcessed , String dbType, String jdbcUrl, String userName , String password)	throws Exception
 	{
 		try 
 		{		
@@ -18,13 +22,26 @@ public class $ClassName
 		     {
 		         if (fileToBeProcessed != null) 
 		         {	
-					 // Parsing - Unmarshalling
+		         		
+					 LoaderDBRoutine.initializeDBRoutine(dbType, jdbcUrl, userName, password);
+					 #if($type == "XML")
 					 log.warn("Parsing incoming XML file...");
+					 
 					 startingTag = XapParsingUtil.parseXml(fileToBeProcessed.getCanonicalPath(), ISO_8859_2);		            		            
-		            
+		            	
 		             // Save all Incoming Data into Tables
 		             log.warn("Processing incoming XML file...");
-					 LoadSaveProcessor.saveData(startingTag.get$List());						 					 
+					 LoadSaveProcessor.saveData(startingTag.get$List());
+					 #elseif($type == "DELIMITED")
+					 log.warn("Parsing incoming Delimited file...");
+					 
+					 List<$StartingTag> records = DelimiterDataExtractor.parseFileData(fileToBeProcessed.getCanonicalPath());		            		            
+		            	
+		             // Save all Incoming Data into Tables
+		             log.warn("Processing incoming Delimited file...");
+					 LoadSaveProcessor.saveData(records);
+					 #end
+					 						 					 
 				 }
 				 startingTag = null;
 			 } 
