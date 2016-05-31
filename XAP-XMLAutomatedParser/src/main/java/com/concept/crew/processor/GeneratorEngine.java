@@ -1,6 +1,7 @@
 package com.concept.crew.processor;
 
 import com.concept.crew.generator.EssentialsGenerator;
+import com.concept.crew.generator.FileProcessorGenerator;
 import com.concept.crew.generator.IGenerate;
 import com.concept.crew.generator.LoadSaveProcessorGenerator;
 import com.concept.crew.generator.LoaderTypeGenerator;

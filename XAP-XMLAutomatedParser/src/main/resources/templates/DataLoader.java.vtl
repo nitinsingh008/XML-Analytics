@@ -17,6 +17,7 @@ import com.concept.crew.util.Pair;
 import com.concept.crew.util.StringUtil;
 import com.concept.crew.util.ThreadManager;
 import com.concept.crew.dao.loaderUtil.IDataDomainLoader;
+import org.apache.log4j.Logger;
 
 /**
  * 
@@ -58,7 +59,7 @@ public class $ClassName {
 	 * 
 	 */
 	private static final class DbWriterImpl implements DbWriter {
-
+		private static final Logger log = Logger.getLogger(DbWriterImpl.class);
 		private DbWriterImpl() 
 		{
 		}
@@ -66,20 +67,19 @@ public class $ClassName {
 		//@Override
 		public void writeData(Collection<ParentInfoWrapper> data) 
 		{
-
+			log.warn("Mapping each record with the loader ");
 			Collection<Pair<ParentInfoWrapper, List<IDataDomainLoader>>> dataAndDomainWriters = new ArrayList<Pair<ParentInfoWrapper, List<IDataDomainLoader>>>();
 
 			Iterate.forEach(data, new PairDataWithItsTargetedWriters(dataAndDomainWriters));
 			try 
 			{
 				String logKey = "";
-
 				ThreadManager dataWriterThreadManager = ThreadManager.UNO;
 				final CompletionService<Void> completionService = ThreadManager.newCompletionService(dataWriterThreadManager);
 				final List<Future<Void>> writeTasks = new ArrayList<Future<Void>>();
 
 				Collection<Collection<Pair<ParentInfoWrapper, List<IDataDomainLoader>>>> partitions = CollectionsUtil.partition(dataAndDomainWriters, 1);
-
+				log.warn("Preparing to write data in the db ");
 				for (Collection<Pair<ParentInfoWrapper, List<IDataDomainLoader>>> partition : partitions){
 					Callable<Void> call = new DataWriterImpl<ParentInfoWrapper, IDataDomainLoader>(logKey, partition);
 					Future<Void> task = completionService.submit(call);
@@ -87,17 +87,19 @@ public class $ClassName {
 				}
 
 				ThreadManager.handleTaskCompletion(writeTasks, completionService);
-
+				log.warn("Finished ");
 			} catch (InterruptedException e)
 			{
+				log.error("Failed while persisting data into db ");
 				throw new RuntimeException(e);
 			} 
 			catch (ExecutionException e) 
 			{
+				log.error("Failed while persisting data into db ");
 				throw new RuntimeException(e);
 			}
 			finally
-			{
+			{	
 				ThreadManager.shutdown();
 			}
 		}

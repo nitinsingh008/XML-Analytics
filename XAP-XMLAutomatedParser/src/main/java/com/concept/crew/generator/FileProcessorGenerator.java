@@ -1,4 +1,4 @@
-package com.concept.crew.processor;
+package com.concept.crew.generator;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -37,12 +37,14 @@ public class FileProcessorGenerator implements IGenerate {
 			javaFileName = "DelimitedFileProcessor.java";
 			context.put("Import", Constants.pojoPackageName + "." + request.getRoot());
 			context.put("ClassName", "DelimitedFileProcessor");
+			context.put("ClassNameClass", "DelimitedFileProcessor.class");
 			context.put("StartingTag", request.getRoot());
 			context.put("FileToBeParsed", request.getInputFile());
 		}else{
 			javaFileName = "XMLFileProcessor.java";
 			context.put("Import", Constants.packageName + "." + request.getStartingElement());
 			context.put("ClassName", "XMLFileProcessor");
+			context.put("ClassNameClass", "XMLFileProcessor.class");
 			context.put("StartingTag", request.getStartingElement());
 			context.put("FileToBeParsed", request.getInputFile());
 		}

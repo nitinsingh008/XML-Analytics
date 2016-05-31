@@ -1,14 +1,14 @@
 package com.concept.crew.processor;
 
-import com.concept.crew.dao.loaderUtil.LoaderDBRoutine;
 import java.io.File;
 import $Import;
 import com.concept.crew.parser.XapParsingUtil;
+import org.apache.log4j.Logger;
 
 public class $ClassName 
 {
 	private static final 	String 					ISO_8859_2 				= "ISO-8859-2"; 
-
+	private static final Logger log = Logger.getLogger("$ClassNameClass");
 	public static void execute(File fileToBeProcessed)	throws Exception
 	{
 		try 
@@ -16,23 +16,26 @@ public class $ClassName
 		     $StartingTag startingTag = null;
 		     try 
 		     {
-		         LoaderDBRoutine.initializeDBRoutine("$DbType", "$JdbcUrl", "$Username", "$Password");
-				 if (fileToBeProcessed != null) 
+		         if (fileToBeProcessed != null) 
 		         {	
 					 // Parsing - Unmarshalling
+					 log.warn("Parsing incoming XML file...");
 					 startingTag = XapParsingUtil.parseXml(fileToBeProcessed.getCanonicalPath(), ISO_8859_2);		            		            
 		            
 		             // Save all Incoming Data into Tables
+		             log.warn("Processing incoming XML file...");
 					 LoadSaveProcessor.saveData(startingTag.get$List());						 					 
 				 }
 				 startingTag = null;
 			 } 
 		     catch (Exception e){
-		     	throw new RuntimeException(e);
+		     	log.error("Failed while parsing XML");
+		     	throw new RuntimeException(e.getMessage());
 			 }			  
 		}
 		catch(Exception e) 
 		{
+			log.error("Failed while processing XML");
 			throw new RuntimeException("Error processing the file " + e.getMessage());	
 		}					
 

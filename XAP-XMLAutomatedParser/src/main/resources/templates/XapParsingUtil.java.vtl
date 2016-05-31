@@ -18,7 +18,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -26,13 +26,15 @@ import $Import;
 
 public class $ClassName {
 	
+	private static final Logger log = Logger.getLogger(XapParsingUtil.class);
 	private static JAXBContext 	jaxbContext;
 	private static Unmarshaller unmarshaller;
 	
 	static  
 	{
 		try 
-		{
+		{	
+			log.warn ("Start Parsing...");
 			jaxbContext = JAXBContext.newInstance($StartingTagClass);
 			
 			unmarshaller = jaxbContext.createUnmarshaller();
@@ -57,6 +59,8 @@ public class $ClassName {
 	}
 	
 	public static $StartingTag parseXml(String filePath, String encoding) throws ParserConfigurationException, SAXException, IOException, JAXBException{
+	
+	    log.warn("Start Unmashalling...");
 		File fXmlFile = new File(filePath);
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		dbf.setNamespaceAware(true);

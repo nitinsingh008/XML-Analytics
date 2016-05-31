@@ -20,11 +20,13 @@ import com.concept.crew.util.GeneralUtil;
 import com.concept.crew.util.Iterate;
 import com.concept.crew.util.Pair;
 import com.concept.crew.util.StringUtil;
+import org.apache.log4j.Logger;
 
 public class $ClassName <T, W extends IDataWriter<T>> 
 											implements Callable<Void> 
 {
-
+	private static final Logger log = Logger.getLogger(DataWriterImpl.class);
+	
 	private final Collection<Pair<T, List<W>>> dataAndWriters;
 
 	public DataWriterImpl(Collection<T> data, W writer) 
@@ -144,6 +146,7 @@ public class $ClassName <T, W extends IDataWriter<T>>
 			PreparedStatement preparedStatement = writerStatement.getValue();
 
 			StringBuilder action = new StringBuilder("execute Writer for ").append(loaderName);
+			log.warn(new StringBuilder("Start ").append(action));
 			try 
 			{
 				preparedStatement.executeBatch();
@@ -152,6 +155,7 @@ public class $ClassName <T, W extends IDataWriter<T>>
 			{
 				throw new RuntimeException(new StringBuilder("Failed ").append(action).toString() + " - " + e.getMessage(), e);
 			}
+			log.warn(new StringBuilder("Finished ").append(action).append(" ").append(writer.getWriterRecordCount()).append(" Statements(s) executed."));
 		}
 	}
 

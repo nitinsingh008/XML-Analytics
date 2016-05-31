@@ -149,29 +149,46 @@ public class AutomationHelper extends MavenHelper
 				 }			 
 			 }	
 	    	 
+	    	//copy log4j xml	    	 
+			targetDir = new File(projectSetting.getResourcePath());
+			if (!targetDir.exists()) {
+				targetDir.mkdirs();
+			}
+	
+			if (sourceDir.isDirectory()) {
+				File[] content = sourceDir.listFiles();
+				for (int i = 0; i < content.length; i++) {
+					if (content[i].getName().contains(".xml")) {
+						targetDir = new File(projectSetting.getResourcePath() + File.separator + content[i].getName());
+						try {
+							Files.copy(content[i].getAbsoluteFile(), targetDir.getAbsoluteFile());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
 	    	 //copy xsd if XSD request
-	    	 if(Constants.inputType.XML.toString().equals(projectSetting.getRequestType())){
-	    		 sourceDir = new File(Constants.xsdLocalPath);
-	    		 targetDir = new File(projectSetting.getResourcePath());
-	    		 
-	    		 if(!targetDir.exists()){
-	 	    		targetDir.mkdirs();
-	 	    	 }
-	    		 
-	    		 if(sourceDir.isDirectory()){
-	    			 File[] content = sourceDir.listFiles();
-					 for(int i = 0; i < content.length; i++) {
-						 if(content[i].getName().contains(projectSetting.getInputFileName())){
-								targetDir = new File(projectSetting.getResourcePath()+ File.separator+ content[i].getName());
-								try {
-									Files.copy(content[i].getAbsoluteFile(), targetDir.getAbsoluteFile());
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
-							 }		
-					 }
-	    		 }
-	    	 }
+			if (Constants.inputType.XML.toString().equals(
+					projectSetting.getRequestType())) {
+				sourceDir = new File(Constants.xsdLocalPath);
+	
+				if (sourceDir.isDirectory()) {
+					File[] content = sourceDir.listFiles();
+					for (int i = 0; i < content.length; i++) {
+						if (content[i].getName().contains(projectSetting.getInputFileName())) {
+							targetDir = new File(projectSetting.getResourcePath() + File.separator + content[i].getName());
+							try {
+								Files.copy(content[i].getAbsoluteFile(), targetDir.getAbsoluteFile());
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+			}
+	    	 
+	    	 
 	    }
 	
 	public static void main(String args[]) throws Exception

@@ -157,7 +157,7 @@ public class MavenHelper {
 	private void addMavenDependancies(){
 		PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(),"ConceptCrewUtil", "ConceptCrewUtil", "1.0","ConceptCrewUtil-1.0.jar");
 		PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(),"ojdbc6", "ojdbc6", "1.0","ojdbc6.jar");
-		//PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(), "log4j", "log4j", "1.2.15");
+		PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(), "log4j", "log4j", "1.2.15");
 		PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(), "commons-io", "commons-io", "2.4");
 		PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(), "commons-dbcp", "commons-dbcp", "1.3");
 	}
@@ -170,7 +170,7 @@ public class MavenHelper {
 	{
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource(zipFilePath).getFile());		
-
+		//File file = new File("D:\\XAP Workspace\\concept-XML-analysis\\target\\classes\\" + File.separator + zipFilePath);
         File destDir = new File(destDirectory);
         if (!destDir.exists()) {
             destDir.mkdir();
