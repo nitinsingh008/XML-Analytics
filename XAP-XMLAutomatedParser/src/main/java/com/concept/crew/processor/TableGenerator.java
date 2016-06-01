@@ -376,6 +376,29 @@ public abstract class TableGenerator
 		jarFile.close();
 		return classes;
 	}
+	
+	protected List<Class> loadClassesFromFolder() throws MalformedURLException, ClassNotFoundException{
+		
+		File jaxbFolder = new File("C:\\XAP\\Work\\");
+		File jaxbFileList = new File(Constants.jaxbWorkFolder);
+		List<Class> classes = new ArrayList<Class>();
+		// convert the file to URL format
+		URL url = jaxbFolder.toURI().toURL();
+		URL[] urls = new URL[] { url };
+		
+		// load this folder into Class loader
+		ClassLoader cl = new URLClassLoader(urls);
+		File[] content = jaxbFileList.listFiles();
+		for(int i = 0; i < content.length; i++) {
+			if(content[i].getName().contains(".class")){
+				String className = Constants.packageName + "." +content[i].getName().substring(0,content[i].getName().length()-6);
+				Class cls = cl.loadClass(className);	
+				classes.add(cls);
+			}
+		}
+		return classes;
+	}
+	
 	private static String format(String columnName, String dataType)
 	{
 		String temp = new String(

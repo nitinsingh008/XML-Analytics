@@ -9,13 +9,13 @@ import java.net.URLClassLoader;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-
+import org.apache.log4j.Logger;
 import com.concept.crew.info.DBDetails;
 import com.concept.crew.util.Constants;
 import com.concept.crew.util.FrameworkSettings;
 
 public class ParseIncomingRequest {
-	
+	private static final Logger log = Logger.getLogger("ParseIncomingRequest.class");
 	private File fileToBeParsed;
 	private FrameworkSettings projectSetting;
 	
@@ -25,6 +25,7 @@ public class ParseIncomingRequest {
 	}
 	
 	public void process(){
+		log.warn("Starting");
 		Class cls = loadMainClass();
 		if(cls == null){
 			System.out.println("Processor class not found");

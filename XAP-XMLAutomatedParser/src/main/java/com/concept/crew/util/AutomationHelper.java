@@ -127,7 +127,29 @@ public class AutomationHelper extends MavenHelper
 			 }	
 	    }
 	    
-	    public void doChoreOperations(){
+	 public void copyJaxbClasses(){
+		 File targetDir = new File(Constants.jaxbWorkFolder);
+		 if(!targetDir.exists()){
+	    		targetDir.mkdirs();
+	     }
+		 String src = projectSetting.getPathToRootClass()+ File.separator +"/com/concept/crew/info/jaxb";
+		 File sourceDir = new File(src);
+		 if(sourceDir.isDirectory()){
+			 File[] content = sourceDir.listFiles();
+			 for(int i = 0; i < content.length; i++) {
+				 if(content[i].getName().contains(".class")){
+					targetDir = new File(Constants.jaxbWorkFolder+ File.separator+ content[i].getName());
+					try {
+						Files.copy(content[i].getAbsoluteFile(), targetDir.getAbsoluteFile());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				 }				  
+			 }			 
+		 }	
+	 }
+	 
+	 public void doChoreOperations(){
 	    	File sourceDir = new File("./src/main/java/com/concept/crew/dao/loaderUtil");
 	    	File targetDir = new File(projectSetting.getPathToLoaderType());
 	    	
@@ -187,9 +209,7 @@ public class AutomationHelper extends MavenHelper
 					}
 				}
 			}
-	    	 
-	    	 
-	    }
+	}
 	
 	public static void main(String args[]) throws Exception
 	{

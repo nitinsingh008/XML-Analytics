@@ -28,7 +28,8 @@ public class JaxbTableGenerator extends TableGenerator
 		log.warn("-----------------------------");
 		
 		Multimap<String, DBColumns> tableMap = ArrayListMultimap.create();
-		List<Class> classes = loadClassesFromJar();
+		//List<Class> classes = loadClassesFromJar();
+		List<Class> classes = loadClassesFromFolder();
 		String currTableName = "";
 		for (Class cls : classes) 
 		{
