@@ -62,7 +62,14 @@ public class ParseIncomingRequest {
 		try {
 			jarFile = new JarFile(projectSetting.getTargetPath()+ "\\" + projectSetting.getJarFileName());
 			Enumeration e = jarFile.entries();
-			URL[] urls = { new URL("jar:file:" + projectSetting.getTargetPath()+ "\\" + projectSetting.getJarFileName()+"!/") };
+			URL[] urls = { new URL("jar:file:" + projectSetting.getTargetPath()+ "\\" + projectSetting.getJarFileName()+"!/"),
+						   new URL("jar:file:" + projectSetting.getPathToUtilityJar() + "/log4j-1.2.15.jar"+"!/"),
+						   new URL("jar:file:" + projectSetting.getPathToUtilityJar() + "/ConceptCrewUtil-1.0.jar"+"!/"),
+						   new URL("jar:file:" + projectSetting.getPathToUtilityJar() + "/ojdbc6.jar"+"!/"),
+						   new URL("jar:file:" + projectSetting.getPathToUtilityJar() + "/commons-dbcp-1.3.jar"+"!/"),
+						   new URL("jar:file:" + projectSetting.getPathToUtilityJar() + "/commons-io-2.4.jar"+"!/"),
+						   new URL("jar:file:" + projectSetting.getPathToUtilityJar() + "/commons-pool-1.5.4.jar"+"!/"),
+						   new URL("jar:file:" + projectSetting.getPathToUtilityJar() + "/univocity-parsers-2.0.2.jar"+"!/")};
 			URLClassLoader loader = URLClassLoader.newInstance(urls);
 			
 			while (e.hasMoreElements()) 
@@ -72,9 +79,11 @@ public class ParseIncomingRequest {
 		        {
 		            continue;
 		        }
+		       	
 			    // -6 because of .class
 			    String className = je.getName().substring(0,je.getName().length()-6);
 			    className = className.replace('/', '.');
+			    
 			    
 			    if(className.contains(Constants.packageToProcess))
 			    {
@@ -84,6 +93,8 @@ public class ParseIncomingRequest {
 			    		processor = Constants.packageToProcess + "." + "XMLFileProcessor";
 			    	}
 			    	 cls = loader.loadClass(processor);					    
+			    }else{
+			    	loader.loadClass(className);
 			    }
 		    }
 			jarFile.close();
