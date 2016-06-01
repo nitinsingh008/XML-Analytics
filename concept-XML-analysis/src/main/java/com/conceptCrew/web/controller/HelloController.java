@@ -252,8 +252,7 @@ public class HelloController {
 				e.printStackTrace();
 			}
 
-			ParseIncomingRequest parseReq = new ParseIncomingRequest(
-					serverFile, sa.getProjectSetting());
+			 new ParseIncomingRequest(serverFile, sa.getProjectSetting()).process();
 		} else {
 			model.put("parsedInString", "You have Uplaoded Blank file");
 		}
