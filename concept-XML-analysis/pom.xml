@@ -48,7 +48,9 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
+			 <scope>system</scope>
 			<version>2.4</version>
+			<systemPath>${basedir}\src\lib\commons-io-2.4.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>javax.xml</groupId>
@@ -110,7 +112,9 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
+			<scope>system</scope>
 			<version>1.2.15</version>
+			<systemPath>${basedir}\src\lib\log4j-1.2.15.jar</systemPath>
 			<exclusions>
 				<exclusion>
 					<groupId>com.sun.jmx</groupId>
@@ -139,8 +143,9 @@
 		<dependency>
 			<groupId>com.univocity</groupId>
 			<artifactId>univocity-parsers</artifactId>
+			<scope>system</scope>
 			<version>2.0.2</version>
-			<type>jar</type>
+			<systemPath>${basedir}\src\lib\univocity-parsers-2.0.2.jar</systemPath>
 		</dependency>
 		<dependency>
 		    <groupId>org.apache.derby</groupId>
