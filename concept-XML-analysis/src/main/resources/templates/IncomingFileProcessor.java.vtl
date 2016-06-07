@@ -5,6 +5,9 @@ import $Import;
  #if($type == "XML")
 import com.concept.crew.parser.XapParsingUtil;
 #end
+ #if($type == "DELIMITED")
+import com.concept.crew.dao.loaderUtil.DelimiterDataExtractor;
+#end
 import org.apache.log4j.Logger;
 import java.util.*;
 import com.concept.crew.dao.loaderUtil.LoaderDBRoutine;
@@ -13,7 +16,13 @@ public class $ClassName
 {
 	private static final 	String 					ISO_8859_2 				= "ISO-8859-2"; 
 	private static final Logger log = Logger.getLogger("$ClassNameClass");
+	#if($type == "XML")
 	public static void execute(File fileToBeProcessed , String dbType, String jdbcUrl, String userName , String password)	throws Exception
+	#end
+	 #if($type == "DELIMITED")
+	public static void execute(File fileToBeProcessed , String dbType, String jdbcUrl, String userName , String password,
+			Boolean haveHeaderInFile,String delimiter, Class<$DelimiterclassType> className)	throws Exception
+	#end				
 	{
 		try 
 		{		
@@ -35,7 +44,7 @@ public class $ClassName
 					 #elseif($type == "DELIMITED")
 					 log.warn("Parsing incoming Delimited file...");
 					 
-					 List<$StartingTag> records = DelimiterDataExtractor.parseFileData(fileToBeProcessed.getCanonicalPath());		            		            
+					 List<$StartingTag> records = DelimiterDataExtractor.parseFileData(haveHeaderInFile,delimiter, className,fileToBeProcessed.getCanonicalPath());		            		            
 		            	
 		             // Save all Incoming Data into Tables
 		             log.warn("Processing incoming Delimited file...");

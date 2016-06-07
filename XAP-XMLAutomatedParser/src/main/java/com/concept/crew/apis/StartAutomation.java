@@ -128,8 +128,6 @@ public class StartAutomation
 	public Multimap<String, DBColumns> tableGenerator(File 		xsdFile,
 													  Boolean 	createScripts) throws Exception
 	{
-
-		
 		TableGenerator generator =  null;
 		if(request.getInputType().equals(Constants.inputType.XML.toString()))
 		{
@@ -183,20 +181,10 @@ public class StartAutomation
 		//new StartAutomation(request).createFrameWork();
 		new StartAutomation(request).doAll();
 	}
+
+	public XSDParseRequest getRequest() {
+		return request;
+	}
 	
-/*	public static void main(String[] args) throws Exception
-	{
-		XSDParseRequest request = new XSDParseRequest();
-		request.setParsedXSDPath(args[0]);
-		request.setDatabaseType("ORACLE");
-		request.setTnsEntry("jdbc:oracle:thin:@ (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = lon2odcdvscan01.markit.partners)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = BRD02DV)))");
-		request.setUserName("CORE_REF_DATA");
-		request.setPassword("CORE_REF_DATA");
-		request.setCreateScript(true);
-		request.setHaveHeaderData(Boolean.TRUE);
-		request.setInputType(Constants.inputType.XML.toString());
-		request.setCreateTable(false);
-		//new StartAutomation(request).createFrameWork();
-		new StartAutomation(request).doAll();
-	}*/
+
 }

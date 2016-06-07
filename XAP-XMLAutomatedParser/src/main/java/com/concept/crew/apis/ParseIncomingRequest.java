@@ -7,37 +7,53 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import org.apache.log4j.Logger;
 import com.concept.crew.info.DBDetails;
+import com.concept.crew.info.GenerateRequest;
 import com.concept.crew.util.Constants;
 import com.concept.crew.util.FrameworkSettings;
+import com.concept.crew.util.XSDParseRequest;
 
 public class ParseIncomingRequest {
 	private static final Logger log = Logger.getLogger("ParseIncomingRequest.class");
 	private File fileToBeParsed;
 	private FrameworkSettings projectSetting;
+	private XSDParseRequest request;
 	
-	public ParseIncomingRequest(File fileToBeParsed , FrameworkSettings projectSetting) {
+	public ParseIncomingRequest(File fileToBeParsed , FrameworkSettings projectSetting,XSDParseRequest request) {
 		this.fileToBeParsed = fileToBeParsed;
 		this.projectSetting = projectSetting;
+		this.request = request;
 	}
 	
 	public void process(){
 		log.warn("Starting");
-		Class cls = loadMainClass();
-		if(cls == null){
+		Map<String,Class> cls = loadMainClass();
+		Class mainClass = cls.get(Constants.mainProcessor);
+		if( mainClass == null){
 			System.out.println("Processor class not found");
 			return;
 		}
 		try {
-			Object instance = cls.newInstance();
-			
-			Method myMethod = cls.getMethod("execute",  new Class[] { File.class, String.class ,String.class, String.class, String.class });
+			Object instance = mainClass.newInstance();
 			DBDetails dbDetails =  projectSetting.getDbDetails();
-		    myMethod.invoke(instance, new Object[] { fileToBeParsed, dbDetails.getDbType(), dbDetails.getJdbcUrl(), 
-		    					dbDetails.getUser(), dbDetails.getPassword() });
+			if(projectSetting.getRequestType().equals(Constants.inputType.XML)){
+				Method myMethod = mainClass.getMethod("execute",  new Class[] { File.class, String.class ,String.class, String.class, String.class });
+			    myMethod.invoke(instance, new Object[] { fileToBeParsed, dbDetails.getDbType(), dbDetails.getJdbcUrl(), 
+			    					dbDetails.getUser(), dbDetails.getPassword() });
+			}else if(projectSetting.getRequestType().equals(Constants.inputType.DELIMITED)){
+				Class pojoCls = cls.get(Constants.delimiterPojoClass);
+				Method myMethod = mainClass.getMethod("execute",  new Class[] { File.class, String.class ,String.class, String.class, String.class,
+						Boolean.class,String.class,Class.class });
+			    myMethod.invoke(instance, new Object[] { fileToBeParsed, dbDetails.getDbType(), dbDetails.getJdbcUrl(), 
+			    					dbDetails.getUser(), dbDetails.getPassword(),request.getHaveHeaderData(),request.getDelimiter(),pojoCls});
+			}
+			
 			
 		} catch (InstantiationException e) {
 			e.printStackTrace();
@@ -55,10 +71,12 @@ public class ParseIncomingRequest {
 		
 	}
 	
-	private Class loadMainClass(){
+	private Map<String,Class> loadMainClass(){
 		JarFile jarFile;
 		String processor;
+		Map<String,Class> result = new HashMap<String, Class>();
 		Class cls = null;
+		Class pojoOfdelimiter = null;
 		try {
 			jarFile = new JarFile(projectSetting.getTargetPath()+ "\\" + projectSetting.getJarFileName());
 			Enumeration e = jarFile.entries();
@@ -84,15 +102,19 @@ public class ParseIncomingRequest {
 			    String className = je.getName().substring(0,je.getName().length()-6);
 			    className = className.replace('/', '.');
 			    
-			    
+			    if(className.contains(Constants.pojoPackageName)){
+			    	pojoOfdelimiter = loader.loadClass(className);
+			    	result.put(Constants.delimiterPojoClass, pojoOfdelimiter);
+			    }
 			    if(className.contains(Constants.packageToProcess))
 			    {
 			    	if(Constants.inputType.DELIMITED.toString().equals(projectSetting.getRequestType())){
 			    		processor = Constants.packageToProcess + "." + "DelimitedFileProcessor";
 			    	}else{
 			    		processor = Constants.packageToProcess + "." + "XMLFileProcessor";
-			    	}
-			    	 cls = loader.loadClass(processor);					    
+			    	}    	
+			    	 cls = loader.loadClass(processor);
+			    	 result.put(Constants.mainProcessor, cls);
 			    }else{
 			    	loader.loadClass(className);
 			    }
@@ -103,7 +125,7 @@ public class ParseIncomingRequest {
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		}
-		return cls;
+		return result;
 	}
 
 }

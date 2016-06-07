@@ -166,11 +166,11 @@
 				$("#alertMessage").html('Select files to upload');
 				 $("#alert").show();
 				return;
-			}else if(!fileName.endsWith(".xml")){
+			}/*else if(!fileName.endsWith(".xml")){
 				 $('#alertMessage').html('invalid file format');
 				 $("#alert").show();
 				 return;
-			}
+			}*/
 			 var oMyForm = new FormData();
 			  oMyForm.append(fileName, inputXML.files[0]);
 			  $.ajax({

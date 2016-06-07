@@ -136,17 +136,17 @@ function checkConnectivity()
 						<br>
 						<div id="databaseSetting">
 							<span class="settng_span">Table Name PostFix</span>
-							<form:input path="databaseTablePostFix" id="databaseTablePostFix" />
+							<form:input path="databaseTablePostFix" id="databaseTablePostFix" value="RAW"/>
 							<br> <span class="settng_span">Database Connection
 								String</span> <br>
 							<form:textarea path="tnsEntry" rows="2" cols="45" id="tnsEntry" />
 
 							<br> <span class="settng_span">UserName&nbsp;</span>
 							<form:input path="userName" id="username"
-								oninput="hideUserIcon()" />
+								oninput="hideUserIcon()"  value="CORE_REF_DATA"/>
 							<br> <span class="settng_span">Password&nbsp;&nbsp;&nbsp;</span>
 							<form:input path="password" type="password" id="password"
-								oninput="hidePsswdIcon()" />
+								oninput="hidePsswdIcon()" value="CORE_REF_DATA" />
 							<br> <input type="button" value="Test Connectivity"
 								onclick="checkConnectivity()" id="testconn" />
 

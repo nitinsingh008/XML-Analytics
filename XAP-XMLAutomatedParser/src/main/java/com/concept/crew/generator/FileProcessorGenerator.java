@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -41,6 +42,11 @@ public class FileProcessorGenerator implements IGenerate {
 			context.put("ClassNameClass", "DelimitedFileProcessor.class");
 			context.put("StartingTag", request.getRoot());
 			context.put("FileToBeParsed", request.getInputFile());
+			
+			Iterator<String> tableMapIt = request.getTableMap().keySet().iterator();
+			// in this case it wil be only one
+			String tableName = tableMapIt.next();
+			context.put("DelimiterclassType", tableName);
 		}else{
 			javaFileName = "XMLFileProcessor.java";
 			context.put("Import", Constants.packageName + "." + request.getStartingElement());
