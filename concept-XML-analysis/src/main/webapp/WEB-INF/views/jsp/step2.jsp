@@ -79,108 +79,136 @@ function checkConnectivity()
 
 <div class="container" id="container-jsp2">
 	<div class="xsd_container">
-		<div class="row">
-			<div class="xsdview_blck col-xs-6">
+		<div class="row col-xs-12">
+			<table width="100%" style="table-layout: fixed" cellspacing=10>
+				<tr>
+					<td rowspan="2" width="45%">
+						<div class="xsdview_blck">
 			
-				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-				  <div class="panel panel-default">
-				    <div class="panel-heading" role="tab" id="headingOne">
-				      <h4 class="panel-title">
-				        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-				         Input File View 
-				        </a>
-				      </h4>
-				    </div>
-				    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-				      <div class="panel-body">
-				       	<textarea class="textareafull" readonly="readonly">${parsedInString}</textarea>
-				      </div>
-				    </div>
-				  </div>
-				  <div class="panel panel-default">
-				    <div class="panel-heading" role="tab" id="headingTwo">
-				      <h4 class="panel-title">
-				        <a role="button" id="consoleOutPut" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-				          What's Happening??
-				        </a>
-				      </h4>
-				    </div>
-				    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-				      <div class="panel-body">
-				      	<textarea class="textareafull" id="consoleOutput" readonly="readonly"></textarea>
-				      </div>
-				    </div>
-				  </div>
-				</div>
-			</div>
-			<div class="col-xs-1"></div>
-			<div class="setting_blck col-xs-5">
-				<form:form commandName="xsdParseRequest" id="captureParseSettings"
-					name="captureSettings">
-						<h4>
-							<strong>Select Setting</strong> <br>
-						</h4>
-						<form:checkbox path="doAll" id="doAll"></form:checkbox>
-						<span class="settng_span">Select All</span> <br>
-
-						<form:checkbox path="createScript" id="createScript" />
-						<span class="settng_span">Create Database Script</span> <br>
-
-						<form:checkbox path="createFramework" id="createFramework" />
-						<span class="settng_span">Generate Parsing framework</span> <br>
-						<form:checkbox path="createTable" id="createTable" />
-						<span class="settng_span">Create Table in Database</span> <br>
-
-						<span class="settng_span">Choose Database Type</span>
-						<form:select path="databaseType" items="${databaseType}"></form:select>
-						<br>
-						<div id="databaseSetting">
-							<span class="settng_span">Table Name PostFix</span>
-							<form:input path="databaseTablePostFix" id="databaseTablePostFix" value="RAW"/>
-							<br> <span class="settng_span">Database Connection
-								String</span> <br>
-							<form:textarea path="tnsEntry" rows="2" cols="45" id="tnsEntry" />
-
-							<br> <span class="settng_span">UserName&nbsp;</span>
-							<form:input path="userName" id="username"
-								oninput="hideUserIcon()"  value="CORE_REF_DATA"/>
-							<br> <span class="settng_span">Password&nbsp;&nbsp;&nbsp;</span>
-							<form:input path="password" type="password" id="password"
-								oninput="hidePsswdIcon()" value="CORE_REF_DATA" />
-							<br> <input type="button" value="Test Connectivity"
-								onclick="checkConnectivity()" id="testconn" />
-
-
+							<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+							  <div class="panel panel-default">
+							    <div class="panel-heading" role="tab" id="headingOne">
+							      <h4 class="panel-title">
+							        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+							         Input File View 
+							        </a>
+							      </h4>
+							    </div>
+							    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+							      <div class="panel-body">
+							       	<textarea class="textareafull" readonly="readonly">${parsedInString}</textarea>
+							      </div>
+							    </div>
+							  </div>
+							  <div class="panel panel-default">
+							    <div class="panel-heading" role="tab" id="headingTwo">
+							      <h4 class="panel-title">
+							        <a role="button" id="consoleOutPut" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							          What's Happening??
+							        </a>
+							      </h4>
+							    </div>
+							    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+							      <div class="panel-body">
+							      	<textarea class="textareafull" id="consoleOutput" readonly="readonly"></textarea>
+							      </div>
+							    </div>
+							  </div>
+							</div>
 						</div>
-
-						<input type="hidden" path="parsedXSDPath" id="parsedXSDPath"
-							name="parsedXSDPath" value="${xsdParseRequest.parsedXSDPath}" />
-						<input type="hidden" path="inputType" id="inputType"
-							name="inputType" value="${xsdParseRequest.inputType}" /> 
-						<input
-							type="hidden" path="delimiter" id="delimiter" name="delimiter"
-							value="${xsdParseRequest.delimiter}" />
-						<input type="hidden"
-							id="haveHeaderData" name="haveHeaderData"
-							value="${xsdParseRequest.haveHeaderData}" />
-							<br>
-						<button type="button" id="GenerateButton" class="upload"
-								value="Generate" onclick="clickGenerate()">
-								<span>Generate</span>
-							</button>
-							<!-- <button type="button" id="Back" class="upload" value="Back"
-								onclick="clickBack()">
-								<span>Back</span>
-							</button> -->
 					
-				</form:form>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-5" id="step3jsp">
+					</td>
+					<td width="10%"></td>
+					<td width="45%">
+							<div class="setting_blck">
+							<form:form commandName="xsdParseRequest" id="captureParseSettings"
+								name="captureSettings">
+									<h4>
+										<strong>Select Setting</strong> <br>
+									</h4>
+									<form:checkbox path="doAll" id="doAll"></form:checkbox>
+									<span class="settng_span">Select All</span> <br>
 			
-			</div>
+									<form:checkbox path="createScript" id="createScript" />
+									<span class="settng_span">Create Database Script</span> <br>
+			
+									<form:checkbox path="createFramework" id="createFramework" />
+									<span class="settng_span">Generate Parsing framework</span> <br>
+									<form:checkbox path="createTable" id="createTable" />
+									<span class="settng_span">Create Table in Database</span> <br>
+			
+									<span class="settng_span">Choose Database Type</span>
+									<form:select path="databaseType" items="${databaseType}"></form:select>
+									<br>
+									<div id="databaseSetting">
+										<span class="settng_span">Table Name PostFix</span>
+										<form:input path="databaseTablePostFix" id="databaseTablePostFix" value="RAW"/>
+										<br> <span class="settng_span">Database Connection
+											String</span> <br>
+										<form:textarea path="tnsEntry" rows="2" cols="45" id="tnsEntry" />
+			
+										<br> <span class="settng_span">UserName&nbsp;</span>
+										<form:input path="userName" id="username"
+											oninput="hideUserIcon()"  value="CORE_REF_DATA"/>
+										<br> <span class="settng_span">Password&nbsp;&nbsp;&nbsp;</span>
+										<form:input path="password" type="password" id="password"
+											oninput="hidePsswdIcon()" value="CORE_REF_DATA" />
+										<br> <input type="button" value="Test Connectivity"
+											onclick="checkConnectivity()" id="testconn" />
+			
+			
+									</div>
+			
+									<input type="hidden" path="parsedXSDPath" id="parsedXSDPath"
+										name="parsedXSDPath" value="${xsdParseRequest.parsedXSDPath}" />
+									<input type="hidden" path="inputType" id="inputType"
+										name="inputType" value="${xsdParseRequest.inputType}" /> 
+									<input
+										type="hidden" path="delimiter" id="delimiter" name="delimiter"
+										value="${xsdParseRequest.delimiter}" />
+									<input type="hidden"
+										id="haveHeaderData" name="haveHeaderData"
+										value="${xsdParseRequest.haveHeaderData}" />
+										
+									<button type="button" id="GenerateButton" class="upload"
+											value="Generate" onclick="clickGenerate()">
+											<span>Generate</span>
+										</button>
+										<!-- <button type="button" id="Back" class="upload" value="Back"
+											onclick="clickBack()">
+											<span>Back</span>
+										</button> -->
+								
+							</form:form>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<div id="step3jsp" class="fileupload">
+							<h4>
+								<strong>Input File Section</strong> <br>
+							</h4>
+							<input id="inputXML" name="inputXML" type="file"
+									class="file-loading form-control" 
+									value="Please Select XSD" multiple="multiple"></input>
+							<button type="button" id="uploadXMLButton"
+									title="Upload selected files" class="upload" value="Upload" onclick="uploadXMLButton()" disabled="disabled">
+									<span>Parse</span>
+								</button>	
+						</div>
+					</td>
+				</tr>
+			</table>
+			
+		<!-- 	<div class="col-xs-1"></div> -->
+			
 		</div>
+		<!-- <div class="row">
+			<div class="col-xs-6"></div>
+			
+		</div> -->
 	</div>
 
 

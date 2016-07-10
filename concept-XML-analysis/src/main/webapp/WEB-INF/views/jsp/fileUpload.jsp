@@ -10,17 +10,14 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 
-<div id="step11" class="span12" align="center">
+<div id="step11" class="row col-xs-12" align="center">
 	<div class="row">
+		<h4>
+			<strong>File Upload Section</strong> <br>
+		</h4>
 		<c:choose>
 			<c:when test="${canUploadFiles eq 'true'}">
-				<input id="inputXML" name="inputXML" type="file"
-									class="file-loading form-control" 
-									value="Please Select XSD" multiple="multiple"></input>
-				<button type="button" id="uploadXMLButton"
-									title="Upload selected files" class="upload" value="Upload" onclick="uploadXMLButton()">
-									<span>Parse</span>
-								</button>	
+				
 			</c:when>
 			<c:otherwise>
 				<h3>All Done But You have not choose Option to Upload Files</h3>

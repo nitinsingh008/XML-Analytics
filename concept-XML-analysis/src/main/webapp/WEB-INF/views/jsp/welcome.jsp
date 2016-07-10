@@ -82,24 +82,25 @@ marqueeInit({
 		<br><br>
 		</div>
 		<div class="header row">
-			<img src="<c:url value='/resources/images/xap_logo.png'/>"
-				id="xaplogo" title="XAP" />
-			<h6 align="right">
-				<a href="#" onclick="clickBack()"> <img
-					src="<c:url value='/resources/images/home_icon.png'/>"
-					id="home_icon" /> &nbsp;HOME
-				</a> | <a href="#"> <img
-					src="<c:url value='/resources/images/about_us.png'/>"
-					id="aboutus_icon" /> &nbsp;ABOUT US
-				</a> | <a href="#"> <img
-					src="<c:url value='/resources/images/help.png'/>" id="help_icon" />
-					&nbsp;HELP
-				</a> | <a href="#"> <img
-					src="<c:url value='/resources/images/contact.png'/>"
-					id="contact_icon" /> &nbsp;CONTACT US&nbsp;&nbsp;
-				</a>
-			</h6>
-
+			<div class="col-xs-12">
+				<img src="<c:url value='/resources/images/xap_logo.png'/>"
+					id="xaplogo" title="XAP" />
+				<h6 align="right">
+					<a href="#" onclick="clickBack()"> <img
+						src="<c:url value='/resources/images/home_icon.png'/>"
+						id="home_icon" /> &nbsp;HOME
+					</a> | <a href="#"> <img
+						src="<c:url value='/resources/images/about_us.png'/>"
+						id="aboutus_icon" /> &nbsp;ABOUT US
+					</a> | <a href="#"> <img
+						src="<c:url value='/resources/images/help.png'/>" id="help_icon" />
+						&nbsp;HELP
+					</a> | <a href="#"> <img
+						src="<c:url value='/resources/images/contact.png'/>"
+						id="contact_icon" /> &nbsp;CONTACT US&nbsp;&nbsp;
+					</a>
+				</h6>
+			</div>
 		</div>
 
 		<%-- 		<div class="header snap12" align = "right">
@@ -121,7 +122,7 @@ marqueeInit({
 				<div id="alertMessage">Please Select XSD</div>
 			</div>
 			<br>
-			<div class="alert alert-warning alert-dismissible" id="success">
+			<div class="alert alert-success alert-dismissible" id="success">
 				<button type="button" class="close" data-dismiss="alert"
 					id="successCloseButton">
 					<span>&times;</span>
@@ -214,25 +215,24 @@ marqueeInit({
 		
 		<div class="row" id="step2jsp"></div>
 
-		<div class="row">
-		<br><br>
-		</div>
 	<!-- 	<div class = "row" id="consoleJsp">
 			<h3>Output Console</h3>
 			
 		</div> -->
-
-		<div class="row footer">
-			<div class="col-xs-2"></div>
-			<div class="col-xs-1" align="right">
-				<img src="<c:url value='/resources/images/concept_crew.png'/>"
-				id="concpt_crew_logo" />
+		<footer>
+			<div class="row footer">
+				<div class="col-xs-2"></div>
+				<div class="col-xs-1" align="right">
+					<img src="<c:url value='/resources/images/concept_crew.png'/>"
+					id="concpt_crew_logo" />
+				</div>
+				<div class="col-xs-7" align="left">
+					<h6 align="center">The Concept Crew &copy; markit.com 2016</h6>
+					<h6 align="center">Gaurav Agarwal | Nitin Singh | Parag Garg</h6>
+				</div>
 			</div>
-			<div class="col-xs-7" align="left">
-				<h6 align="center">The Concept Crew &copy; markit.com 2016</h6>
-				<h6 align="center">Gaurav Agarwal | Nitin Singh | Parag Garg</h6>
-			</div>
-		</div>
+		</footer>
+		
 	</div>
 
 </body>

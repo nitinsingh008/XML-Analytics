@@ -1,7 +1,7 @@
 	$(document).ready(function() {
 		// hide remaining divs
 	//	$("#step2jsp").hide();
-		$("#step3jsp").hide();
+	//	$("#step3jsp").hide();
 		//$("#consoleJsp").hide();
 		$("#delimtedMetaDeta").hide();
 	//	$("#step2jsp").attr("disabled", true);
@@ -116,8 +116,11 @@
 						
 					    success: function(data){
 					   		clearInterval(add);
-					   		$("#step3jsp").html(data);
-					    	$("#step3jsp").show();
+					   		$("#successMessage").html("Framework generation Done, Please upload input file");
+					   		$("#success").show();
+					   		$("#uploadXMLButton").removeAttr("disabled");
+					   		/*$("#step3jsp").html(data);
+					    	$("#step3jsp").show();*/
 					    },
 					    error :function(xhr, status, error) {
 					    	clearInterval(add);
