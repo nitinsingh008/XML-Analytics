@@ -29,6 +29,10 @@ public class FrameworkSettings {
 	private String requestType;
 	private String inputFileName;
 	
+	public FrameworkSettings(){
+		
+	}	
+	
 	public FrameworkSettings(String projectName , String requestType, String inputFileName) {
 		super();
 		this.projectName 				= projectName;
