@@ -1,25 +1,8 @@
 	$(document).ready(function() {
 		// hide remaining divs
-	//	$("#step2jsp").hide();
-	//	$("#step3jsp").hide();
-		//$("#consoleJsp").hide();
 		$("#delimtedMetaDeta").hide();
-	//	$("#step2jsp").attr("disabled", true);
-	//	$("#step3jsp").attr("disabled", true);
 		$("#alert").hide();
 		$("#success").hide();
-
-		$("#step1Nav").click(function() {
-			alert("step1Nav .click() called.");
-		});
-
-		$("#step2Nav").click(function() {
-			alert("step2Nav .click() called.");
-		});
-
-		$("#step3Nav").click(function() {
-			alert("step3Nav .click() called.");
-		});
 		
 		$("#uploadButtonXsd").click(function() {
 			var fileName = $("#inputXsd").val();
@@ -43,9 +26,8 @@
 					    success: function(data){
 					   		 $("#step2jsp").show();
 					    	 $("#step1jsp").hide();
-					    	 //$("#step2jsp").attr("disabled", false);
-							 //$("#step1jsp").attr("disabled", true);
 					    	 $("#step2jsp").html(data);
+					    	 $("#topblank").hide();
 					    }
 					  });
 			}
@@ -75,8 +57,7 @@
 					    success: function(data){
 					   		 $("#step2jsp").show();
 					    	 $("#step1jsp").hide();
-					    	 //$("#step2jsp").attr("disabled", false);
-							 //$("#step1jsp").attr("disabled", true);
+					    	 $("#topblank").hide();
 					    	 $("#step2jsp").html(data);
 					    }
 					  });
@@ -119,8 +100,6 @@
 					   		$("#successMessage").html("Framework generation Done, Please upload input file");
 					   		$("#success").show();
 					   		$("#uploadXMLButton").removeAttr("disabled");
-					   		/*$("#step3jsp").html(data);
-					    	$("#step3jsp").show();*/
 					    },
 					    error :function(xhr, status, error) {
 					    	clearInterval(add);
@@ -137,6 +116,10 @@
 	function clickBack(){
 		$('#step1jsp').show();
 		$('#step2jsp').hide();
+		$("#topblank").show();
+   		$("#Help").hide();
+   		$("#contactUs").hide();
+   		$("#AboutUs").hide();
 	}
 	
 	function initStep2(){
@@ -149,16 +132,12 @@
 		    type: 'GET',
 		    success: function(data){
 		   		$("#consoleOutput").html(data);
-		   		//$("#consoleJsp").show();
 		    }
 		  });
 		
 	}
 	
-	function clickBackToHome(){
-		$('#step1jsp').show();
-		$('#step3jsp').hide();
-	}
+
 
 	function uploadXMLButton(){
 		
@@ -169,11 +148,7 @@
 				$("#alertMessage").html('Select files to upload');
 				 $("#alert").show();
 				return;
-			}/*else if(!fileName.endsWith(".xml")){
-				 $('#alertMessage').html('invalid file format');
-				 $("#alert").show();
-				 return;
-			}*/
+			}
 			 var oMyForm = new FormData();
 			  oMyForm.append(fileName, inputXML.files[0]);
 			  $.ajax({
@@ -203,4 +178,55 @@
 			$("#delimtedMetaDeta").hide();
 		}
 		
+	}
+	
+	function clickAboutUs(){
+		$.ajax({
+		    url: 'getAboutUs',
+		    type: 'GET',
+		    success: function(data){
+		   		$("#AboutUs").html(data);
+		   		$("#AboutUs").show();
+		   		$("#step2jsp").hide();
+		   		$("#step1jsp").hide();
+		   		$("#step2jsp").hide();
+		   		$("#topblank").show();
+		   		$("#contactUs").hide();
+		   		$("#Help").hide();
+		    }
+		  });
+	}
+	
+	function clickHelp(){
+		$.ajax({
+		    url: 'getHelp',
+		    type: 'GET',
+		    success: function(data){
+		   		$("#Help").html(data);
+		   		$("#Help").show();
+		   		$("#step2jsp").hide();
+		   		$("#step1jsp").hide();
+		   		$("#step2jsp").hide();
+		   		$("#topblank").show();
+		   		$("#contactUs").hide();
+		   		$("#AboutUs").hide();
+		    }
+		  });
+	}
+	
+	function clickContact(){
+		$.ajax({
+		    url: 'getContact',
+		    type: 'GET',
+		    success: function(data){
+		   		$("#contactUs").html(data);
+		   		$("#contactUs").show();
+		   		$("#step2jsp").hide();
+		   		$("#step1jsp").hide();
+		   		$("#step2jsp").hide();
+		   		$("#topblank").show();
+		   		$("#Help").hide();
+		   		$("#AboutUs").hide();
+		    }
+		  });
 	}

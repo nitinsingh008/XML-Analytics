@@ -259,4 +259,19 @@ public class HelloController {
 		}
 		return "All files uploaded Successfully";
 	}
+	
+	@RequestMapping(value = "getAboutUs",method = RequestMethod.GET)
+	public String getAbotUs(){
+		return "aboutUs";
+	}
+	
+	@RequestMapping(value = "getHelp",method = RequestMethod.GET)
+	public String getHelp(){
+		return "help";
+	}
+	
+	@RequestMapping(value = "getContact",method = RequestMethod.GET)
+	public String getContactUs(){
+		return "contactUs";
+	}
 }

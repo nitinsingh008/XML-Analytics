@@ -18,101 +18,39 @@
 
 <script src="<c:url value="/resources/core/js/welcome.js" />"></script>
 
-<script type="text/javascript">
-marqueeInit({
-	uniqueid: 'mycrawler',
-	style: 
-	{
-		'padding'	 : '5px',
-		'width'		 : '100%',		
-		/* 'background' : 'rgba(255,255,255,0.0)', */
-		'font-size'	 : '35px',
-		'font-style' : 'italic',
-		'color'      :'#090995'
-		
-			
-		
-	},
-	inc: 5, //speed - pixel increment for each iteration of this marquee's movement
-	mouse: 'cursor driven', //mouseover behavior ('pause' 'cursor driven' or false)
-	moveatleast: 2,
-	neutral: 150,
-	persist: true,
-	savedirection: true
-});
-</script>
-
 </head>
 
 <body class="main_body">
 	<img src="<c:url value='/resources/images/logo.jpg'/>"
 		id="full-screen-background-image" />
-	<!-- <div id="parent" class="snap12"> -->
-
-		<!-- http://www.dynamicdrive.com/dynamicindex2/crawler/ use this link for reference for crawler marquee -->
-		<%-- 		<div class="marquee" id="mycrawler">
-			| <img src="<c:url value='/resources/images/xap_logo.png'/>" id="xap_crawler" /> 
-			<img src="<c:url value='/resources/images/text1.png'/>" id="text1_crawler" />
-<!-- 			XAP - XML Automated Parser | Features  -->	
-			: <img src="<c:url value='/resources/images/maven.png'/>" id="maven_crawler" /> 
-<!-- 			Generation of maven project -->
-		<img src="<c:url value='/resources/images/text2.png'/>" id="text2_crawler" />
-			: <img src="<c:url value='/resources/images/java1.png'/>" id="java1_crawler" /> 
-<!-- 			Generation of JAXB, POJO classes  -->
-					<img src="<c:url value='/resources/images/text3.png'/>" id="text3_crawler" />		
-			: <img src="<c:url value='/resources/images/sqlSmall.png'/>" id="sql_crawler" /> 
-		<!-- 	Generation of SQL scripts -->
-		<img src="<c:url value='/resources/images/text4.png'/>" id="text4_crawler" />		
-			: <img src="<c:url value='/resources/images/dbTable.png'/>" id="dbTable_crawler" /> 
-		<!-- 	Generation of Database Model => Tables, Sequence, Primary Key, Foreign Key etc -->
-		<img src="<c:url value='/resources/images/text5.png'/>" id="text5_crawler" />				  			
-			: <img src="<c:url value='/resources/images/xml.png'/>" id="xml_crawler" />  
-		<!-- 	Generation of XML Parsers -->
-		<img src="<c:url value='/resources/images/text6.png'/>" id="text6_crawler" />		
-			: <img src="<c:url value='/resources/images/loader.png'/>" id="loader_crawler" /> 
-			<!-- Generation of Loader framework  -->
-		<img src="<c:url value='/resources/images/text7.png'/>" id="text7_crawler" />			
-			| Developed by  <img src="<c:url value='/resources/images/ConceptCrewSmall.png'/>" id="conceptCrew_crawler" />
-			| Contributors : <img src="<c:url value='/resources/images/GauravAgarwal.JPG'/>" id="photo_crawler" /> Gaurav Agarwal
-			, Nitin Singh
-			, Parag Garg
-		</div> --%>
 	<div class="container"> 
 		<div class="row">
 		<br><br>
 		</div>
-		<div class="header row">
-			<div class="col-xs-12">
+		<div class="row header" >
+			<div class="col-xs-6">
 				<img src="<c:url value='/resources/images/xap_logo.png'/>"
-					id="xaplogo" title="XAP" />
-				<h6 align="right">
-					<a href="#" onclick="clickBack()"> <img
+					id="xaplogo" title="XAP" />			
+			</div>
+			<div class="col-xs-6" align="right">
+				<a href="#" onclick="clickBack()"> <img
 						src="<c:url value='/resources/images/home_icon.png'/>"
 						id="home_icon" /> &nbsp;HOME
-					</a> | <a href="#"> <img
+					</a> | <a href="#" onclick="clickAboutUs()"> <img
 						src="<c:url value='/resources/images/about_us.png'/>"
 						id="aboutus_icon" /> &nbsp;ABOUT US
-					</a> | <a href="#"> <img
+					</a> | <a href="#" onclick="clickHelp()"> <img
 						src="<c:url value='/resources/images/help.png'/>" id="help_icon" />
 						&nbsp;HELP
-					</a> | <a href="#"> <img
+					</a> | <a href="#" onclick="clickContact()"> <img
 						src="<c:url value='/resources/images/contact.png'/>"
 						id="contact_icon" /> &nbsp;CONTACT US&nbsp;&nbsp;
 					</a>
-				</h6>
 			</div>
 		</div>
-
-		<%-- 		<div class="header snap12" align = "right">
-			<img src="<c:url value='/resources/images/xap_logo.png'/>"
-				id="xaplogo" title="XAP"/> <img
-				src="<c:url value='/resources/images/concept_crew.png'/>"
-				id="conceptlogo" />
-
-		</div>	 --%>
-
-		<div>
+		<div class="row">
 			<!-- file not chosen alert div -->
+			<br><br>
 			<div class="alert alert-warning alert-dismissible" id="alert">
 				<button type="button" class="close" data-dismiss="alert"
 					id="alertCloseButton">
@@ -132,7 +70,7 @@ marqueeInit({
 			</div>
 
 		</div>
-		<div class="row">
+		<div id="topblank" class="row topblankspace" >
 		<br><br>
 		</div>
 		<div id="step1jsp" class="row upload_form" align="center">
@@ -214,21 +152,23 @@ marqueeInit({
 		</div>
 		
 		<div class="row" id="step2jsp"></div>
-
+		<div class="row" id="contactUs"></div>
+		<div class="row" id="Help"></div>
+		<div class="row" id="AboutUs"></div>
 	<!-- 	<div class = "row" id="consoleJsp">
 			<h3>Output Console</h3>
 			
 		</div> -->
 		<footer>
 			<div class="row footer">
-				<div class="col-xs-2"></div>
+				<div class="col-xs-4"></div>
 				<div class="col-xs-1" align="right">
 					<img src="<c:url value='/resources/images/concept_crew.png'/>"
 					id="concpt_crew_logo" />
 				</div>
 				<div class="col-xs-7" align="left">
-					<h6 align="center">The Concept Crew &copy; markit.com 2016</h6>
-					<h6 align="center">Gaurav Agarwal | Nitin Singh | Parag Garg</h6>
+					<h6 style="vertical-align: middle;">The Concept Crew &copy; markit.com 2016</h6>
+					<h6 style="vertical-align: middle;">Gaurav Agarwal | Nitin Singh | Parag Garg</h6>
 				</div>
 			</div>
 		</footer>

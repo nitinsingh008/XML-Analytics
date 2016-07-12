@@ -14,13 +14,19 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-	$("#databaseSetting").hide();
+	$("#username").attr("disabled","disabled");
+	$("#password").attr("disabled","disabled");
+	$("#tnsEntry").attr("disabled","disabled");
 	
 	$("#createTable").on('click',function(){
 		if(document.getElementById('createTable').checked) {
-		    $("#databaseSetting").show();
+			$("#username").attr("disabled","disabled");
+			$("#password").attr("disabled","disabled");
+			$("#tnsEntry").attr("disabled","disabled");
 		} else {
-		    $("#databaseSetting").hide();
+		   $("#username").removeAttr("disabled");
+			$("#password").removeAttr("disabled");
+			$("#tnsEntry").removeAttr("disabled");
 		}
 	});
 	
@@ -29,12 +35,16 @@ $(document).ready(function() {
 		    $("#createScript").attr("checked",true);
 		    $("#createFramework").attr("checked",true);
 		    $("#createTable").attr("checked",true);
-		     $("#databaseSetting").show();
+			$("#username").removeAttr("disabled");
+			$("#password").removeAttr("disabled");
+			$("#tnsEntry").removeAttr("disabled");
 		} else {
 		    $("#createScript").attr("checked",false);
 		    $("#createFramework").attr("checked",false);
-		    $("#createTable").attr("checked",false);
-		     $("#databaseSetting").hide();
+		    $("#createTable").attr("checked",false);	
+		    $("#username").attr("disabled","disabled");
+			$("#password").attr("disabled","disabled");
+			$("#tnsEntry").attr("disabled","disabled");
 		}
 	});
 });
@@ -79,131 +89,164 @@ function checkConnectivity()
 
 <div class="container" id="container-jsp2">
 	<div class="xsd_container">
+	<div class="row"><br><br><br><br><br><br></div>
 		<div class="row col-xs-12">
-			<table width="100%" style="table-layout: fixed" cellspacing=10>
+			<table width="100%" style="table-layout: fixed" >
 				<tr>
 					<td rowspan="2" width="45%">
 						<div class="xsdview_blck">
-			
-							<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-							  <div class="panel panel-default">
-							    <div class="panel-heading" role="tab" id="headingOne">
-							      <h4 class="panel-title">
-							        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-							         Input File View 
-							        </a>
-							      </h4>
-							    </div>
-							    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-							      <div class="panel-body">
-							       	<textarea class="textareafull" readonly="readonly">${parsedInString}</textarea>
-							      </div>
-							    </div>
-							  </div>
-							  <div class="panel panel-default">
-							    <div class="panel-heading" role="tab" id="headingTwo">
-							      <h4 class="panel-title">
-							        <a role="button" id="consoleOutPut" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-							          What's Happening??
-							        </a>
-							      </h4>
-							    </div>
-							    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-							      <div class="panel-body">
-							      	<textarea class="textareafull" id="consoleOutput" readonly="readonly"></textarea>
-							      </div>
-							    </div>
-							  </div>
+							<div class="panel-group" id="accordion" role="tablist"
+								aria-multiselectable="true">
+								<div class="panel panel-default">
+									<div class="panel-heading" role="tab" id="headingOne">
+										<h4 class="panel-title">
+											<a role="button" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseOne"
+												aria-expanded="true" aria-controls="collapseOne"> Input
+												File View </a>
+										</h4>
+									</div>
+									<div id="collapseOne" class="panel-collapse collapse in"
+										role="tabpanel" aria-labelledby="headingOne">
+										<div class="panel-body">
+											<textarea class="textareafull" readonly="readonly">${parsedInString}</textarea>
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading" role="tab" id="headingTwo">
+										<h4 class="panel-title">
+											<a role="button" id="consoleOutPut" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseTwo"
+												aria-expanded="false" aria-controls="collapseTwo">
+												What's Happening?? </a>
+										</h4>
+									</div>
+									<div id="collapseTwo" class="panel-collapse collapse"
+										role="tabpanel" aria-labelledby="headingTwo">
+										<div class="panel-body">
+											<textarea class="textareafull" id="consoleOutput"
+												readonly="readonly"></textarea>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
-					
+
 					</td>
 					<td width="10%"></td>
 					<td width="45%">
-							<div class="setting_blck">
-							<form:form commandName="xsdParseRequest" id="captureParseSettings"
-								name="captureSettings">
-									<h4>
-										<strong>Select Setting</strong> <br>
-									</h4>
-									<form:checkbox path="doAll" id="doAll"></form:checkbox>
-									<span class="settng_span">Select All</span> <br>
-			
-									<form:checkbox path="createScript" id="createScript" />
-									<span class="settng_span">Create Database Script</span> <br>
-			
-									<form:checkbox path="createFramework" id="createFramework" />
-									<span class="settng_span">Generate Parsing framework</span> <br>
-									<form:checkbox path="createTable" id="createTable" />
-									<span class="settng_span">Create Table in Database</span> <br>
-			
-									<span class="settng_span">Choose Database Type</span>
-									<form:select path="databaseType" items="${databaseType}"></form:select>
-									<br>
-									<div id="databaseSetting">
-										<span class="settng_span">Table Name PostFix</span>
-										<form:input path="databaseTablePostFix" id="databaseTablePostFix" value="RAW"/>
-										<br> <span class="settng_span">Database Connection
-											String</span> <br>
-										<form:textarea path="tnsEntry" rows="2" cols="45" id="tnsEntry" />
-			
-										<br> <span class="settng_span">UserName&nbsp;</span>
-										<form:input path="userName" id="username"
-											oninput="hideUserIcon()"  value="CORE_REF_DATA"/>
-										<br> <span class="settng_span">Password&nbsp;&nbsp;&nbsp;</span>
-										<form:input path="password" type="password" id="password"
-											oninput="hidePsswdIcon()" value="CORE_REF_DATA" />
-										<br> <input type="button" value="Test Connectivity"
-											onclick="checkConnectivity()" id="testconn" />
-			
-			
-									</div>
-			
-									<input type="hidden" path="parsedXSDPath" id="parsedXSDPath"
-										name="parsedXSDPath" value="${xsdParseRequest.parsedXSDPath}" />
-									<input type="hidden" path="inputType" id="inputType"
-										name="inputType" value="${xsdParseRequest.inputType}" /> 
-									<input
-										type="hidden" path="delimiter" id="delimiter" name="delimiter"
-										value="${xsdParseRequest.delimiter}" />
-									<input type="hidden"
-										id="haveHeaderData" name="haveHeaderData"
-										value="${xsdParseRequest.haveHeaderData}" />
+						<div>
+							<form:form commandName="xsdParseRequest"
+								id="captureParseSettings" name="captureSettings">
+								<table class="setting_blck" width="100%">
+									<thead>
+										<tr>
+											<td colspan="2">
+												<h4>
+													<strong>Select Setting</strong> <br>
+												</h4>
+											</td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+										</tr>
+										<tr>
+											<td width="25%"><form:checkbox path="doAll" id="doAll"></form:checkbox>
+												<span class="settng_span">Select All</span></td>
+											<td width="25%"><form:checkbox path="createScript" id="createScript" />
+												<span class="settng_span">Create Database Script</span></td>
+										</tr>
 										
-									<button type="button" id="GenerateButton" class="upload"
-											value="Generate" onclick="clickGenerate()">
-											<span>Generate</span>
-										</button>
-										<!-- <button type="button" id="Back" class="upload" value="Back"
-											onclick="clickBack()">
-											<span>Back</span>
-										</button> -->
-								
+										<tr>
+											<td><form:checkbox path="createFramework"
+													id="createFramework" /> <span class="settng_span">Generate
+													Parsing framework</span></td>
+											<td><form:checkbox path="createTable" id="createTable" />
+												<span class="settng_span">Create Table in Database</span></td>
+										</tr>
+										<tr>
+											<td><span class="settng_span">Choose Database
+													Type</span></td>
+											<td><form:select path="databaseType" class="dropdown btn-default dropdown-toggle"
+													items="${databaseType}"></form:select></td>
+										</tr>
+										<tr>
+											<td><span class="settng_span">Table Name PostFix</span></td>
+											<td><form:input path="databaseTablePostFix"
+													id="databaseTablePostFix" value="RAW" /></td>
+										</tr>
+										<tr>
+											<td><span class="settng_span">UserName</span></td>
+											<td><form:input path="userName" id="username"
+													oninput="hideUserIcon()" value="CORE_REF_DATA" /></td>
+										</tr>
+										<tr>
+											<td><span class="settng_span">Password</span></td>
+											<td><form:input path="password" type="password"
+													id="password" oninput="hidePsswdIcon()"
+													value="CORE_REF_DATA" /></td>
+										</tr>
+										<tr>
+											<td><span class="settng_span">Database Connection
+													String</span></td>
+											<td><input type="button" value="Test Connectivity"
+												onclick="checkConnectivity()" id="testconn" /></td>
+										</tr>
+										<tr>
+											<td colspan="2" align="center"><form:textarea path="tnsEntry" rows="5" cols="59"
+													id="tnsEntry" /></td>
+										</tr>
+										<tr>
+											<td align="center">
+												<button type="button" id="GenerateButton" class="upload"
+													value="Generate" onclick="clickGenerate()">
+													<span>Generate</span>
+												</button>
+											</td>
+											<td align="center">
+												<button type="reset" class="upload">Reset</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+								<input type="hidden" path="parsedXSDPath" id="parsedXSDPath"
+									name="parsedXSDPath" value="${xsdParseRequest.parsedXSDPath}" />
+								<input type="hidden" path="inputType" id="inputType"
+									name="inputType" value="${xsdParseRequest.inputType}" />
+								<input type="hidden" path="delimiter" id="delimiter"
+									name="delimiter" value="${xsdParseRequest.delimiter}" />
+								<input type="hidden" id="haveHeaderData" name="haveHeaderData"
+									value="${xsdParseRequest.haveHeaderData}" />
+
 							</form:form>
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<td></td>
-					<td>
+					<td align="center">
 						<div id="step3jsp" class="fileupload">
-							<h4>
+							<h4 align="left">
 								<strong>Input File Section</strong> <br>
 							</h4>
 							<input id="inputXML" name="inputXML" type="file"
-									class="file-loading form-control" 
-									value="Please Select XSD" multiple="multiple"></input>
+								class="file-loading form-control" value="Please Select XSD"
+								multiple="multiple"></input>
 							<button type="button" id="uploadXMLButton"
-									title="Upload selected files" class="upload" value="Upload" onclick="uploadXMLButton()" disabled="disabled">
-									<span>Parse</span>
-								</button>	
+								title="Upload selected files" class="upload" value="Upload"
+								onclick="uploadXMLButton()" disabled="disabled">
+								<span>Parse</span>
+							</button>
 						</div>
 					</td>
 				</tr>
 			</table>
-			
-		<!-- 	<div class="col-xs-1"></div> -->
-			
+
+			<!-- 	<div class="col-xs-1"></div> -->
+
 		</div>
 		<!-- <div class="row">
 			<div class="col-xs-6"></div>
