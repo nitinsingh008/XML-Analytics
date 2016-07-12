@@ -27,6 +27,7 @@ import com.concept.crew.apis.ParseIncomingRequest;
 import com.concept.crew.apis.StartAutomation;
 import com.concept.crew.dao.XapDBRoutine;
 import com.concept.crew.util.Constants;
+import com.concept.crew.util.FrameworkSettings;
 import com.concept.crew.util.XSDParseRequest;
 import com.conceptCrew.web.service.XSDParser;
 
@@ -185,7 +186,7 @@ public class HelloController {
 	@RequestMapping(value="/checkConnectivity",method = RequestMethod.POST)
 	public @ResponseBody String checkConnectivity(@RequestParam("DatabaseType") String databaseType, @RequestParam("tns") String tns,
 			@RequestParam("username") String userNamee,@RequestParam("password") String password){
-		XapDBRoutine.initializeDBRoutine(databaseType, tns, userNamee, password, null);
+		XapDBRoutine.initializeDBRoutine(databaseType, tns, userNamee, password, new FrameworkSettings());
 		if(XapDBRoutine.testAndValidateDBConnection()){
 			return "Connected";
 		}
