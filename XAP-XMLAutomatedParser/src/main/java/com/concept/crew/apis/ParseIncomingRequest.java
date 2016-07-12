@@ -8,13 +8,13 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+
 import org.apache.log4j.Logger;
+
 import com.concept.crew.info.DBDetails;
-import com.concept.crew.info.GenerateRequest;
 import com.concept.crew.util.Constants;
 import com.concept.crew.util.FrameworkSettings;
 import com.concept.crew.util.XSDParseRequest;
