@@ -122,8 +122,6 @@ public class MavenHelper {
 		}
 		// updating dependency in pom file
 		addMavenDependancies(); // for XML
-		
-		//Files.copy(srcDir.toPath(), resourcesDir.toPath(), StandardCopyOption.ATOMIC_MOVE);
 	}
 	
 	public void buildMavenProject() throws MavenInvocationException
@@ -154,11 +152,11 @@ public class MavenHelper {
 	private void addMavenDependancies(){
 		PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(),"ConceptCrewUtil", "ConceptCrewUtil", "1.0","ConceptCrewUtil-1.0.jar");
 		PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(),"ojdbc6", "ojdbc6", "1.0","ojdbc6.jar");
-		PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(), "log4j", "log4j", "1.2.15");
-		PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(), "commons-io", "commons-io", "2.4");
-		PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(), "commons-dbcp", "commons-dbcp", "1.3");
+		PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(), "log4j", "log4j", "1.2.15","log4j-1.2.15.jar");
+		PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(), "commons-io", "commons-io", "2.4", "commons-io-2.4.jar");
+		PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(), "commons-dbcp", "commons-dbcp", "1.3","commons-dbcp-1.3.jar");
 		// adding new dependency for apache unilocity
-		PomDependencyUpdater.addNewDependency(projectSetting.getPomPath(),"univocity-parsers", "com.univocity", "2.0.2");
+		PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(),"univocity-parsers", "com.univocity", "2.0.2", "univocity-parsers-2.0.2.jar");
 	}
 	
 	/*
