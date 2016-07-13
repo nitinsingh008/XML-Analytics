@@ -57,6 +57,7 @@ public abstract class TableGenerator
 							 String 						dbType)
 							 					throws Exception
 	{
+		logger.warn("---------------------------------------------------");
 		logger.warn("Generate Database Table scripts");
 		String fileName = projectSetting.getResourcePath() + "createTable";
 		String parentTableName = null;
@@ -71,7 +72,8 @@ public abstract class TableGenerator
 			fileName = fileName + ".sql";
 			parentTableName =  rootNode.toUpperCase() ;
 		}
-		logger.warn("Start Generating DB scripts "+ fileName);
+		logger.warn("Start Generating DB scripts at");
+		logger.warn(fileName);
 		File file = new File(fileName);
 
 		// if file doesn't exists, then create it
@@ -90,13 +92,15 @@ public abstract class TableGenerator
 		StringBuffer sb = new StringBuffer();
 		
 		addDropScripts(bw, sb, tableMap.keySet(), tableSuffix, rootNode,  dbType);
-		
+		logger.warn("----- Drop Scripts ------");
+		logger.warn(sb);
 		if(rootNode != null){
 			sb = new StringBuffer();
 			sb.append("\n") ;
 			sb.append("CREATE SEQUENCE ").append(rootNode.toUpperCase()).append("_SEQ ").append("MINVALUE 1 START WITH 1 INCREMENT BY 1 ;");
 			bw.write(sb.toString());
 			bw.newLine();
+			logger.warn(sb);
 			sb = new StringBuffer();
 		}
 		

@@ -50,22 +50,25 @@ public class MavenHelper {
 		}
 		
 		logger.warn("Installing apache-maven-3.2.2 .......");
-
-		// Copying local m2 repository
-		installZippedDirectory(Constants.m2_repo_Zip, Constants.mavenProjectPath);
-
 		// Unzipping Maven 
 		installZippedDirectory(Constants.mavenZip, Constants.mavenProjectPath);
-		
 		logger.warn("Maven Installed successfully");
+		
 		logger.warn("---------------------------------------------------");
-		logger.warn("Creating local m2 repository => " + Constants.m2_repository);
+		logger.warn("Creating local m2 Repository for Maven");
+		logger.warn(Constants.m2_repository);
+		// Copying local m2 repository
+		installZippedDirectory(Constants.m2_repo_Zip, Constants.mavenProjectPath);
 		File m2Repo =  new File(Constants.m2_repository);
 		if(!m2Repo.exists())
 		{
 			m2Repo.mkdirs();
 		}
+		logger.warn("m2 Installed successfully");
 		
+		logger.warn("---------------------------------------------------");
+		logger.warn("Installing local database (JavaDB)");
+		logger.warn(Constants.databaseLoc);
 		// Unzipping Derby utilities 
 		installZippedDirectory(Constants.debryDb, Constants.databaseLoc);
 		
@@ -78,6 +81,7 @@ public class MavenHelper {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		logger.warn("DB Installed successfully");
 	} 
 	/*
 	 * Initialization method should be called before calling this method 
