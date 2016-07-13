@@ -42,11 +42,11 @@ public class ParseIncomingRequest {
 		try {
 			Object instance = mainClass.newInstance();
 			DBDetails dbDetails =  projectSetting.getDbDetails();
-			if(projectSetting.getRequestType().equals(Constants.inputType.XML)){
+			if(projectSetting.getRequestType().equals(Constants.inputType.XML.toString())){
 				Method myMethod = mainClass.getMethod("execute",  new Class[] { File.class, String.class ,String.class, String.class, String.class });
 			    myMethod.invoke(instance, new Object[] { fileToBeParsed, dbDetails.getDbType(), dbDetails.getJdbcUrl(), 
 			    					dbDetails.getUser(), dbDetails.getPassword() });
-			}else if(projectSetting.getRequestType().equals(Constants.inputType.DELIMITED)){
+			}else if(projectSetting.getRequestType().equals(Constants.inputType.DELIMITED.toString())){
 				Class pojoCls = cls.get(Constants.delimiterPojoClass);
 				Method myMethod = mainClass.getMethod("execute",  new Class[] { File.class, String.class ,String.class, String.class, String.class,
 						Boolean.class,String.class,Class.class });
