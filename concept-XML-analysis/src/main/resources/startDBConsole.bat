@@ -1,14 +1,16 @@
 @echo off
 ECHO *********************************************************************
 ECHO ******* ******* ******* Starting XAP Database Console ******* ******* 
-ECHO **** Useful Commands 		   
+ECHO **** Useful Commands shown below		   
 ECHO **** Connecting to database
 ECHO **** connect 'jdbc:derby://localhost:1527/<Path>\<dbName>';
+ECHO **** Example
 ECHO **** connect 'jdbc:derby://localhost:1527/C:\XAP\xapDB\dbName';
-ECHO **** SHOW SCHEMAS;
-ECHO **** SHOW TABLES;
-ECHO **** DESCRIBE TABLES;
+ECHO **** SHOW SCHEMAS; 			(Showing List of Schemas)
+ECHO **** SHOW TABLES;  			(Showing List of Tables)
+ECHO **** DESCRIBE TABLES;			(Describe about Table)
 ECHO **** SELECT * FROM TABLE_NAME;
+ECHO **** EXIT;						(Exiting console)
 ECHO *********************************************************************
 
 CALL db-derby-10.12.1.1\bin\ij
