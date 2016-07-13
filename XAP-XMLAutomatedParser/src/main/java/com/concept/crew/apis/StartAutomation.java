@@ -79,7 +79,7 @@ public class StartAutomation
 			autoHelper.copyUtilityJars();
 			//3. Build Maven project
 			autoHelper.buildMavenProject();
-			autoHelper.copyJaxbClasses();
+			autoHelper.copyJaxbClasses(false);
 		}
 		
 		// 4. Generate tables from input Meta-data File [XSD/CSV]

@@ -127,18 +127,29 @@ public class AutomationHelper extends MavenHelper
 			 }	
 	    }
 	    
-	 public void copyJaxbClasses(){
-		 File targetDir = new File(Constants.jaxbWorkFolder);
+	 public void copyJaxbClasses(Boolean isDelimited){
+		 String workFolderLoc = null;
+		 String src = null;
+		 
+		 if(isDelimited){
+			  workFolderLoc = Constants.pojoWorkFolder; 
+			  src = projectSetting.getPathToRootClass()+ File.separator +"/com/concept/crew/info/pojo";
+		 }else{
+			 workFolderLoc = Constants.jaxbWorkFolder; 
+			 src = projectSetting.getPathToRootClass()+ File.separator +"/com/concept/crew/info/jaxb";
+		 }
+		 
+		 File targetDir = new File(workFolderLoc);
 		 if(!targetDir.exists()){
 	    		targetDir.mkdirs();
 	     }
-		 String src = projectSetting.getPathToRootClass()+ File.separator +"/com/concept/crew/info/jaxb";
+		 
 		 File sourceDir = new File(src);
 		 if(sourceDir.isDirectory()){
 			 File[] content = sourceDir.listFiles();
 			 for(int i = 0; i < content.length; i++) {
 				 if(content[i].getName().contains(".class")){
-					targetDir = new File(Constants.jaxbWorkFolder+ File.separator+ content[i].getName());
+					targetDir = new File(workFolderLoc+ File.separator+ content[i].getName());
 					try {
 						Files.copy(content[i].getAbsoluteFile(), targetDir.getAbsoluteFile());
 					} catch (IOException e) {

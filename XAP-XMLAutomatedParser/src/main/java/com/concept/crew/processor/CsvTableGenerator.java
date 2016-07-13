@@ -23,7 +23,6 @@ import com.univocity.parsers.csv.CsvParserSettings;
 public class CsvTableGenerator<E> extends TableGenerator{
 
 	private String delimiter;
-	
 	private static final Logger LOGGER = Logger.getLogger(CsvTableGenerator.class);
 	
 	public CsvTableGenerator(String xsdName,String delimiter,FrameworkSettings projectSetting,AutomationHelper helper) {
@@ -71,7 +70,10 @@ public class CsvTableGenerator<E> extends TableGenerator{
 				// compile generated project
 				new AutomationHelper(projectSetting).buildMavenProject();
 				// load class file
-				loadClassesFromJar();
+				autoHelper.copyJaxbClasses(true);
+				
+				//loadClassesFromJar();
+				loadClassesFromFolder(true);
 				
 			}catch(IOException e){
 				

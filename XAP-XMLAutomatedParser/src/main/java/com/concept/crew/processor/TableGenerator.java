@@ -377,21 +377,29 @@ public abstract class TableGenerator
 		return classes;
 	}
 	
-	protected List<Class> loadClassesFromFolder() throws MalformedURLException, ClassNotFoundException{
+	protected List<Class> loadClassesFromFolder(Boolean isDelimited) throws MalformedURLException, ClassNotFoundException{
 		
-		File jaxbFolder = new File("C:\\XAP\\Work\\");
-		File jaxbFileList = new File(Constants.jaxbWorkFolder);
+		String packageName;
+		File srcFileList;
+		if(isDelimited){
+			srcFileList = new File(Constants.pojoWorkFolder);
+			packageName = Constants.pojoPackageName;
+		}else{
+			srcFileList = new File(Constants.jaxbWorkFolder);
+			packageName = Constants.packageName ;
+		}
+		File srcFolder = new File("C:\\XAP\\Work\\");
 		List<Class> classes = new ArrayList<Class>();
 		// convert the file to URL format
-		URL url = jaxbFolder.toURI().toURL();
+		URL url = srcFolder.toURI().toURL();
 		URL[] urls = new URL[] { url };
 		
 		// load this folder into Class loader
 		ClassLoader cl = new URLClassLoader(urls);
-		File[] content = jaxbFileList.listFiles();
+		File[] content = srcFileList.listFiles();
 		for(int i = 0; i < content.length; i++) {
 			if(content[i].getName().contains(".class")){
-				String className = Constants.packageName + "." +content[i].getName().substring(0,content[i].getName().length()-6);
+				String className = packageName + "." +content[i].getName().substring(0,content[i].getName().length()-6);
 				Class cls = cl.loadClass(className);	
 				classes.add(cls);
 			}
