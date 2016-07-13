@@ -10,6 +10,7 @@ ECHO **** SHOW SCHEMAS; 			(Showing List of Schemas)
 ECHO **** SHOW TABLES;  			(Showing List of Tables)
 ECHO **** DESCRIBE TABLES;			(Describe about Table)
 ECHO **** SELECT * FROM TABLE_NAME;
+ECHO **** SHOW INDEXES				(Display all indexes in database)
 ECHO **** EXIT;						(Exiting console)
 ECHO *********************************************************************
 
