@@ -119,7 +119,7 @@ function checkConnectivity()
 											<a role="button" id="consoleOutPut" data-toggle="collapse"
 												data-parent="#accordion" href="#collapseTwo"
 												aria-expanded="false" aria-controls="collapseTwo">
-												What's Happening?? </a>
+												Output Console View </a>
 										</h4>
 									</div>
 									<div id="collapseTwo" class="panel-collapse collapse"
