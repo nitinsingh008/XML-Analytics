@@ -12,7 +12,7 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <div class="container">
 	<div>
-		<h3>Need Help</h3>
+		<h1>Help</h1>
 	</div>
 	<div>
 	

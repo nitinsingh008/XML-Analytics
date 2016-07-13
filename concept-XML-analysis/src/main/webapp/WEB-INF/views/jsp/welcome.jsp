@@ -33,19 +33,22 @@
 					id="xaplogo" title="XAP" />			
 			</div>
 			<div class="col-xs-6" align="right">
-				<a href="#" onclick="clickBack()"> <img
-						src="<c:url value='/resources/images/home_icon.png'/>"
-						id="home_icon" /> &nbsp;HOME
-					</a> | <a href="#" onclick="clickAboutUs()"> <img
-						src="<c:url value='/resources/images/about_us.png'/>"
-						id="aboutus_icon" /> &nbsp;ABOUT US
-					</a> | <a href="#" onclick="clickHelp()"> <img
-						src="<c:url value='/resources/images/help.png'/>" id="help_icon" />
+				<a href="#" onclick="clickBack()"> 
+					<img src="<c:url value='/resources/images/home_icon.png'/>" id="home_icon" /> 
+						&nbsp;HOME
+				
+				</a> | <a href="#" onclick="clickAboutUs()"> 
+					<img src="<c:url value='/resources/images/about_us.png'/>" id="aboutus_icon" /> 
+						&nbsp;ABOUT US
+				
+				</a> | <a href="#" onclick="clickHelp()"> 
+					<img src="<c:url value='/resources/images/help.png'/>" id="help_icon" />
 						&nbsp;HELP
-					</a> | <a href="#" onclick="clickContact()"> <img
-						src="<c:url value='/resources/images/contact.png'/>"
-						id="contact_icon" /> &nbsp;CONTACT US&nbsp;&nbsp;
-					</a>
+				
+				</a> | <a href="#" onclick="clickContact()"> 
+					<img src="<c:url value='/resources/images/contact.png'/>" id="contact_icon" /> 
+						&nbsp;CONTACT US&nbsp;&nbsp;
+				</a>
 			</div>
 		</div>
 		<div class="row">
