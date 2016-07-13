@@ -39,7 +39,8 @@ public class MavenHelper {
 	 */
 	public void initialization() throws IOException
 	{
-		logger.warn("Initializing => " + Constants.mavenProjectPath);
+		logger.warn("------------- XAP Started ---------------------");
+		logger.warn("Initializing at Folder => " + Constants.mavenProjectPath);
 		File workingBaseDirectory = new File(Constants.mavenProjectPath);
 		if (!workingBaseDirectory.exists()) 
 		{
@@ -52,8 +53,8 @@ public class MavenHelper {
 		//installMaven();
 		// Unzipping Maven 
 		installZippedDirectory(Constants.mavenZip, Constants.mavenProjectPath);
-		logger.warn("Maven installed successfully");
-		logger.warn("----------------------------------");
+		logger.warn("Maven Installed successfully");
+		logger.warn("---------------------------------------------------");
 		logger.warn("Creating local m2 repository => " + Constants.m2_repository);
 		File m2Repo =  new File(Constants.m2_repository);
 		if(!m2Repo.exists())
@@ -80,9 +81,9 @@ public class MavenHelper {
 	public void createMavenProject() 
 										throws IOException,MavenInvocationException 
 	{
-		logger.warn("----------------------------------------");
+		logger.warn("---------------------------------------------------");
 		logger.warn("Generating Maven project in Batch mode");
-		logger.warn("----------------------------------------");
+		logger.warn("---------------------------------------------------");
 		File workingBaseDirectory = new File(Constants.mavenProjectPath);
 
 		// no need to delete any existing project now
@@ -114,8 +115,8 @@ public class MavenHelper {
 			//throw new IllegalStateException("archetype:generate failed.");
 			return;
 		}
-		logger.warn("Project generated successfully : " + projectSetting.getProjectName());
-		
+		logger.warn("Project Generated Successfully");
+		logger.warn(projectSetting.getProjectName());
 		File resourcesDir = new File(projectSetting.getResourcePath());
 		if(!resourcesDir.exists()){
 			resourcesDir.mkdirs();
@@ -131,9 +132,9 @@ public class MavenHelper {
 		request.setGoals( Arrays.asList( "install", "-DskipTests=true" ) );
 		Invoker invoker = new DefaultInvoker();
 		setMavenHome(invoker); // Setting Maven Home(if wrongly set)
-		logger.warn("-----------------------------");
+		logger.warn("---------------------------------------------------");
 		logger.warn("Building Maven project");
-		logger.warn("-----------------------------");		
+		logger.warn("---------------------------------------------------");		
 		InvocationResult result = invoker.execute( request );
 
 		if (result.getExitCode() != 0) 
@@ -143,13 +144,14 @@ public class MavenHelper {
 		}
 		else
 		{
-			logger.warn("-----------------------------");
 			logger.warn("BUILD SUCCESS");
-			logger.warn("-----------------------------");	
+			logger.warn("---------------------------------------------------");
 		}
 	}
 	
-	private void addMavenDependancies(){
+	private void addMavenDependancies()
+	{
+		logger.warn("Adding dependancies in pom.xml");
 		PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(),"ConceptCrewUtil", "ConceptCrewUtil", "1.0","ConceptCrewUtil-1.0.jar");
 		PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(),"ojdbc6", "ojdbc6", "1.0","ojdbc6.jar");
 		PomDependencyUpdater.addDependancyForUtilities(projectSetting.getPomPath(), "log4j", "log4j", "1.2.15","log4j-1.2.15.jar");

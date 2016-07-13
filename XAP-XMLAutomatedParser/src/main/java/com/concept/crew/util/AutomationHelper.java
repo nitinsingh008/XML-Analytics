@@ -105,7 +105,9 @@ public class AutomationHelper extends MavenHelper
 		return new Pair<String,String>(startingElement,mainElement);
 	}
 	
-	 public void copyUtilityJars(){
+	 public void copyUtilityJars()
+	 {
+		 logger.warn("Copy Utility jars to new Maven Project");
 	    	File targetDir = new File(projectSetting.getPathToUtilityJar());
 	    	if(!targetDir.exists()){
 	    		targetDir.mkdirs();

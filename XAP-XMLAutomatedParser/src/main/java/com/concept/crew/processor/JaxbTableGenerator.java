@@ -23,9 +23,9 @@ public class JaxbTableGenerator extends TableGenerator
 	public Multimap<String, DBColumns> parse(Boolean typed,
 										     String dbType) throws Exception
 	{
-		log.warn("-----------------------------");
-		log.warn("Convert Meta-data to Relational model ");
-		log.warn("-----------------------------");
+
+		log.warn("Convert Meta-data to Relational model");
+		log.warn("---------------------------------------------------");
 		
 		Multimap<String, DBColumns> tableMap = ArrayListMultimap.create();
 		//List<Class> classes = loadClassesFromJar();

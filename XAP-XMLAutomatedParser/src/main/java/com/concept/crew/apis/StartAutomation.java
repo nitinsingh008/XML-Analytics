@@ -73,6 +73,7 @@ public class StartAutomation
 		//2. Generate JAXB object in new maven project from the input XSD
 		if(request.getInputType().equals(Constants.inputType.XML.toString()))
 		{
+			logger.warn("---------------------------------------------------");
 			logger.warn("Generating JAXB Objects in new maven project");		
 			JaxbInfoGenerator jaxbGenerator = new JaxbInfoGenerator(projectSetting);
 			jaxbGenerator.generateInfos(inputMetaDataFile.getAbsolutePath());
@@ -116,9 +117,11 @@ public class StartAutomation
 		
 		// Build Maven project again
 		autoHelper.buildMavenProject();
-		
-		// Parse Input file using above created Framework & Insert
-		
+		logger.warn("---------------------------------------------------");
+		logger.warn("FRAMEWORK GENERATION COMPLETED");
+		logger.warn("PLEASE UPLOAD INPUT FILE");
+		logger.warn("---------------------------------------------------");
+		logger.warn("---------------------------------------------------");
 	}
 
 	/*
