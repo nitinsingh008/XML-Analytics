@@ -50,9 +50,13 @@ public class MavenHelper {
 		}
 		
 		logger.warn("Installing apache-maven-3.2.2 .......");
-		//installMaven();
+
+		// Copying local m2 repository
+		installZippedDirectory(Constants.m2_repo_Zip, Constants.mavenProjectPath);
+
 		// Unzipping Maven 
 		installZippedDirectory(Constants.mavenZip, Constants.mavenProjectPath);
+		
 		logger.warn("Maven Installed successfully");
 		logger.warn("---------------------------------------------------");
 		logger.warn("Creating local m2 repository => " + Constants.m2_repository);
@@ -189,7 +193,8 @@ public class MavenHelper {
             {
                 // if the entry is a directory, make the directory
                 File dir = new File(filePath);
-                dir.mkdir();
+                boolean dirCreated = dir.mkdir();
+                //System.out.println(dirCreated);
             }
             zipIn.closeEntry();
             entry = zipIn.getNextEntry();

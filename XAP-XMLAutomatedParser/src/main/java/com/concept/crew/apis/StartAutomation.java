@@ -175,8 +175,8 @@ public class StartAutomation
 		request.setParsedXSDPath(args[0]);
 		request.setDatabaseType("JavaDB_DERBY");
 		request.setTnsEntry("jdbc:derby:c:\\XAP\\database;create=true");
-		request.setUserName("");
-		request.setPassword("");
+		request.setUserName("CORE_REF_DATA");
+		request.setPassword("CORE_REF_DATA");
 		request.setCreateScript(true);
 		request.setHaveHeaderData(Boolean.TRUE);
 		request.setInputType(Constants.inputType.XML.toString());
