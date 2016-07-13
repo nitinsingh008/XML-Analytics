@@ -3,7 +3,8 @@ ECHO *********************************************************************
 ECHO ******* ******* ******* Starting XAP Database Console ******* ******* 
 ECHO **** Useful Commands shown below		   
 ECHO **** Connecting to database
-ECHO **** connect 'jdbc:derby://localhost:1527/<Path>\<dbName>';
+ECHO **** connect "'jdbc:derby://localhost:1527/<Path>\<dbName>';"
+ECHO **** connect 'jdbc:derby://localhost:1527/C:\XAP\xapDB\dbname' user 'user' password 'pass';
 ECHO **** Example
 ECHO **** connect 'jdbc:derby://localhost:1527/C:\XAP\xapDB\dbName';
 ECHO **** SHOW SCHEMAS; 			(Showing List of Schemas)
