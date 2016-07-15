@@ -58,6 +58,8 @@ public class CsvTableGenerator<E> extends TableGenerator{
 						}else{
 							column.setName(Constants.delimiterTableHeaderPrefi+index);
 						}
+						
+						column.setOriginalDataType("String");
 						column.setDataType(sqlDataType(head,false, dbType));
 						column.setPosition(index-1);
 						csvTableInfo.put(tableName, column);
@@ -68,7 +70,8 @@ public class CsvTableGenerator<E> extends TableGenerator{
 				// move ojdbc jars
 				autoHelper.copyUtilityJars();
 				// compile generated project
-				new AutomationHelper(projectSetting).buildMavenProject();
+				//new AutomationHelper(projectSetting).buildMavenProject();
+				autoHelper.buildMavenProject();
 				// load class file
 				autoHelper.copyJaxbClasses(true);
 				
