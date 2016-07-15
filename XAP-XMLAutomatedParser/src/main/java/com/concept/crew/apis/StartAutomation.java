@@ -118,7 +118,7 @@ public class StartAutomation
 		// Build Maven project again
 		autoHelper.buildMavenProject();
 		logger.warn("---------------------------------------------------");
-		logger.warn("FRAMEWORK GENERATION COMPLETED");
+		logger.warn("FRAMEWORK GENERATION DONE");
 		logger.warn("PLEASE UPLOAD INPUT FILE");
 		logger.warn("---------------------------------------------------");
 		logger.warn("---------------------------------------------------");
