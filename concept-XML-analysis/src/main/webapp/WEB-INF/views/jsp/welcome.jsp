@@ -28,11 +28,12 @@
 		<br><br>
 		</div>
 		<div class="row header" >
-			<div class="col-xs-6">
+		
+			<div class="col-xs-4 col-md-6">
 				<img src="<c:url value='/resources/images/xap_logo.png'/>"
 					id="xaplogo" title="XAP" />			
 			</div>
-			<div class="col-xs-6" align="right">
+			<div class="col-xs-8 col-md-6" align="right">
 				<a href="#" onclick="clickBack()"> 
 					<img src="<c:url value='/resources/images/home_icon.png'/>" id="home_icon" /> 
 						&nbsp;HOME
@@ -50,7 +51,9 @@
 						&nbsp;CONTACT US&nbsp;&nbsp;
 				</a>
 			</div>
-		</div>
+		</div> 
+		
+
 		<div class="row">
 			<!-- file not chosen alert div -->
 			<br><br>
@@ -117,28 +120,28 @@
 									<br>
 									</div>
 									<div class="row">
-										<div class="col-xs-2"></div>
-										<div class="col-xs-2">
-										<b>	File Demilimter By : </b>
+										<div class="col-xs-2 col-md-2"></div>
+										<div class="col-xs-2 col-md-2">
+										<b>	File Delimiter by </b>
 										</div>
-										<div class="col-xs-2">
+										<div class="col-xs-2 col-md-2">
 											<select class="dropdown btn-default dropdown-toggle" id="csvDelimiter">
 												<option></option>
 												<option value="\t">TAB</option>
-												<option value=",">,(comma)</option>
-												<option value="|">|(pipe)</option>
+												<option value=",">COMMA (,)</option>
+												<option value="|">PIPE (|)</option>
 											</select> 
 										</div>
-										<div class="col-xs-2">
-											<b>File Have Header data : </b>
+										<div class="col-xs-2 col-md-2">
+											<b>File Have Header </b>
 										</div>
-										<div class="col-xs-2">
+										<div class="col-xs-2 col-md-1">
 											<select class="dropdown btn-default dropdown-toggle" id="haveHeader">
 												<option value="Y">Yes</option>
 												<option value="N">No</option>
 											</select> 
 										</div>
-										<div class="col-xs-2"></div>
+										<div class="col-xs-2 col-md-3"></div>
 									</div>
 									<div>
 										<input id="inputDelimited" name="inputXsd" type="file"
@@ -162,19 +165,22 @@
 			<h3>Output Console</h3>
 			
 		</div> -->
-		<footer>
+	 	 
+	 <footer>
 			<div class="row footer">
-				<div class="col-xs-4"></div>
-				<div class="col-xs-1" align="right">
+				<div class="col-xs-4 col-md-4"></div>
+				<div class="col-xs-1 col-md-1">
 					<img src="<c:url value='/resources/images/concept_crew.png'/>"
 					id="concpt_crew_logo" />
 				</div>
-				<div class="col-xs-7" align="left">
+				<div class="col-xs-7 col-md-7">
 					<h6 style="vertical-align: middle;">The Concept Crew &copy; markit.com 2016</h6>
 					<h6 style="vertical-align: middle;">Gaurav Agarwal | Nitin Singh | Parag Garg</h6>
 				</div>
 			</div>
 		</footer>
+	 
+
 		
 	</div>
 
