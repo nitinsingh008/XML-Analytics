@@ -279,25 +279,12 @@ div.footer_jsp2 h6 {
 	bottom: 45px; */
 	width: 100px;
 	height: 100px;
-	
-	
- 	
 } 
 
-
-/* .footer img{
-	position: relative;
-	left: 40%;
-} */
-
-
 .upload_form{
-	position:relative;
+	position:absolute;
 	display:block;
-  /*   height:50px;
-    top:180px;    
-    margin-bottom:0px;	
-   */  
+	top:240px;
     transition: width 1s, height 1s;
 }
 .upload_form:HOVER{
@@ -382,11 +369,9 @@ div.footer_jsp2 h6 {
 	font-size:100%;
 }
 .xsd_container{
-	position: relative;
-	/* top: 130px;	
-	height:400px; */
-	/* padding:10px; */
-	
+	position: absolute;
+	top: 80px;
+		
 }
 
 .generatebtn{

@@ -89,7 +89,7 @@ function checkConnectivity()
 
 <div class="container" id="container-jsp2">
 	<div class="xsd_container">
-	<div class="row"><br><br><br><br><br><br></div>
+	
 		<div class="row col-xs-12">
 			<table width="100%" style="table-layout: fixed" >
 				<tr>
