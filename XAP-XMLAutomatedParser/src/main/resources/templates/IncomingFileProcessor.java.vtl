@@ -44,7 +44,14 @@ public class $ClassName
 					 #elseif($type == "DELIMITED")
 					 log.warn("Parsing incoming Delimited file...");
 					 
-					 List<$StartingTag> records = DelimiterDataExtractor.parseFileData(haveHeaderInFile,delimiter, className,fileToBeProcessed.getCanonicalPath());		            		            
+					 List<$StartingTag> records = DelimiterDataExtractor.parseFileData(haveHeaderInFile,delimiter, className,fileToBeProcessed.getCanonicalPath());
+					  for (Iterator iterator = records.iterator(); iterator.hasNext();) {
+						$StartingTag delimiter_SAMPLE = ($StartingTag) iterator.next();
+						if(delimiter_SAMPLE == null){
+							iterator.remove();
+						}
+						
+					}	            		            
 		            	
 		             // Save all Incoming Data into Tables
 		             log.warn("Processing incoming Delimited file...");
