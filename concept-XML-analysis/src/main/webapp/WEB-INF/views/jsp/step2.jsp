@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-
+<link href="<c:url value="/resources/core/css/welcome.css" />"
+	rel="stylesheet">
 <script src="<c:url value="/resources/core/js/welcome.js"/>"></script>
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -102,8 +103,8 @@ function checkConnectivity()
 										<h4 class="panel-title">
 											<a role="button" data-toggle="collapse"
 												data-parent="#accordion" href="#collapseOne"
-												aria-expanded="true" aria-controls="collapseOne"> Input
-												File View </a>
+												aria-expanded="true" aria-controls="collapseOne"> <span class="settng_span"><b>Input
+												File View </b></span></a>
 										</h4>
 									</div>
 									<div id="collapseOne" class="panel-collapse collapse in"
@@ -119,7 +120,7 @@ function checkConnectivity()
 											<a role="button" id="consoleOutPut" data-toggle="collapse"
 												data-parent="#accordion" href="#collapseTwo"
 												aria-expanded="false" aria-controls="collapseTwo">
-												Output Console View </a>
+												<span class="settng_span"><b>Output Console View</b></span> </a>
 										</h4>
 									</div>
 									<div id="collapseTwo" class="panel-collapse collapse"
@@ -134,7 +135,7 @@ function checkConnectivity()
 						</div>
 
 					</td>
-					<td width="10%"></td>
+					<td width="5%"></td>
 					<td width="45%">
 						<div>
 							<form:form commandName="xsdParseRequest"
@@ -142,7 +143,7 @@ function checkConnectivity()
 								<table class="setting_blck" width="100%">
 									<thead>
 										<tr>
-											<td colspan="2">
+											<td colspan="2" style="padding:5px;">
 												<h4>
 													<strong>Select Setting</strong> <br>
 												</h4>
@@ -153,49 +154,51 @@ function checkConnectivity()
 										<tr>
 										</tr>
 										<tr>
-											<td width="25%"><form:checkbox path="doAll" id="doAll"></form:checkbox>
+										
+											<td width="25%" style="padding-left:8px;"><form:checkbox path="doAll" id="doAll"></form:checkbox>
 												<span class="settng_span">Select All</span></td>
-											<td width="25%"><form:checkbox path="createScript" id="createScript" />
-												<span class="settng_span">Create Database Script</span></td>
+											
+												<td width="25%" ><form:checkbox path="createFramework"
+													id="createFramework" /> <span class="settng_span">Generate
+													Parsing framework</span></td>
 										</tr>
 										
 										<tr>
-											<td><form:checkbox path="createFramework"
-													id="createFramework" /> <span class="settng_span">Generate
-													Parsing framework</span></td>
+											<td style="padding-left:8px;"><form:checkbox path="createScript" id="createScript" />
+												<span class="settng_span">Create Database Script</span></td>
 											<td><form:checkbox path="createTable" id="createTable" />
 												<span class="settng_span">Create Table in Database</span></td>
 										</tr>
 										<tr>
-											<td><span class="settng_span">Choose Database
+											<td style="padding-left:8px;"><span class="settng_span">Choose Database
 													Type</span></td>
 											<td><form:select path="databaseType" class="dropdown btn-default dropdown-toggle"
-													items="${databaseType}"></form:select></td>
+													items="${databaseType}" style="margin-bottom:5px;"></form:select></td>
 										</tr>
 										<tr>
-											<td><span class="settng_span">Table Name PostFix</span></td>
+											<td style="padding-left:8px;"><span class="settng_span">Table Name PostFix</span></td>
 											<td><form:input path="databaseTablePostFix"
-													id="databaseTablePostFix" value="RAW" /></td>
+													id="databaseTablePostFix" value="RAW" style="margin-bottom:5px;"/></td>
 										</tr>
 										<tr>
-											<td><span class="settng_span">UserName</span></td>
+											<td style="padding-left:8px;"><span class="settng_span">UserName</span></td>
 											<td><form:input path="userName" id="username"
-													oninput="hideUserIcon()" value="CORE_REF_DATA" /></td>
+													oninput="hideUserIcon()" value="CORE_REF_DATA" style="margin-bottom:5px;"/></td>
 										</tr>
 										<tr>
-											<td><span class="settng_span">Password</span></td>
+											<td style="padding-left:8px;"><span class="settng_span">Password</span></td>
 											<td><form:input path="password" type="password"
 													id="password" oninput="hidePsswdIcon()"
-													value="CORE_REF_DATA" /></td>
+													value="CORE_REF_DATA" style="margin-bottom:5px;"/></td>
 										</tr>
 										<tr>
-											<td><span class="settng_span">Database Connection
+											<td style="padding-left:8px;"><span class="settng_span">Database Connection
 													String</span></td>
 											<td><input type="button" value="Test Connectivity"
-												onclick="checkConnectivity()" id="testconn" /></td>
+												onclick="checkConnectivity()" id="testconn" style="margin-bottom:5px;"/></td>
 										</tr>
 										<tr>
-											<td colspan="2" align="center"><form:textarea path="tnsEntry" rows="5" cols="59"
+											<td colspan="2" style="padding-left:8px;"><form:textarea path="tnsEntry" rows="4" cols="55"
 													id="tnsEntry" /></td>
 										</tr>
 										<tr>
@@ -229,7 +232,7 @@ function checkConnectivity()
 					<td></td>
 					<td align="center">
 						<div id="step3jsp" class="fileupload">
-							<h4 align="left">
+							<h4 align="left" style="padding-left:8px;">
 								<strong>Input File Section</strong> <br>
 							</h4>
 							<input id="inputXML" name="inputXML" type="file"

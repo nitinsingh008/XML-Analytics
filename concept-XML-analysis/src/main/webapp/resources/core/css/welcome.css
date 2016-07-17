@@ -309,8 +309,8 @@ div.footer_jsp2 h6 {
 	/* margin-top: 0px;
 	margin-left: 50px;
 	margin-right: 50px; */
-	border: 1px solid black;
-	height:50vh;
+	/*border: 1px solid black;*/
+	height:65vh;
 	font-size : 100%;
 /* 	padding: 20px 20px 20px 20px; */
 	background-color: #ffffff;
@@ -346,8 +346,9 @@ div.footer_jsp2 h6 {
 	background: linear-gradient(grey, white);
 	/* Standard syntax (must be last) */	
 	font-size:100%;
-	font-style: normal;
+	font-style: normal;	
 	}
+	
 
 .fileupload{
 	/*	display: inline-block;
@@ -371,6 +372,7 @@ div.footer_jsp2 h6 {
 .xsd_container{
 	position: absolute;
 	top: 80px;
+	left:20px;
 		
 }
 
@@ -433,9 +435,9 @@ div.footer_jsp2 h6 {
 .settng_span{
 	font-family: "Calibri";
 	font-size: 16px;
-	font-style: 
-	
+	font-style: 	
 }
+
 
 
 .textareafull{
@@ -461,4 +463,36 @@ div.footer_jsp2 h6 {
 
 #captureParseSettings input[type="password"]{
 	width: 170px;
+}
+
+.contactus{	
+	position: fixed;
+	top: 120px;
+	left: 50px;
+	border-radius: 4px;
+	background-color: #c0c0c0;
+	width: 50%;
+	height: auto;
+	padding: 10px;}
+	
+.help{
+	position: fixed;
+	top: 120px;
+	left: 50px;
+	border-radius: 4px;
+	background-color: #c0c0c0;
+	width: 50%;
+	height: auto;
+	padding: 10px;
+}	
+
+.aboutus{
+	position: fixed;
+	top: 120px;
+	left: 50px;
+	border-radius: 4px;
+	background-color: #c0c0c0;
+	width: 50%;
+	height: auto;
+	padding: 10px;
 }
