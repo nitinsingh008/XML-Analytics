@@ -12,7 +12,7 @@ import org.apache.velocity.app.VelocityEngine;
 import com.concept.crew.info.GenerateRequest;
 import com.concept.crew.util.Constants;
 
-public class LoadSaveProcessorGenerator implements IGenerate {
+public class LoadSaveProcessorGenerator extends IGenerate {
 
 	private  VelocityContext context;
 	
@@ -35,8 +35,15 @@ public class LoadSaveProcessorGenerator implements IGenerate {
 			context.put("Import", Constants.packageName + "." + request.getRoot());
 		}
 		context.put("Root", request.getRoot());
+		
+		String fileLocation = IGenerate.VTL_LOC_1+"templates/LoadSaveProcessor.java.vtl";
+
 		try {
-			Template template = velocityEngine.getTemplate("./src/main/resources/templates/LoadSaveProcessor.java.vtl");
+			File templateLocation = new File(fileLocation);
+			if(!templateLocation.exists()){
+				fileLocation = IGenerate.getResourcePathOnServer()+"templates/LoadSaveProcessor.java.vtl";
+			}
+			Template template = velocityEngine.getTemplate(fileLocation);
 			BufferedWriter writer = new BufferedWriter(new FileWriter(
 					new File(request.getProjectSetting().getPathToProcessor() + File.separator +"LoadSaveProcessor.java")));
 			template.merge(context, writer);

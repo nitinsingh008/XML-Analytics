@@ -12,7 +12,7 @@ import org.apache.velocity.app.VelocityEngine;
 import com.concept.crew.info.GenerateRequest;
 import com.concept.crew.util.Constants;
 
-public class ParentWrapperGenerator implements IGenerate {
+public class ParentWrapperGenerator extends IGenerate {
 
 	private  VelocityContext context;
 	public ParentWrapperGenerator() {
@@ -35,9 +35,14 @@ public class ParentWrapperGenerator implements IGenerate {
 		}
 		context.put("Root", request.getRoot());
 		String className = "ParentInfoWrapper.java";
-		try 
-		{
-			Template template = velocityEngine.getTemplate("./src/main/resources/templates/ParentInfoWrapper.java.vtl");
+		String fileLocation = IGenerate.VTL_LOC_1+"templates/ParentInfoWrapper.java.vtl";
+
+		try {
+			File templateLocation = new File(fileLocation);
+			if(!templateLocation.exists()){
+				fileLocation = IGenerate.getResourcePathOnServer()+"templates/ParentInfoWrapper.java.vtl";
+			}
+			Template template = velocityEngine.getTemplate(fileLocation);
 			BufferedWriter writer = new BufferedWriter(new FileWriter(
 					new File(request.getProjectSetting().getPathToParentInfoWrapper() + File.separator + className)));
 			template.merge(context, writer);

@@ -14,7 +14,7 @@ import com.concept.crew.info.DBColumns;
 import com.concept.crew.info.GenerateRequest;
 import com.concept.crew.util.Constants;
 
-public class ScheduleGenerator implements IGenerate{
+public class ScheduleGenerator extends IGenerate{
 	
 	private  VelocityContext context;
 	
@@ -63,18 +63,28 @@ public class ScheduleGenerator implements IGenerate{
 			context.put("Info", infoName);
 			context.put("ClassName", className);
 			context.put("columnList", columnList);
-			
-			try
-			{
+			String rootFileLocation = IGenerate.VTL_LOC_1+"templates/RootLoader.java.vtl";
+			String scheduleFileLocation = IGenerate.VTL_LOC_1+"templates/ScheduleLoader.java.vtl";
+
+			try {
+				File templateLocation = new File(rootFileLocation);
+				if(!templateLocation.exists()){
+					rootFileLocation = IGenerate.getResourcePathOnServer()+"templates/RootLoader.java.vtl";
+				}
+				File templateScheduleLocation = new File(scheduleFileLocation);
+				if(!templateScheduleLocation.exists()){
+					scheduleFileLocation = IGenerate.getResourcePathOnServer()+"templates/RootLoader.java.vtl";
+				}
+				
 				if(tableName.equals(request.getRoot()))
 				{
-					template = velocityEngine.getTemplate("./src/main/resources/templates/RootLoader.java.vtl");
+					template = velocityEngine.getTemplate(rootFileLocation);
 					writer = new BufferedWriter(new FileWriter(new File(request.getProjectSetting().getPathToGenerateSchedules() + File.separator + className + ".java")));
 					template.merge(context, writer);
 				}
 				else
 				{
-					template = velocityEngine.getTemplate("./src/main/resources/templates/ScheduleLoader.java.vtl");
+					template = velocityEngine.getTemplate(scheduleFileLocation);
 					writer = new BufferedWriter(new FileWriter(new File(request.getProjectSetting().getPathToGenerateSchedules() + File.separator + className + ".java")));
 					template.merge(context, writer);
 				}

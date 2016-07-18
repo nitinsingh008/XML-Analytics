@@ -12,7 +12,7 @@ import org.apache.velocity.app.VelocityEngine;
 import com.concept.crew.info.GenerateRequest;
 import com.concept.crew.util.Constants;
 
-public class XMLParserGenerator implements IGenerate {
+public class XMLParserGenerator extends IGenerate {
 
 	private  VelocityContext context;
 	
@@ -39,8 +39,14 @@ public class XMLParserGenerator implements IGenerate {
 		context.put("StartingTag", request.getStartingElement());
 		context.put("StartingTagClass", request.getStartingElement()+".class");
 		
+		String fileLocation = IGenerate.VTL_LOC_1+"templates/XapParsingUtil.java.vtl";
+
 		try {
-			Template template = velocityEngine.getTemplate("./src/main/resources/templates/XapParsingUtil.java.vtl");
+			File templateLocation = new File(fileLocation);
+			if(!templateLocation.exists()){
+				fileLocation = IGenerate.getResourcePathOnServer()+"templates/XapParsingUtil.java.vtl";
+			}
+			Template template = velocityEngine.getTemplate(fileLocation);
 			BufferedWriter writer = new BufferedWriter(new FileWriter(
 					new File(request.getProjectSetting().getPathToParser() + File.separator +"XapParsingUtil.java")));
 			template.merge(context, writer);

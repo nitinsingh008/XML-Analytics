@@ -114,6 +114,12 @@ public class AutomationHelper extends MavenHelper
 	    	}
 	    	
 	    	File sourceDir = new File("./src/lib");
+	    	if(!sourceDir.isDirectory()){
+	    		URL resource = AutomationHelper.class.getClassLoader().getResource("/");
+	    		String rootPath = resource.getPath().substring(0, resource.getPath().indexOf("XAP")+3);
+	    		sourceDir = new File(rootPath+"/DEPENDENCY-JARS/lib");
+	    	}
+	    	logger.warn("utitlity jar path"+sourceDir.getAbsolutePath());
 	    	 if(sourceDir.isDirectory()){
 				 File[] content = sourceDir.listFiles();
 				 for(int i = 0; i < content.length; i++) {

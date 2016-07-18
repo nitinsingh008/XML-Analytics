@@ -117,7 +117,7 @@ function checkConnectivity()
 								<div class="panel panel-default">
 									<div class="panel-heading" role="tab" id="headingTwo">
 										<h4 class="panel-title">
-											<a role="button" id="consoleOutPut" data-toggle="collapse"
+											<a role="button" id="consoleOutPutLink" data-toggle="collapse"
 												data-parent="#accordion" href="#collapseTwo"
 												aria-expanded="false" aria-controls="collapseTwo">
 												<span class="settng_span"><b>Output Console View</b></span> </a>

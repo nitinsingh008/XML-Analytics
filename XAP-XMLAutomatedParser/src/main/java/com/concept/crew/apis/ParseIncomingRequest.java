@@ -81,6 +81,7 @@ public class ParseIncomingRequest {
 			jarFile = new JarFile(projectSetting.getTargetPath()+ "\\" + projectSetting.getJarFileName());
 			Enumeration e = jarFile.entries();
 			URL[] urls = { new URL("jar:file:" + projectSetting.getTargetPath()+ "\\" + projectSetting.getJarFileName()+"!/"),
+							new URL("jar:file:" + projectSetting.getTargetPath()+ "\\classes" +"!/"),
 						   new URL("jar:file:" + projectSetting.getPathToUtilityJar() + "/log4j-1.2.15.jar"+"!/"),
 						   new URL("jar:file:" + projectSetting.getPathToUtilityJar() + "/ConceptCrewUtil-1.0.jar"+"!/"),
 						   new URL("jar:file:" + projectSetting.getPathToUtilityJar() + "/ojdbc6.jar"+"!/"),

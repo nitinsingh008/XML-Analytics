@@ -48,9 +48,7 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			 <scope>system</scope>
-			<version>2.4</version>
-			<systemPath>${basedir}\src\lib\commons-io-2.4.jar</systemPath>
+			<version>1.3.2</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.xml</groupId>
@@ -165,7 +163,7 @@
 	</dependencies>
 
 	<build>
-
+		<finalName>XAP</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -208,8 +206,24 @@
 				<version>2.4</version>
 				<configuration>
 					<warSourceDirectory>src/main/webapp</warSourceDirectory>
-					<warName>ConceptCrewXAP</warName>
+					<warName>XAP</warName>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<webResources>
+						 <resource>
+                               <directory>${basedir}\src\lib</directory>
+                               <targetPath>WEB-INF/lib</targetPath>
+                               <includes>
+                                    <include>*.jar</include>
+                               </includes>
+                            </resource>
+                             <resource>
+                               <directory>${basedir}\src\lib</directory>
+                               <targetPath>DEPENDENCY-JARS/lib</targetPath>
+                               <includes>
+                                    <include>*.jar</include>
+                               </includes>
+                            </resource>
+					</webResources>
 				</configuration>
 			</plugin>
             <plugin>

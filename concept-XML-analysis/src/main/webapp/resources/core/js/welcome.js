@@ -1,17 +1,15 @@
 	$(document).ready(function() {
 		// hide remaining divs
-		$("#delimtedMetaDeta").hide();
-		$("#alert").hide();
-		$("#success").hide();
-		
+		$("#delimtedMetaDeta").hide();		
 		$("#uploadButtonXsd").click(function() {
 			var fileName = $("#inputXsd").val();
 			if (fileName == null || fileName == '') {
-				$("#alert").show();
+				alert('Please select any XSD');
 				return;
 			}else if(!fileName.endsWith(".xsd")){
-				 $('#alertMessage').html('invalid file format');
-				 $("#alert").show();
+				/* $('#alertMessage').html('invalid file format');
+				 $("#alert").modal('show');*/
+				alert('Invalid File Format');
 			}
 			else{
 				 var oMyForm = new FormData();
@@ -38,8 +36,9 @@
 			var fileName = $("#inputDelimited").val();
 			var delimiter = $("#csvDelimiter").val();
 			if (fileName == null || fileName == '' || delimiter == null || delimiter == '') {
-				$('#alertMessage').html('either inputfile or delimiter not provided');
-				$("#alert").show();
+				/*$('#alertMessage').html('either inputfile or delimiter not provided');
+				$("#alert").modal('show');*/
+				alert('either input file or delimiter not provided');
 				return;
 			}
 			else{
@@ -64,13 +63,13 @@
 			}
 		});
 
-		$("#alertCloseButton").click(function() {
+		/*$("#alertCloseButton").click(function() {
 			$("#alert").hide();
 		});
 		
 		$("#successCloseButton").click(function() {
 			$("#success").hide();
-		});
+		});*/
 		
 		
 		
@@ -87,7 +86,7 @@
 					return;
 				}
 			}
-			$("#consoleOutPut").click();
+			$("#consoleOutPutLink").click();
 			var add = setInterval("readLog()",10);
 				$.ajax({
 					    url: 'Generate',
@@ -97,9 +96,10 @@
 						
 					    success: function(data){
 					   		clearInterval(add);
-					   		$("#successMessage").html("Framework generation Done, Please upload input file");
-					   		$("#success").show();
 					   		$("#uploadXMLButton").removeAttr("disabled");
+					   		/*$("#alertMessage").html("Framework generation Done, Please upload input file");
+					   		$("#alert").modal('show');*/
+					   		alert('Framework generation Done, Please upload input file');
 					    },
 					    error :function(xhr, status, error) {
 					    	clearInterval(add);
@@ -132,6 +132,8 @@
 		    type: 'GET',
 		    success: function(data){
 		   		$("#consoleOutput").html(data);
+		   		var elem = document.getElementById('consoleOutput');
+		   	    elem.scrollTop = elem.scrollHeight;
 		    }
 		  });
 		
@@ -143,10 +145,10 @@
 		
 			
 			var fileName = $("#inputXML").val();
-			alert(fileName);
 			if (fileName == null || fileName == '') {
-				$("#alertMessage").html('Select files to upload');
-				 $("#alert").show();
+				/*$("#alertMessage").html('Select files to upload');
+				$("#alert").modal('show');*/
+				alert('Select files to upload');
 				return;
 			}
 			 var oMyForm = new FormData();
@@ -159,8 +161,10 @@
 				    contentType: false,
 				    type: 'POST',
 				    success: function(data){
-				   		$("#successMessage").html(data);
-				   		$("#success").show();
+				   		/*$("#alertMessage").html(data);
+				   		$("#alert").removeattr('style');
+				   		$("#alert").modal('show');*/
+				    	alert(data);
 				    }
 				  });
 		

@@ -14,7 +14,7 @@ import org.apache.velocity.app.VelocityEngine;
 
 import com.concept.crew.info.GenerateRequest;
 
-public class LoaderTypeGenerator implements IGenerate {
+public class LoaderTypeGenerator extends IGenerate {
 
 	private  VelocityContext context;
 	
@@ -64,9 +64,15 @@ public class LoaderTypeGenerator implements IGenerate {
 			String loader = tableName + "Loader" + ".class";
 			nameMap.put(tableNameWithPostFix,  loader);
 		}
-		context.put("mapp", nameMap);		
+		context.put("mapp", nameMap);	
+		String fileLocation = IGenerate.VTL_LOC_1+"templates/LoadersType.java.vtl";
+
 		try {
-			Template template = velocityEngine.getTemplate("./src/main/resources/templates/LoadersType.java.vtl");
+			File templateLocation = new File(fileLocation);
+			if(!templateLocation.exists()){
+				fileLocation = IGenerate.getResourcePathOnServer()+"templates/LoadersType.java.vtl";
+			}
+			Template template = velocityEngine.getTemplate(fileLocation);
 			BufferedWriter writer = new BufferedWriter(new FileWriter(
 					new File(request.getProjectSetting().getPathToLoaderType() + File.separator + "LoadersType.java")));
 			template.merge(context, writer);

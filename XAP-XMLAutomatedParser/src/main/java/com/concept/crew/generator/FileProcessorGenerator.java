@@ -14,7 +14,7 @@ import com.concept.crew.generator.IGenerate;
 import com.concept.crew.info.GenerateRequest;
 import com.concept.crew.util.Constants;
 
-public class FileProcessorGenerator implements IGenerate {
+public class FileProcessorGenerator extends IGenerate {
 	
 	private  VelocityContext context;
 	
@@ -64,9 +64,13 @@ public class FileProcessorGenerator implements IGenerate {
 			context.put("Password", request.getProjectSetting().getDbDetails().getPassword());
 		}
 		context.put("List", request.getRoot());
-		
+		String fileLocation = IGenerate.VTL_LOC_1+"templates/IncomingFileProcessor.java.vtl";
 		try {
-			template = velocityEngine.getTemplate("./src/main/resources/templates/IncomingFileProcessor.java.vtl");
+			File templateLocation = new File(fileLocation);
+			if(!templateLocation.exists()){
+				fileLocation = IGenerate.getResourcePathOnServer()+"templates/IncomingFileProcessor.java.vtl";
+			}
+			template = velocityEngine.getTemplate(fileLocation);
 			writer = new BufferedWriter(new FileWriter(
 					new File(request.getProjectSetting().getPathToProcessor() + File.separator + javaFileName)));
 			template.merge(context, writer);

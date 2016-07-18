@@ -53,30 +53,43 @@
 			</div>
 		</div> 
 		
-		
 
-		<div class="row">
-			<!-- file not chosen alert div -->
-			<br><br>
-			<div class="alert alert-warning alert-dismissible" id="alert">
-				<button type="button" class="close" data-dismiss="alert"
-					id="alertCloseButton">
-					<span>&times;</span>
-				</button>
-				<strong>Warning!</strong>
-				<div id="alertMessage">Please Select XSD</div>
+		<div id="alert" class="modal fade">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Warning</h4>
+					</div>
+					<div class="modal-body">
+						<p class="text-info">
+							<small id="alertMessage">Please Select XSD</small>
+						</p>
+					</div>
+					<!-- <div class="modal-footer">
+						<button type="button" class="btn  btn-primary" data-dismiss="modal">Close</button>
+					</div> -->
+				</div>
 			</div>
-			<br>
-			<div class="alert alert-success alert-dismissible" id="success">
-				<button type="button" class="close" data-dismiss="alert"
-					id="successCloseButton">
-					<span>&times;</span>
-				</button>
-				<strong>Message!</strong>
-				<div id="successMessage"></div>
-			</div>
-
 		</div>
+	<!-- 	<div id="successId" class="modal fade">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Message</h4>
+					</div>
+					<div class="modal-body">
+						<p class="text-warning">
+							<small id="successMessage"></small>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div> -->
+
 		<div id="topblank" class="row topblankspace" >
 		<br><br>
 		</div>

@@ -13,7 +13,7 @@ import org.apache.velocity.app.VelocityEngine;
 import com.concept.crew.info.GenerateRequest;
 import com.concept.crew.util.Constants;
 
-public class DelimiterDataExtractorGenerator implements IGenerate{
+public class DelimiterDataExtractorGenerator extends IGenerate{
 
 	private  VelocityContext context;
 	
@@ -36,9 +36,14 @@ public class DelimiterDataExtractorGenerator implements IGenerate{
 			String tableName = tableMapIt.next();
 			context.put("classImport", Constants.pojoPackageName + ".*");
 			context.put("classType", tableName);
-				
+			
+			String fileLocation = IGenerate.VTL_LOC_1+"templates/DelimitedDataExtractor.java.vtl";
 			try {
-				Template template = velocityEngine.getTemplate("./src/main/resources/templates/DelimitedDataExtractor.java.vtl");
+				File templateLoc = new File(fileLocation);
+				if(!templateLoc.exists()){
+					fileLocation = IGenerate.getResourcePathOnServer()+"templates/DelimitedDataExtractor.java.vtl";
+				}
+				Template template = velocityEngine.getTemplate(fileLocation);
 				BufferedWriter writer = new BufferedWriter(new FileWriter(
 						new File(request.getProjectSetting().getPathToLoaderType() + File.separator +"DelimiterDataExtractor.java")));
 				template.merge(context, writer);
