@@ -146,9 +146,13 @@ public class XapDBRoutine
 	}
 	
 	public static Connection getConnection(){
-		if(conn == null){
-			initializeConnection();
-			return conn;
+		try {
+			if(conn == null || conn.isClosed()){
+				initializeConnection();
+				return conn;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return conn;
 	}
