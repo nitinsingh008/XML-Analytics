@@ -36,6 +36,7 @@ public class XMLParserGenerator extends IGenerate {
 		context.put("Import", Constants.packageName + ".*");
 		context.put("ClassName", "XapParsingUtil");
 		context.put("xsd", request.getXsdFile().getName());
+		context.put("xsdLoc", Constants.xsdLocalPath + "/" +request.getXsdFile().getName());
 		context.put("StartingTag", request.getStartingElement());
 		context.put("StartingTagClass", request.getStartingElement()+".class");
 		
