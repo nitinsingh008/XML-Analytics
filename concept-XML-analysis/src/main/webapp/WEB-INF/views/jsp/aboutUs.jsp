@@ -14,6 +14,17 @@
 <div class="container">
 	<div class="aboutus">
 		<h1>About Us</h1>
+		<pre>
+		About Product
+		Markit XAP - XML Automated Parser
+		</pre>
+		<pre>
+		About Team
+		
+		Gaurav Agarwal 	- Working with Reference Data Development Team
+		Nitin Singh 	- Working with Reference Data Development Team
+		Parag Garg 		- Working with Reference Data Development Team
+		</pre>
 	</div>
 	<div></div>
 

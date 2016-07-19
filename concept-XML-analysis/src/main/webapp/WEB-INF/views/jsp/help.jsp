@@ -16,7 +16,26 @@
 		<h1>Help</h1>
 	</div>
 	<div>
-	
+			<pre>
+		Technologies Used
+		HTML5, CSS3, Bootstrap, JQuery
+		JDBC
+		Spring framework
+		Apache Maven 
+		Univocity Parser
+		Velocity Template
+		In-built Server -  Tomcat7
+		In-Built Database - Apache Derby (JavaDB)</pre>
+		<pre>
+		Web based solution, which is easy to execute
+		Can run Independently on any machine
+		Creates new Maven project on the fly 
+		Creates JAXB classes/Pojo classes/API on the fly from given XSD\Delimited Files
+		Generation of SQL scripts
+		Converting parent - child relationship into Relational database scripts
+		Login to database and create tables
+		Creates common Loader framework in newly created project dynamically
+		</pre>
 	</div>
 </div>
 
