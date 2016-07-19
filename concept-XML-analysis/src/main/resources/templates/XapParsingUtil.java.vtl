@@ -43,7 +43,11 @@ public class $ClassName {
 			final Thread currentThread = Thread.currentThread();
 			final ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-			final InputStream inputStream = contextClassLoader.getResourceAsStream("$xsd");
+			InputStream inputStream = XapParsingUtil.class.getResourceAsStream("$xsd");
+			
+			if(inputStream == null){
+				inputStream = new FileInputStream(new File("$xsdLoc"));
+			}
 			
 			final Source src = new StreamSource(inputStream);
 			
