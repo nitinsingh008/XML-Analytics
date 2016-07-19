@@ -166,8 +166,21 @@ public class AutomationHelper extends MavenHelper
 		 }	
 	 }
 	 
-	 public void doChoreOperations(){
+	 public void doChoreOperations()
+	 {
+		 logger.warn("Copy Loader Util classes");
+		 
 	    	File sourceDir = new File("./src/main/java/com/concept/crew/dao/loaderUtil");
+	    	
+	    	if(!sourceDir.isDirectory())
+	    	{
+	    		URL resource = AutomationHelper.class.getClassLoader().getResource("/");
+	    		String rootPath = resource.getPath().substring(0, resource.getPath().indexOf("XAP")+3);
+	    		sourceDir = new File(rootPath+"/UTIL-CLASSES");
+	    	}
+	    	
+	    logger.warn("Path=> " + sourceDir.getAbsolutePath());	
+	    
 	    	File targetDir = new File(projectSetting.getPathToLoaderType());
 	    	
 	    	if(!targetDir.exists()){
@@ -226,6 +239,7 @@ public class AutomationHelper extends MavenHelper
 					}
 				}
 			}
+			logger.warn("Loader Utils copied successfully");
 	}
 	
 	public static void main(String args[]) throws Exception

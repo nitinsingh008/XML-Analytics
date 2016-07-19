@@ -341,6 +341,8 @@ public abstract class TableGenerator
 			bw.close();
 			sb = new StringBuffer();
 		}
+		
+		logger.warn("Insert scripts generated Successfully");
 	}
 	
 	

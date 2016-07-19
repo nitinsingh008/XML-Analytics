@@ -211,20 +211,27 @@
 					<warName>XAP</warName>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<webResources>
-						 <resource>
+						   <resource>
                                <directory>${basedir}\src\lib</directory>
                                <targetPath>WEB-INF/lib</targetPath>
                                <includes>
                                     <include>*.jar</include>
                                </includes>
                             </resource>
-                             <resource>
+                            <resource>
                                <directory>${basedir}\src\lib</directory>
                                <targetPath>DEPENDENCY-JARS/lib</targetPath>
                                <includes>
                                     <include>*.jar</include>
                                </includes>
                             </resource>
+                            <resource>
+                               <directory>${basedir}\src\main\java\com\concept\crew\dao\loaderUtil</directory>
+                               <targetPath>UTIL-CLASSES</targetPath>
+                               <includes>
+                                    <include>*.*</include>
+                               </includes>
+                            </resource>                            
 					</webResources>
 				</configuration>
 			</plugin>
