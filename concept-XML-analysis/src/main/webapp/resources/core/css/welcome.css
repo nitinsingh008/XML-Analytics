@@ -442,13 +442,13 @@ div.footer_jsp2 h6 {
 
 #username{
 	margin-bottom: 8px;
-	background-image: url(userid.jpg);
+	/* background-image: url(userid.jpg); */
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-origin: content-box;}
 #password{
 	margin-bottom: 8px;
-	background-image: url(password.jpg);
+	/* background-image: url(password.jpg); */
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-origin: content-box;}

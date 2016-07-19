@@ -144,7 +144,7 @@ function checkConnectivity()
 										<tr>
 											<td colspan="2" style="padding:5px;">
 												<h4>
-													<strong>Select Setting</strong> <br>
+													<strong>Configuration Settings Section</strong> <br>
 												</h4>
 											</td>
 										</tr>
