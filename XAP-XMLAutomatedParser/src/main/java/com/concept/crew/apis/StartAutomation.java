@@ -62,7 +62,6 @@ public class StartAutomation
 	{
 		File inputMetaDataFile = new File(request.getParsedXSDPath()); 
 		
-	//	AutomationHelper autoHelper = new AutomationHelper(projectSetting);
 		autoHelper.initialization();
 		
 		//1. Create Maven project with default settings

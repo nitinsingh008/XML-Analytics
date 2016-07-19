@@ -1,10 +1,10 @@
 package com.concept.crew.util;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.net.URLClassLoader;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -47,9 +47,7 @@ public class AutomationHelper extends MavenHelper
 		String mainElement = "";
 		String startingElement = "";
 		final Thread currentThread = Thread.currentThread();
-		final ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-		final InputStream inputStream = contextClassLoader.getResourceAsStream(xsdFile.getName());
-		
+		final InputStream inputStream = new FileInputStream(new File(xsdFile.getAbsolutePath()));
 		//parse the document
 		DocumentBuilderFactory  docBuilderFactory 	= DocumentBuilderFactory.newInstance();
 		DocumentBuilder 		docBuilder 			= docBuilderFactory.newDocumentBuilder();
