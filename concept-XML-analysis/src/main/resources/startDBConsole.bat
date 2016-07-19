@@ -12,7 +12,7 @@ ECHO **** SHOW TABLES;  			(Showing List of Tables)
 ECHO **** DESCRIBE TABLES;			(Describe about Table)
 ECHO **** SELECT * FROM TABLE_NAME;
 ECHO **** SHOW INDEXES				(Display all indexes in database)
-ECHO **** EXIT;						(Exiting console)
+ECHO **** EXIT;						(Exiting the console)
 ECHO *********************************************************************
 
 CALL db-derby-10.12.1.1\bin\ij
