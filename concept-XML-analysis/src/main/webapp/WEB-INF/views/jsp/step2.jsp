@@ -89,8 +89,7 @@ function checkConnectivity()
 
 
 <div class="container" id="container-jsp2">
-	<div class="xsd_container">
-	
+	<div class="xsd_container">	
 		<div class="row col-xs-12">
 			<table width="100%" style="table-layout: fixed" >
 				<tr>
@@ -203,13 +202,13 @@ function checkConnectivity()
 										</tr>
 										<tr>
 											<td align="center">
-												<button type="button" id="GenerateButton" class="upload"
+												<button type="button" id="GenerateButton" class="upload1"
 													value="Generate" onclick="clickGenerate()">
 													<span>Generate</span>
 												</button>
 											</td>
 											<td align="center">
-												<button type="reset" class="upload">Reset</button>
+												<button type="reset" class="upload1">Reset</button>
 											</td>
 										</tr>
 									</tbody>
@@ -230,16 +229,16 @@ function checkConnectivity()
 				</tr>
 				<tr>
 					<td></td>
-					<td align="center">
+					<td align="center" width="45%">
 						<div id="step3jsp" class="fileupload">
-							<h4 align="left" style="padding-left:8px;">
+							<h4 align="left" style="padding-left:5px;padding-top:8px;">
 								<strong>Input File Section</strong> <br>
 							</h4>
 							<input id="inputXML" name="inputXML" type="file"
 								class="file-loading form-control" value="Please Select XSD"
 								multiple="multiple"></input>
 							<button type="button" id="uploadXMLButton"
-								title="Upload selected files" class="upload" value="Upload"
+								title="Upload selected files" class="upload1" value="Upload"
 								onclick="uploadXMLButton()" disabled="disabled">
 								<span>Parse</span>
 							</button>
