@@ -10,8 +10,10 @@ import com.concept.crew.generator.ParentWrapperGenerator;
 import com.concept.crew.generator.ScheduleGenerator;
 import com.concept.crew.generator.XMLParserGenerator;
 import com.concept.crew.info.GenerateRequest;
+import org.apache.log4j.Logger;
 
-public enum GeneratorEngine {
+public enum GeneratorEngine 
+{
 
 	PARENT_WRAPPER(new ParentWrapperGenerator()),
 	ESSENTIALS(new EssentialsGenerator()),
@@ -21,6 +23,8 @@ public enum GeneratorEngine {
 	XML_PARSER(new XMLParserGenerator()),
 	FILE_RUNNER(new FileProcessorGenerator()),
 	DELIMITER_RUNNER(new DelimiterDataExtractorGenerator());
+
+	private static Logger 		logger 			= Logger.getLogger(GeneratorEngine.class);
 	
 	private final IGenerate generator;
 	
@@ -32,8 +36,10 @@ public enum GeneratorEngine {
 		return generator;
 	}
 
-	public static void generateAll(GenerateRequest request){
-		for(GeneratorEngine gen : values()){
+	public static void generateAll(GenerateRequest request)
+	{
+		for(GeneratorEngine gen : values())
+		{
 			gen.getGenerator().generate(request);
 		}
 	}
