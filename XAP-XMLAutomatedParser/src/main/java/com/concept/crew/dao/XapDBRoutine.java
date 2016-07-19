@@ -111,8 +111,12 @@ public class XapDBRoutine
 	private static boolean initializeConnection()
 	{		
 		boolean connected = false;
-		if(conn != null)
-			return true;
+		try {
+			if(conn != null && !conn.isClosed())
+				return true;
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		
 		try 
 		{
@@ -120,7 +124,7 @@ public class XapDBRoutine
 			
 			conn = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
 			
-			if(conn != null)
+			if(conn != null && !conn.isClosed())
 			{
 				logger.warn("Connection to DB successful");
 				connected = true;
