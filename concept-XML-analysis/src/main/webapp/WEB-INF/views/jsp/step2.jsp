@@ -159,7 +159,7 @@ function checkConnectivity()
 											
 												<td width="25%" ><form:checkbox path="createFramework"
 													id="createFramework" /> <span class="settng_span">Generate
-													Parsing framework</span></td>
+													Loader framework</span></td>
 										</tr>
 										
 										<tr>
