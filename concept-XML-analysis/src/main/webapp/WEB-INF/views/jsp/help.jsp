@@ -13,20 +13,22 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <div class="container">
 	<div class="help">
-		<h1>Help</h1>
-	</div>
-	<div>
-			<pre>
-		Technologies Used
-		HTML5, CSS3, Bootstrap, JQuery
-		JDBC
-		Spring framework
-		Apache Maven 
-		Univocity Parser
-		Velocity Template
-		In-built Server -  Tomcat7
-		In-Built Database - Apache Derby (JavaDB)</pre>
-		<pre>
+		<h1 align="center">Help</h1>
+	
+			
+		<b>Technologies Used</b>
+		<ul>
+		<li>HTML5, CSS3, Bootstrap, JQuery</li>
+		<li>JDBC</li>
+		<li>Spring framework</li>
+		<li>Apache Maven </li>
+		<li>Univocity Parser</li>
+		<li>Velocity Template</li>
+		<li>In-built Server -  Tomcat7</li>
+		<li>In-Built Database - Apache Derby (JavaDB)</li>
+		</ul>
+		<br>
+		
 		Web based solution, which is easy to execute
 		Can run Independently on any machine
 		Creates new Maven project on the fly 
@@ -35,7 +37,7 @@
 		Converting parent - child relationship into Relational database scripts
 		Login to database and create tables
 		Creates common Loader framework in newly created project dynamically
-		</pre>
+		
 	</div>
 </div>
 

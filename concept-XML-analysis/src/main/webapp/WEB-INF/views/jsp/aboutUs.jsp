@@ -13,20 +13,20 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <div class="container">
 	<div class="aboutus">
-		<h1>About Us</h1>
-		<pre>
-		About Product
-		Markit XAP - XML Automated Parser
-		</pre>
-		<pre>
-		About Team
+		<h1 align="center">About Us</h1>
 		
-		Gaurav Agarwal 	- Working with Reference Data Development Team
-		Nitin Singh 	- Working with Reference Data Development Team
-		Parag Garg 		- Working with Reference Data Development Team
-		</pre>
+		<b>About Product:</b><br>
+		<b><ul><li>Markit XAP</b> - XML Automated Parser</li></ul>
+		
+		<b>About Team:</b>
+		
+		<ul>
+		<li><b>Gaurav Agarwal</b> 	- Working with Reference Data Development Team</li>
+		<li><b>Nitin Singh</b> 	- Working with Reference Data Development Team</li>
+		<li><b>Parag Garg</b> 		- Working with Reference Data Development Team</li>
+		</ul>
 	</div>
-	<div></div>
+	
 
 </div>
 

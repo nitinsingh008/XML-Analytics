@@ -13,17 +13,27 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <div class="container">
 	<div class="contactus">
-		<h1>Contact Us</h1>
+		
+		<h1 align="center">Contact Us</h1>	
+		
 		Let us know how we can help<br>
 		Contact Support<br>
-		Gaurav Agarwal<br>
-		gaurav.agarwal@ihsmarkit.com
-		<br><br>
-		Nitin Singh<br>
-		nitin.singh@ihsmarkit.com
-		<br><br>
-		Parag Garg<br>
-		parag.garg@ihsmarkit.com
+		<ul>
+		<li><b>Gaurav Agarwal</b></li>
+		<span class="glyphicon glyphicon-envelope"></span> gaurav.agarwal@ihsmarkit.com<br>		
+		<span class="glyphicon glyphicon-earphone"></span> 9818766924
+		<br>
+		
+		<li><b>Nitin Singh</b></li>
+		<span class="glyphicon glyphicon-envelope"></span> nitin.singh@ihsmarkit.com<br>
+		<span class="glyphicon glyphicon-earphone"></span> 8527155055
+		<br>
+		
+		<li><b>Parag Garg</b></li>
+		<span class="glyphicon glyphicon-envelope"></span>  parag.garg@ihsmarkit.com<br>
+		<span class="glyphicon glyphicon-earphone"></span> 8860086495
+		
+		</ul>
 	</div>
 </div>
 
