@@ -1,0 +1,11 @@
+Complex Element is an XML element which can contain other elements and/or attributes.
+
+	All - Child elements can occur in any order.
+	Sequence - Child element can occur only in specified order.
+
+
+Default Handling
+ 	<xs:element name="grade" type="xs:string" default="NA" />
+
+Fixed Value
+	 <xs:element name="class" type="xs:string" fixed="1" /> 
