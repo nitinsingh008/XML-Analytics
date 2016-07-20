@@ -73,7 +73,7 @@ public class ScheduleGenerator extends IGenerate{
 				}
 				File templateScheduleLocation = new File(scheduleFileLocation);
 				if(!templateScheduleLocation.exists()){
-					scheduleFileLocation = IGenerate.getResourcePathOnServer()+"templates/RootLoader.java.vtl";
+					scheduleFileLocation = IGenerate.getResourcePathOnServer()+"templates/ScheduleLoader.java.vtl";
 				}
 				
 				if(tableName.equals(request.getRoot()))

@@ -32,6 +32,8 @@ public class GenerateRequest {
 		this.xsdFile = xsdFile;
 		this.inputType = inputType;	
 		this.velocityEngine = new VelocityEngine();
+		velocityEngine.setProperty("resource.loader", "class");
+		velocityEngine.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
 		this.velocityEngine.init();  
 	}
 

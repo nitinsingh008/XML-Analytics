@@ -18,7 +18,8 @@ public abstract class IGenerate {
 		{
 			rootPath = rootPath.substring(1);
 		}
-		return rootPath+"/WEB-INF/classes/";
+		//return rootPath+"/WEB-INF/classes/";
+		return "";
 	}
 
 	public static void main(String args[])
