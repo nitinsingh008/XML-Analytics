@@ -103,12 +103,12 @@
 			<systemPath>${basedir}\src\lib\ojdbc6.jar</systemPath>
 		</dependency>
 		<dependency>
-	         <groupId>ConceptCrewUtil</groupId>
-	         <artifactId>ConceptCrewUtil</artifactId>
-	         <scope>system</scope>
-	         <version>1.0</version>
-	         <systemPath>${basedir}\src\lib\ConceptCrewUtil-1.0.jar</systemPath>
-    	</dependency>
+			<groupId>ConceptCrewUtil</groupId>
+			<artifactId>ConceptCrewUtil</artifactId>
+			<scope>system</scope>
+			<version>1.0</version>
+			<systemPath>${basedir}\src\lib\ConceptCrewUtil-1.0.jar</systemPath>
+		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -148,20 +148,25 @@
 			<systemPath>${basedir}\src\lib\univocity-parsers-2.0.2.jar</systemPath>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.derby</groupId>
-		    <artifactId>derby</artifactId>
-		    <version>10.12.1.1</version>
-		</dependency>	
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.12.1.1</version>
+		</dependency>
 		<dependency>
-		    <groupId>org.apache.derby</groupId>
-		    <artifactId>derbynet</artifactId>
-		    <version>10.12.1.1</version>
-		</dependency>	
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derbynet</artifactId>
+			<version>10.12.1.1</version>
+		</dependency>
 		<dependency>
-		    <groupId>org.apache.derby</groupId>
-		    <artifactId>derbyclient</artifactId>
-		    <version>10.12.1.1</version>
-		</dependency>			
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derbyclient</artifactId>
+			<version>10.12.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -186,7 +191,7 @@
 				<configuration>
 					<scanIntervalSeconds>10</scanIntervalSeconds>
 					<webApp>
-						<contextPath>/XMLAnalysis</contextPath>
+						<contextPath>/XAP</contextPath>
 					</webApp>
 				</configuration>
 			</plugin>
@@ -211,50 +216,50 @@
 					<warName>XAP</warName>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<webResources>
-						   <resource>
-                               <directory>${basedir}\src\lib</directory>
-                               <targetPath>WEB-INF/lib</targetPath>
-                               <includes>
-                                    <include>*.jar</include>
-                               </includes>
-                            </resource>
-                            <resource>
-                               <directory>${basedir}\src\lib</directory>
-                               <targetPath>DEPENDENCY-JARS/lib</targetPath>
-                               <includes>
-                                    <include>*.jar</include>
-                               </includes>
-                            </resource>
-                            <resource>
-                               <directory>${basedir}\src\main\java\com\concept\crew\dao\loaderUtil</directory>
-                               <targetPath>UTIL-CLASSES</targetPath>
-                               <includes>
-                                    <include>*.*</include>
-                               </includes>
-                            </resource>                            
+						<resource>
+							<directory>${basedir}\src\lib</directory>
+							<targetPath>WEB-INF/lib</targetPath>
+							<includes>
+								<include>*.jar</include>
+							</includes>
+						</resource>
+						<resource>
+							<directory>${basedir}\src\lib</directory>
+							<targetPath>DEPENDENCY-JARS/lib</targetPath>
+							<includes>
+								<include>*.jar</include>
+							</includes>
+						</resource>
+						<resource>
+							<directory>${basedir}\src\main\java\com\concept\crew\dao\loaderUtil</directory>
+							<targetPath>UTIL-CLASSES</targetPath>
+							<includes>
+								<include>*.*</include>
+							</includes>
+						</resource>
 					</webResources>
 				</configuration>
 			</plugin>
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.1</version>
-                <executions>
-                    <execution>
-                        <id>tomcat-run</id>
-                        <goals>
-                            <goal>exec-war-only</goal>
-                        </goals>
-                        <phase>package</phase>
-                        <configuration>
-                            <path>/XAP</path>                               
-                            <attachartifactclassifier>exec-war</attachartifactclassifier>
-                            <attachartifactclassifiertype>jar</attachartifactclassifiertype>
-                            <finalName>XAP-Parser.jar</finalName>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>			
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.1</version>
+				<executions>
+					<execution>
+						<id>tomcat-run</id>
+						<goals>
+							<goal>exec-war-only</goal>
+						</goals>
+						<phase>package</phase>
+						<configuration>
+							<path>/XAP</path>
+							<attachartifactclassifier>exec-war</attachartifactclassifier>
+							<attachartifactclassifiertype>jar</attachartifactclassifiertype>
+							<finalName>XAP-Parser.jar</finalName>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
