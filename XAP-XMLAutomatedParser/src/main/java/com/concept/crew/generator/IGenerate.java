@@ -8,7 +8,8 @@ public abstract class IGenerate {
 
 	public abstract void generate(GenerateRequest request);
 	
-	public static final String VTL_LOC_1 ="./src/main/resources/";
+	//public static final String VTL_LOC_1 ="./src/main/resources/";
+	public static final String VTL_LOC_1 ="";
 	
 	public static String getResourcePathOnServer()
 	{

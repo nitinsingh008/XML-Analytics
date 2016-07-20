@@ -32,7 +32,7 @@ public class ParseIncomingRequest {
 	}
 	
 	public void process(){
-		log.warn("Starting");
+		log.warn("Starting Data Insertion into Database..");
 		Map<String,Class> cls = loadMainClass();
 		Class mainClass = cls.get(Constants.mainProcessor);
 		if( mainClass == null){
@@ -53,7 +53,7 @@ public class ParseIncomingRequest {
 			    myMethod.invoke(instance, new Object[] { fileToBeParsed, dbDetails.getDbType(), dbDetails.getJdbcUrl(), 
 			    					dbDetails.getUser(), dbDetails.getPassword(),request.getHaveHeaderData(),request.getDelimiter(),pojoCls});
 			}
-			
+			log.warn("Data Insertion Done..");
 			
 		} catch (InstantiationException e) {
 			e.printStackTrace();

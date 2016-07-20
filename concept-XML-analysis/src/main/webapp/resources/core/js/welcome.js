@@ -96,6 +96,7 @@
 						
 					    success: function(data){
 					   		clearInterval(add);
+					   		readLog();
 					   		$("#uploadXMLButton").removeAttr("disabled");
 					   		/*$("#alertMessage").html("Framework generation Done, Please upload input file");
 					   		$("#alert").modal('show');*/
@@ -131,6 +132,10 @@
 		    url: 'readLog',
 		    type: 'GET',
 		    success: function(data){
+		    	/*var olddata = $("#consoleOutput").html();
+		    	if(olddata.length >= data.length){
+		    		data = olddata + "--";
+		    	}*/
 		   		$("#consoleOutput").html(data);
 		   		var elem = document.getElementById('consoleOutput');
 		   	    elem.scrollTop = elem.scrollHeight;
@@ -138,8 +143,6 @@
 		  });
 		
 	}
-	
-
 
 	function uploadXMLButton(){
 		
@@ -151,6 +154,7 @@
 				alert('Select files to upload');
 				return;
 			}
+			var add1 = setInterval("readLog()",10);
 			 var oMyForm = new FormData();
 			  oMyForm.append(fileName, inputXML.files[0]);
 			  $.ajax({
@@ -161,6 +165,8 @@
 				    contentType: false,
 				    type: 'POST',
 				    success: function(data){
+				    	clearInterval(add1);
+				    	readLog();
 				   		/*$("#alertMessage").html(data);
 				   		$("#alert").removeattr('style');
 				   		$("#alert").modal('show');*/
