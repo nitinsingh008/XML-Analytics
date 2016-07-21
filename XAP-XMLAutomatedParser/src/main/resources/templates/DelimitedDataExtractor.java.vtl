@@ -65,7 +65,20 @@ public class DelimiterDataExtractor{
 			out.getFormat().setLineSeparator(lineSeparator);
 		}
 		
-		out.getFormat().setDelimiter(delimiter.charAt(0));
+		//out.getFormat().setDelimiter(delimiter.charAt(0));
+		char separator;
+		if ("\\t".equals(delimiter)) 
+		{
+			separator = '\t';
+		}else if("\\|".equals(delimiter))
+		{
+			separator = '|';
+		}
+		else 
+		{
+			separator = delimiter.charAt(0);
+		}
+		out.getFormat().setDelimiter(separator);
 		
 		return out;
 	}

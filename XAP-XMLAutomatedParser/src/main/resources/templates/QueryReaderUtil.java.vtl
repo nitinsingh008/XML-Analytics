@@ -60,7 +60,7 @@ public class QueryReaderUtil {
 		return sb.toString();
 	}
 	
-	private static final String SQL_SELECT_NEW_PK = "select level, CORE_REF_DATA.INSTRUMENT_SEQ.nextval id from dual connect by level <= ";
+	private static final String SQL_SELECT_NEW_PK = "$PKSql";
 	
 	public static List<Integer> loadNewPKeys(int cacheSize)
 			throws Exception {
@@ -75,7 +75,7 @@ public class QueryReaderUtil {
 		ResultSet rs = null;
 		try {
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(SQL_SELECT_NEW_PK + cacheSize);
+			rs = stmt.executeQuery(SQL_SELECT_NEW_PK);
 			while (rs.next()) {
 				retvalList.add(rs.getInt("id"));
 			}
