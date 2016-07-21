@@ -25,30 +25,36 @@ public class LoaderDBRoutine
 	private static String DB_CONNECTION;
 	private static String DB_USER;
 	private static String DB_PASSWORD ;
+	private static String DB_TYPE ;
 	
 	public static void initializeDBRoutine(String dbType, 
 										   String jdbcUrl, 
 										   String user, 
 										   String password) 
 	{
-		
-/*		if(DatabaseType.ORACLE.toString().equals(dbType))
+		DB_TYPE	 = dbType;
+		if("ORACLE".equals(dbType))
 		{
-			DB_DRIVER = "oracle.jdbc.driver.OracleDriver";
+			DB_DRIVER     = "oracle.jdbc.driver.OracleDriver";
+			DB_CONNECTION = jdbcUrl;
+			DB_USER 	  = user;
+			DB_PASSWORD   = password;
 		}
-		else if(DatabaseType.MySQL.toString().equals(dbType))
+		else if("MySQL".equals(dbType))
 		{
-			DB_DRIVER = "com.mysql.jdbc.Driver";
+			DB_DRIVER     = "com.mysql.jdbc.Driver";
+			DB_CONNECTION = jdbcUrl;
+			DB_USER 	  = user;
+			DB_PASSWORD   = password;
 		}
-		else
+		else if("JavaDB_DERBY".equals(dbType))
 		{
-			// DB Driver for MS SQL Server
-			//DB_DRIVER = "com.mysql.jdbc.Driver";
-		}*/
-		
-		DB_CONNECTION = jdbcUrl;
-		DB_USER 	  = user;
-		DB_PASSWORD   = password;
+			DB_DRIVER 	  = "org.apache.derby.jdbc.EmbeddedDriver";
+			DB_CONNECTION = jdbcUrl;
+			DB_USER 	  = user;
+			DB_PASSWORD   = password;
+			DB_TYPE = "DERBY";
+		}
 		
 		createCoreDBRoutine();
 	}
@@ -70,7 +76,7 @@ public class LoaderDBRoutine
 	{
 		
 		Properties coreDBProperties = new Properties();
-	
+		coreDBProperties.setProperty("DB_TYPE", DB_TYPE);
 		coreDBProperties.setProperty("JDBCURL", DB_CONNECTION);
 		coreDBProperties.setProperty("DBUSER",  DB_USER);
 		coreDBProperties.setProperty("DBPASS",  DB_PASSWORD);
