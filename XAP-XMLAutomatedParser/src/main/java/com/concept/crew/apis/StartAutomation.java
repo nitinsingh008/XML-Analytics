@@ -95,7 +95,7 @@ public class StartAutomation
 			}
 			autoHelper.doChoreOperations();
 			GeneratorEngine.generateAll(new GenerateRequest(projectSetting, tableInfo, nodes, 
-					request.getDatabaseTablePostFix(), isDelimited, inputMetaDataFile, request.getInputType()));
+					request.getDatabaseTablePostFix(), isDelimited, inputMetaDataFile, request.getInputType(), request.getDatabaseType()));
 		}
 		
 		if(createTable)

@@ -97,7 +97,12 @@ public abstract class TableGenerator
 		if(rootNode != null){
 			sb = new StringBuffer();
 			sb.append("\n") ;
-			sb.append("CREATE SEQUENCE ").append(rootNode.toUpperCase()).append("_SEQ ").append("MINVALUE 1 START WITH 1 INCREMENT BY 1 ;");
+			sb.append("CREATE SEQUENCE ").append(rootNode.toUpperCase()).append("_SEQ ");
+			if(Constants.DatabaseType.ORACLE.toString().equals(dbType)){
+				sb.append("MINVALUE 1 START WITH 1 INCREMENT BY 1 ;");
+			}else if(Constants.DatabaseType.JavaDB_DERBY.toString().equals(dbType)){
+				sb.append("AS BIGINT START WITH 1 ;");
+			}
 			bw.write(sb.toString());
 			bw.newLine();
 			logger.warn(sb);

@@ -19,10 +19,11 @@ public class GenerateRequest {
 	private  File xsdFile;
 	private  String inputType;
 	private  File inputFile; //XML or CSV
+	private  String dbType;
 	
 	public GenerateRequest(FrameworkSettings projectSetting,
 			Multimap<String, DBColumns> tableMap, Pair<String, String> xsdNodes, String postFix,
-			Boolean isDelimited, File xsdFile,String inputType) {
+			Boolean isDelimited, File xsdFile,String inputType, String dbType) {
 		super();
 		this.projectSetting = projectSetting;
 		this.tableMap = tableMap;
@@ -35,6 +36,7 @@ public class GenerateRequest {
 		velocityEngine.setProperty("resource.loader", "class");
 		velocityEngine.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
 		this.velocityEngine.init();  
+		this.dbType = dbType;
 	}
 
 	public VelocityEngine getVelocityEngine() {
@@ -77,5 +79,8 @@ public class GenerateRequest {
 		return inputFile;
 	}
 
-	
+	public String getDbType() {
+		return dbType;
+	}
+
 }

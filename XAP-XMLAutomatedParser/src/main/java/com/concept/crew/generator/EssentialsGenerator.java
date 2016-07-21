@@ -10,6 +10,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
 import com.concept.crew.info.GenerateRequest;
+import com.concept.crew.util.Constants;
 
 public class EssentialsGenerator extends IGenerate {
 
@@ -128,8 +129,20 @@ public class EssentialsGenerator extends IGenerate {
 			queryUtil.mkdirs();
 		}
 		
-		context.put("ResourcePath", request.getProjectSetting().getResourcePath());		
+		context.put("ResourcePath", request.getProjectSetting().getResourcePath());	
+		StringBuffer sb= new StringBuffer();
 		
+		if(request.getDbType() != null){
+			if(Constants.DatabaseType.ORACLE.toString().equals(request.getDbType())){
+				sb.append("SELECT CORE_REF_DATA.").append(request.getRoot().toUpperCase()).append("_SEQ").append("NEXTVAL ID FROM DUAL");
+			}else if(Constants.DatabaseType.JavaDB_DERBY.toString().equals(request.getDbType())){
+				sb.append("SELECT currentvalue ID FROM sys.syssequences WHERE sequencename ='").append(request.getRoot().toUpperCase()).append("_SEQ'");
+			}
+		}else{
+			sb.append("SELECT CORE_REF_DATA.").append(request.getRoot().toUpperCase()).append("_SEQ").append("NEXTVAL ID FROM DUAL");
+		}
+		
+		context.put("PKSql", sb.toString());
 		try {
 			String dataReaderLocation = IGenerate.VTL_LOC_1+"templates/QueryReaderUtil.java.vtl";
 			File datareader = new File(dataReaderLocation);
