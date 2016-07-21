@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -30,6 +31,7 @@ public class CsvTableGenerator<E> extends TableGenerator{
 		this.delimiter = delimiter;
 	}
 
+	private static final List<String> seperators = Arrays.asList(new String[]{"|"});
 	@Override
 	public Multimap<String, DBColumns> parse(Boolean haveHeaderInFile,
 											 String dbType) throws Exception 
@@ -47,7 +49,11 @@ public class CsvTableGenerator<E> extends TableGenerator{
 			try{
 				reader = new BufferedReader(new FileReader(csvFile));
 				String line = reader.readLine();
+				if(seperators.contains(delimiter)){
+					delimiter = "\\"+delimiter;
+				}
 				String[] headers = line.split(delimiter);
+				
 				if(headers !=null){
 					int index = 1;
 					for (String head : headers) {

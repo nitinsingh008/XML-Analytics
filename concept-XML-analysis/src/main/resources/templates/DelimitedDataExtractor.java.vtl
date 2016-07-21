@@ -70,6 +70,9 @@ public class DelimiterDataExtractor{
 		if ("\\t".equals(delimiter)) 
 		{
 			separator = '\t';
+		}else if("\\|".equals(delimiter))
+		{
+			separator = '|';
 		}
 		else 
 		{
