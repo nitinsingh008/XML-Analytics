@@ -75,9 +75,9 @@ public class QueryReaderUtil {
 		ResultSet rs = null;
 		try {
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(SQL_SELECT_NEW_PK);
+			rs = stmt.executeQuery(SQL_SELECT_NEW_PK+cacheSize);
 			while (rs.next()) {
-				retvalList.add(rs.getInt("id"));
+				retvalList.add(rs.getInt("ID"));
 			}
 		} catch (SQLException e) {
 			brdDBRoutineTx.rollbackTransaction();
