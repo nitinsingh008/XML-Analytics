@@ -134,12 +134,12 @@ public class EssentialsGenerator extends IGenerate {
 		
 		if(request.getDbType() != null){
 			if(Constants.DatabaseType.ORACLE.toString().equals(request.getDbType())){
-				sb.append("SELECT CORE_REF_DATA.").append(request.getRoot().toUpperCase()).append("_SEQ").append(".NEXTVAL ID FROM DUAL");
+				sb.append("SELECT LEVEL, CORE_REF_DATA.").append(request.getRoot().toUpperCase()).append("_SEQ").append(".NEXTVAL ID FROM DUAL CONNECT BY LEVEL <=");
 			}else if(Constants.DatabaseType.JavaDB_DERBY.toString().equals(request.getDbType())){
 				sb.append("SELECT currentvalue ID FROM sys.syssequences WHERE sequencename ='").append(request.getRoot().toUpperCase()).append("_SEQ'");
 			}
 		}else{
-			sb.append("SELECT CORE_REF_DATA.").append(request.getRoot().toUpperCase()).append("_SEQ").append("NEXTVAL ID FROM DUAL");
+			sb.append("SELECT LEVEL, CORE_REF_DATA.").append(request.getRoot().toUpperCase()).append("_SEQ").append(".NEXTVAL ID FROM DUAL CONNECT BY LEVEL <=");
 		}
 		
 		context.put("PKSql", sb.toString());
